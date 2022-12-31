@@ -1,131 +1,75 @@
-<div class="page-inner">
-    <div class="page-header">
-        <h4 class="page-title"><?= $titlebar ?></h4>
-        <ul class="breadcrumbs">
-            <li class="nav-home">
-                <a href="<?= base_url('home') ?>">
-                    <i class="flaticon-home"></i>
-                </a>
-            </li>
-            <li class="separator">
-                <i class="flaticon-right-arrow"></i>
-            </li>
-            <li class="nav-item">
-                <a href="<?= base_url('data-user') ?>"><?= $titlebar ?></a>
-            </li>
-            <li class="separator">
-                <i class="flaticon-right-arrow"></i>
-            </li>
-            <li class="nav-item">
-                <a href="#"><?= $title ?></a>
-            </li>
-        </ul>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-title"><?= $title ?></div>
+<div class="content-wrapper">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>General Form</h1>
                 </div>
-                <form action="<?= base_url('data-user/save') ?>" method="post">
-                    <?= csrf_field(); ?>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group <?= ($validation->hasError('idbagian')) ? 'has-error' : ''; ?>">
-                                    <label>Pilih Bagian<span class="text-danger">*</span></label>
-                                    <select name="idbagian" id="idbagian" class="js-example-language" style="width: 100%">
-                                        <option selected disabled><?= (old('idbagian')) ? old('idbagian') : ".::Pilih Bagian::." ?></option>
-                                        <?php foreach ($bagian as $r) : ?>
-                                            <option value="<?= $r['id'] ?>"><?= $r['nama_bagian'] ?></option>
-                                        <?php endforeach ?>
-                                    </select>
-                                    <small class="form-text text-danger">
-                                        <?= $validation->getError('idbagian'); ?></small>
-                                </div>
-                            </div>
-                            <div class="col-md-6 pr-0">
-                                <div class="form-group">
-                                    <label>Nama Bagian<span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="namabagian" name="bagian" value="<?= old('bagian'); ?>" readonly>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group <?= ($validation->hasError('nip')) ? 'has-error' : ''; ?>">
-                                    <label>NIP<span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="nik" name="nip" autocomplete="off" value="<?= old('nip'); ?>">
-                                    <small class="form-text text-danger">
-                                        <?= $validation->getError('nip'); ?></small>
-                                </div>
-                            </div>
-                            <div class="col-md-6 pr-0">
-                                <div class="form-group <?= ($validation->hasError('nama')) ? 'has-error' : ''; ?>">
-                                    <label>Nama<span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="nama" name="nama" autocomplete="off" value="<?= old('nama'); ?>">
-                                    <small class="form-text text-danger">
-                                        <?= $validation->getError('nama'); ?></small>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group <?= ($validation->hasError('nohp')) ? 'has-error' : ''; ?>">
-                                    <label>Nomor Handphone<span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="nohp" name="nohp" autocomplete="off" value="<?= old('nohp'); ?>">
-                                    <small class="form-text text-danger">
-                                        <?= $validation->getError('nohp'); ?></small>
-                                </div>
-                            </div>
-                            <div class="col-md-6 pr-0">
-                                <div class="form-group <?= ($validation->hasError('email')) ? 'has-error' : ''; ?>">
-                                    <label>Email<span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="email" name="email" autocomplete="off" value="<?= old('email'); ?>">
-                                    <small class="form-text text-danger">
-                                        <?= $validation->getError('email'); ?></small>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group <?= ($validation->hasError('username')) ? 'has-error' : ''; ?>">
-                                    <label>Username<span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="username" name="username" autocomplete="off" value="<?= old('username'); ?>">
-                                    <small class="form-text text-danger">
-                                        <?= $validation->getError('username'); ?></small>
-                                </div>
-                            </div>
-                            <div class="col-md-6 pr-0">
-                                <div class="form-group <?= ($validation->hasError('password')) ? 'has-error' : ''; ?>">
-                                    <label>Password<span class="text-danger">*</span></label>
-                                    <input type="password" class="form-control" id="password" name="password" autocomplete="off" value="<?= old('password'); ?>">
-                                    <small class="form-text text-danger">
-                                        <?= $validation->getError('password'); ?></small>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group <?= ($validation->hasError('repassword')) ? 'has-error' : ''; ?>">
-                                    <label>Retype password<span class="text-danger">*</span></label>
-                                    <input type="password" class="form-control" id="repassword" name="repassword" autocomplete="off" value="<?= old('repassword'); ?>">
-                                    <small class="form-text text-danger">
-                                        <?= $validation->getError('repassword'); ?></small>
-                                </div>
-                            </div>
-                            <div class="col-md-6 pr-0">
-                                <div class="form-group <?= ($validation->hasError('level')) ? 'has-error' : ''; ?>">
-                                    <label>Level<span class="text-danger">*</span></label>
-                                    <select name="level" class="form-control">
-                                        <option selected disabled><?= (old('level')) ? old('level') : ".::Pilih Level::." ?></option>
-                                        <option value="2">User Bagian</option>
-                                    </select>
-                                    <small class="form-text text-danger">
-                                        <?= $validation->getError('level'); ?></small>
-                                </div>
-                            </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="<?= base_url('data-user') ?>"">Daftar User</a></li>
+                        <li class=" breadcrumb-item active">Tambah Data User</li>
+                    </ol>
+                </div>
+            </div>
+    </section>
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title"><?= $title ?></h3>
                         </div>
+                        <form action="<?= base_url('data-user/save') ?>" method="post">
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label>Nama</label>
+                                    <input name="nama" type="text" class="form-control <?= ($validation->hasError('nama')) ? 'is-invalid' : ''; ?>" autocomplete="off" value="<?= old('nama'); ?>">
+                                    <span class="error invalid-feedback"> <?= $validation->getError('nama'); ?></span>
+                                </div>
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <input name="email" type="email" class="form-control <?= ($validation->hasError('email')) ? 'is-invalid' : ''; ?>" autocomplete="off" value="<?= old('email'); ?>">
+                                    <span class="error invalid-feedback"> <?= $validation->getError('email'); ?></span>
+                                </div>
+                                <div class="form-group">
+                                    <label>Nomor HP</label>
+                                    <input name="nohp" type="text" class="form-control <?= ($validation->hasError('nohp')) ? 'is-invalid' : ''; ?>" autocomplete="off" value="<?= old('nohp'); ?>">
+                                    <span class="error invalid-feedback"> <?= $validation->getError('nohp'); ?></span>
+                                </div>
+                                <div class="form-group">
+                                    <label>Username</label>
+                                    <input name="username" type="text" class="form-control <?= ($validation->hasError('username')) ? 'is-invalid' : ''; ?>" autocomplete="off" value="<?= old('username'); ?>">
+                                    <span class="error invalid-feedback"> <?= $validation->getError('username'); ?></span>
+                                </div>
+                                <div class="form-group">
+                                    <label>Password</label>
+                                    <input name="password" type="password" class="form-control <?= ($validation->hasError('password')) ? 'is-invalid' : ''; ?>" class="form-control" autocomplete="off">
+                                    <span class="error invalid-feedback"> <?= $validation->getError('password'); ?></span>
+                                </div>
+                                <div class="form-group">
+                                    <label>Re-Type Password</label>
+                                    <input name="repassword" type="password" class="form-control <?= ($validation->hasError('repassword')) ? 'is-invalid' : ''; ?>" class="form-control" autocomplete="off">
+                                    <span class="error invalid-feedback"> <?= $validation->getError('repassword'); ?></span>
+                                </div>
+                                <div class="form-group">
+                                    <label>Level</label>
+                                    <select name="level" class="form-control <?= ($validation->hasError('level')) ? 'is-invalid' : ''; ?>">
+                                        <option selected disabled><?= (old('level')) ? old('level') : ".::Pilih Level::." ?></option>
+                                        <option value="2">Sekretris</option>
+                                        <option value="3">User</option>
+                                    </select>
+                                    <span class="error invalid-feedback"> <?= $validation->getError('level'); ?></span>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary">Simpan</button>
+                            </div>
+                        </form>
                     </div>
-                    <div class="card-action">
-                        <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-save"></i> Simpan</button>
-                        <a href="<?= base_url('data-user') ?>" class="btn btn-dark btn-sm"><i class="fas fa-undo-alt"></i> Kembali</a>
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
-    </div>
-</div>
+    </section>
 </div>

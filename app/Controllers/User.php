@@ -15,22 +15,20 @@ class User extends BaseController
     public function user()
     {
         // jika tidak ingin menampilkan data superadmin
-        // $datauser = $this->userModel->where('level !=', 1)->findAll();
+        $datauser = $this->userModel->where('level !=', 1)->findAll();
         $data = array(
             'title' => 'Daftar User',
-            // 'data' => $datauser,
+            'data' => $datauser,
             'isi' => 'master/user/data'
         );
         return view('layout/wrapper', $data);
     }
     public function add()
     {
-        $bagian = $this->bagianModel->findAll();
         $data = array(
             'titlebar' => 'Data User',
-            'title' => 'Form Tambah Data User',
+            'title' => 'Tambah Data User',
             'isi' => 'master/user/add',
-            'bagian' => $bagian,
             'validation' => \Config\Services::validation()
         );
         return view('layout/wrapper', $data);
@@ -39,27 +37,19 @@ class User extends BaseController
     {
         //Validasi input
         if (!$this->validate([
-            'idbagian' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Pilih Bagian.',
-                ]
-            ],
-            'nip' => [
-                'rules' => 'required|numeric|max_length[18]|min_length[18]|is_unique[mod_user.nip]',
-                'errors' => [
-                    'required' => 'NIP tidak boleh kosong.',
-                    'numeric' => 'NIP harus angka.',
-                    'max_length' => 'NIP maximal 18 digit.',
-                    'min_length' => 'NIP minimal 18 digit.',
-                    'is_unique' => 'NIP sudah terdaftar.'
-                ]
-            ],
             'nama' => [
                 'rules' => 'required|alpha_space',
                 'errors' => [
                     'required' => 'Nama tidak boleh kosong.',
                     'alpha_space' => 'Nama harus huruf dan spasi.'
+                ]
+            ],
+            'email' => [
+                'rules' => 'required|valid_email|is_unique[mod_user.email]',
+                'errors' => [
+                    'required' => 'Email tidak boleh kosong.',
+                    'valid_email' => 'Email tidak valid.',
+                    'is_unique' => 'Email sudah terdaftar.',
                 ]
             ],
             'nohp' => [
@@ -69,14 +59,6 @@ class User extends BaseController
                     'max_length' => 'Nomor Handphone maximal 12 digit.',
                     'min_length' => 'Nomor Handphone manimal 11 digit.',
                     'regex_match' => 'Penulisan Nomor Handphone harus benar'
-                ]
-            ],
-            'email' => [
-                'rules' => 'required|valid_email|is_unique[mod_user.email]',
-                'errors' => [
-                    'required' => 'Email tidak boleh kosong.',
-                    'valid_email' => 'Email tidak valid.',
-                    'is_unique' => 'Email sudah terdaftar.',
                 ]
             ],
             'username' => [
@@ -100,7 +82,7 @@ class User extends BaseController
             'repassword' => [
                 'rules' => 'required|max_length[8]|min_length[6]|matches[password]',
                 'errors' => [
-                    'required' => 'Password tidak boleh kosong.',
+                    'required' => 'Re-Password tidak boleh kosong.',
                     'max_length' => 'Password maximal 8 digit.',
                     'min_length' => 'Password minimal 6 digit.',
                     'matches' => 'Password harus sama.'
@@ -118,9 +100,6 @@ class User extends BaseController
         $md5 = md5($this->request->getPost('password'));
         $password = password_hash($md5, PASSWORD_DEFAULT);
         $data = [
-            'id_bagian'           => $this->request->getPost('idbagian'),
-            'nama_bagian'         => $this->request->getPost('bagian'),
-            'nip'                  => $this->request->getPost('nip'),
             'nama'                 => $this->request->getPost('nama'),
             'nohp'                 => $this->request->getPost('nohp'),
             'email'                => $this->request->getPost('email'),
@@ -128,7 +107,6 @@ class User extends BaseController
             'foto'                 => 'blank.png',
             'password'             => $password,
             'level'                => $this->request->getPost('level'),
-            'status'               => '1',
         ];
         $this->userModel->save($data);
         session()->setFlashdata('m', 'Data berhasil disimpan');

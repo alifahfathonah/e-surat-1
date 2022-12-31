@@ -14,30 +14,60 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
+                        <div class="swal" data-swal="<?= session()->getFlashdata('m'); ?>"></div>
                         <div class="card-header">
-                            <h3 class="card-title">Data User</h3>
+                            <a href="<?= base_url('data-user/add') ?>" class="btn btn-primary btn-xs">
+                                <i class="fa fa-plus-circle"></i>&nbsp;Tambah
+                            </a>
                         </div>
                         <div class="card-body">
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
-                                        <th>Rendering engine</th>
-                                        <th>Browser</th>
-                                        <th>Platform(s)</th>
-                                        <th>Engine version</th>
-                                        <th>CSS grade</th>
+                                        <th style="width: 5%">No</th>
+                                        <th>Nama</th>
+                                        <th>Email</th>
+                                        <th>Nomor HP</th>
+                                        <th>Username</th>
+                                        <th>
+                                            <center>Foto</center>
+                                        </th>
+                                        <th style="width: 10%">
+                                            <center>Aksi</center>
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>Trident</td>
-                                        <td>Internet
-                                            Explorer 4.0
-                                        </td>
-                                        <td>Win 95+</td>
-                                        <td> 4</td>
-                                        <td>X</td>
-                                    </tr>
+                                    <?php $i = 1;
+                                    foreach ($data as $key => $r) : ?>
+                                        <tr>
+                                            <td><?= $i++; ?></td>
+                                            <td><?= $r['nama']; ?></td>
+                                            <td><?= $r['email']; ?></td>
+                                            <td><?= $r['nohp']; ?></td>
+                                            <td><?= $r['username']; ?></td>
+                                            <td>
+                                                <center>
+                                                    <?php if ($r['foto'] == null) { ?>
+                                                        <img src="<?= base_url('/media/fotouser/' . 'blank.png') ?>" width="30px" class="img rounded">
+                                                    <?php } else { ?>
+                                                        <img src="<?= base_url('/media/fotouser/' . $r['foto']) ?>" width="30px" class="img rounded">
+                                                    <?php } ?>
+                                                </center>
+                                            <td>
+                                                <div class="form-button-action">
+                                                    <center>
+                                                        <a href="data-user/edit/<?= $r['id']; ?>" class="btn btn-warning btn-xs">
+                                                            <i class="fa fa-edit"></i>
+                                                        </a>
+                                                        <a href="#" class="btn btn-danger btn-xs" title="Hapus Data" data-toggle='modal' data-target='#activateModalDelete<?= $r['id'] ?>'>
+                                                            <i class="fas fa-trash"></i>
+                                                        </a>
+                                                    </center>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
                                 </tbody>
                             </table>
                         </div>
