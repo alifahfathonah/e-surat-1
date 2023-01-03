@@ -101,10 +101,9 @@ class User extends BaseController
         $password = password_hash($md5, PASSWORD_DEFAULT);
         $data = [
             'nama'                 => $this->request->getPost('nama'),
-            'nohp'                 => $this->request->getPost('nohp'),
             'email'                => $this->request->getPost('email'),
+            'nohp'                 => $this->request->getPost('nohp'),
             'username'             => $this->request->getPost('username'),
-            'foto'                 => 'blank.png',
             'password'             => $password,
             'level'                => $this->request->getPost('level'),
         ];
@@ -127,25 +126,17 @@ class User extends BaseController
     }
     public function edit($id)
     {
-        $bagian = $this->bagianModel->findAll();
         $data = array(
             'titlebar' => 'Data User',
-            'title' => 'Form Edit User',
+            'title' => 'Edit User',
             'isi' => 'master/user/edit',
             'validation' => \Config\Services::validation(),
-            'bagian' => $bagian,
             'data' => $this->userModel->where('id', $id)->first(),
         );
         return view('layout/wrapper', $data);
     }
     public function update($id)
     {
-        $nipLama = $this->userModel->where(['id' => $id])->first();
-        if ($nipLama['nip'] == $this->request->getPost('nip')) {
-            $rule_nip = 'required|numeric|max_length[18]|min_length[18]';
-        } else {
-            $rule_nip = 'required|numeric|max_length[18]|min_length[18]|is_unique[mod_user.nip]';
-        }
         $emailLama = $this->userModel->where(['id' => $id])->first();
         if ($emailLama['email'] == $this->request->getPost('email')) {
             $rule_email = 'required|valid_email';
@@ -158,29 +149,21 @@ class User extends BaseController
         } else {
             $rule_username = 'required|max_length[25]|min_length[8]|is_unique[mod_user.username]';
         }
-        //Validasi input
         if (!$this->validate([
-            'idbagian' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Pilih Bagian.',
-                ]
-            ],
-            'nip' => [
-                'rules' => $rule_nip,
-                'errors' => [
-                    'required' => 'NIP tidak boleh kosong.',
-                    'numeric' => 'NIP harus angka.',
-                    'max_length' => 'NIP maximal 18 digit.',
-                    'min_length' => 'NIP minimal 18 digit.',
-                    'is_unique' => 'NIP sudah terdaftar.'
-                ]
-            ],
+            //Validasi input
             'nama' => [
                 'rules' => 'required|alpha_space',
                 'errors' => [
                     'required' => 'Nama tidak boleh kosong.',
                     'alpha_space' => 'Nama harus huruf dan spasi.'
+                ]
+            ],
+            'email' => [
+                'rules' => $rule_email,
+                'errors' => [
+                    'required' => 'Email tidak boleh kosong.',
+                    'valid_email' => 'Email tidak valid.',
+                    'is_unique' => 'Email sudah terdaftar.',
                 ]
             ],
             'nohp' => [
@@ -190,14 +173,6 @@ class User extends BaseController
                     'max_length' => 'Nomor Handphone maximal 12 digit.',
                     'min_length' => 'Nomor Handphone manimal 11 digit.',
                     'regex_match' => 'Penulisan Nomor Handphone harus benar'
-                ]
-            ],
-            'email' => [
-                'rules' => $rule_email,
-                'errors' => [
-                    'required' => 'Email tidak boleh kosong.',
-                    'valid_email' => 'Email tidak valid.',
-                    'is_unique' => 'Email sudah terdaftar.',
                 ]
             ],
             'username' => [
@@ -221,7 +196,7 @@ class User extends BaseController
             'repassword' => [
                 'rules' => 'required|max_length[8]|min_length[6]|matches[password]',
                 'errors' => [
-                    'required' => 'Password tidak boleh kosong.',
+                    'required' => 'Re-Password tidak boleh kosong.',
                     'max_length' => 'Password maximal 8 digit.',
                     'min_length' => 'Password minimal 6 digit.',
                     'matches' => 'Password harus sama.'
@@ -240,12 +215,9 @@ class User extends BaseController
         $password = password_hash($md5, PASSWORD_DEFAULT);
         $data = [
             'id'                   => $id,
-            'id_bagian'            => $this->request->getPost('idbagian'),
-            'nama_bagian'          => $this->request->getPost('bagian'),
-            'nip'                  => $this->request->getPost('nip'),
             'nama'                 => $this->request->getPost('nama'),
-            'nohp'                 => $this->request->getPost('nohp'),
             'email'                => $this->request->getPost('email'),
+            'nohp'                 => $this->request->getPost('nohp'),
             'username'             => $this->request->getPost('username'),
             'password'             => $password,
             'level'                => $this->request->getPost('level'),

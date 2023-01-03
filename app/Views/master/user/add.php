@@ -3,11 +3,11 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>General Form</h1>
+                    <h1><?= $titlebar ?></h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="<?= base_url('data-user') ?>"">Daftar User</a></li>
+                        <li class="breadcrumb-item"><a href="<?= base_url('data-user') ?>">Daftar User</a></li>
                         <li class=" breadcrumb-item active">Tambah Data User</li>
                     </ol>
                 </div>
@@ -22,6 +22,7 @@
                             <h3 class="card-title"><?= $title ?></h3>
                         </div>
                         <form action="<?= base_url('data-user/save') ?>" method="post">
+                            <?= csrf_field(); ?>
                             <div class="card-body">
                                 <div class="form-group">
                                     <label>Nama</label>
@@ -57,8 +58,11 @@
                                     <label>Level</label>
                                     <select name="level" class="form-control <?= ($validation->hasError('level')) ? 'is-invalid' : ''; ?>">
                                         <option selected disabled><?= (old('level')) ? old('level') : ".::Pilih Level::." ?></option>
-                                        <option value="2">Sekretris</option>
-                                        <option value="3">User</option>
+                                        <option value="2">Sekretaris</option>
+                                        <option value="3">Pokja I</option>
+                                        <option value="4">Pokja II</option>
+                                        <option value="5">Pokja III</option>
+                                        <option value="6">Pokja IV</option>
                                     </select>
                                     <span class="error invalid-feedback"> <?= $validation->getError('level'); ?></span>
                                 </div>

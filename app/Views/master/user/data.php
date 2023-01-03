@@ -29,6 +29,7 @@
                                         <th>Email</th>
                                         <th>Nomor HP</th>
                                         <th>Username</th>
+                                        <th>Level</th>
                                         <th>
                                             <center>Foto</center>
                                         </th>
@@ -46,6 +47,18 @@
                                             <td><?= $r['email']; ?></td>
                                             <td><?= $r['nohp']; ?></td>
                                             <td><?= $r['username']; ?></td>
+                                            <td> <?php if ($r['level'] == 2) { ?>
+                                                    Sekretaris
+                                                <?php } elseif ($r['level'] == 3) { ?>
+                                                    Pokja I
+                                                <?php } elseif ($r['level'] == 4) { ?>
+                                                    Pokja II
+                                                <?php } elseif ($r['level'] == 5) { ?>
+                                                    Pokja III
+                                                <?php } elseif ($r['level'] == 6) { ?>
+                                                    Pokja IV
+                                                <?php } ?>
+                                            </td>
                                             <td>
                                                 <center>
                                                     <?php if ($r['foto'] == null) { ?>
@@ -77,3 +90,29 @@
         </div>
     </section>
 </div>
+<!-- Modal -->
+<?php foreach ($data as $r) { ?>
+    <form action="<?= base_url('data-user/' . $r['id']); ?>" method="post">
+        <?= csrf_field(); ?>
+        <div class="modal fade" id="activateModalDelete<?= $r['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Hapus Data</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Apa kamu yakin ingin menghapus data <span class="text-danger"><?= $r['nama'] ?></span> ini secara permanen ???
+                    </div>
+                    <div class="modal-footer">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button class="btn btn-default btn-sm" type="button" data-dismiss="modal">Tidak</button>
+                        <button type="submit" class="btn btn-primary btn-sm">Ya</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+<?php } ?>

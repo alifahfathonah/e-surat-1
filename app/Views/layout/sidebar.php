@@ -40,7 +40,7 @@
                with font-awesome or any other icon font library -->
                 <li class="nav-header">MENU</li>
                 <li class="nav-item">
-                    <a href="<?= base_url('/') ?>" class="nav-link <?= ($request->uri->getSegment(1) == 'home') ? 'active' : ""; ?>">
+                    <a href="<?= base_url('/home') ?>" class="nav-link <?= ($request->uri->getSegment(1) == 'home') ? 'active' : ""; ?>">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
                             Beranda
