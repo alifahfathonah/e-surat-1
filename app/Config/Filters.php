@@ -38,17 +38,14 @@ class Filters extends BaseConfig
         'before' => [
             'filteradmin' => ['except' => [
                 '/', 'auth/*',
-                'home', 'home/*',
                 'data-user',
                 'data-user/*',
             ]],
             'filtersek' => ['except' => [
                 '/', 'auth/*',
-                'home', 'home/*',
             ]],
             'filteruser' => ['except' => [
                 '/', 'auth/*',
-                'home', 'home/*',
             ]],
         ],
         'after' => [

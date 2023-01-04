@@ -2,7 +2,7 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="<?= base_url('/home'); ?>" class="brand-link">
-        <img src="<?= base_url(); ?>/template/admin/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <img src="<?= base_url(); ?>/media/logo/logo.png" alt="Lambang Batu Bara" class="brand-image ml-4 mr-4">
         <span class="brand-text font-weight-light">e Surat</span>
     </a>
 
@@ -80,6 +80,35 @@
                         </ul>
                     </li>
                 <?php } ?>
+                <li class="nav-item">
+                    <a href="#" class="nav-link <?= ($request->uri->getSegment(1) == 'tambah-surat-masuk' or $request->uri->getSegment(1) == 'daftar-surat-masuk' or $request->uri->getSegment(1) == 'data-surat-masuk') ? 'active' : ""; ?>">
+                        <i class="nav-icon fas fa-envelope-open-text"></i>
+                        <p>
+                            Surat Masuk
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <?php if (session()->get('level') == '3') { ?>
+                                <a href="<?= base_url('tambah-surat-masuk') ?>" class="nav-link <?= ($request->uri->getSegment(1) == 'tambah-surat-masuk') ? 'active' : ""; ?>">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Tambah Surat Masuk</p>
+                                </a>
+                                <a href="<?= base_url('daftar-surat-masuk') ?>" class="nav-link <?= ($request->uri->getSegment(1) == 'daftar-surat-masuk') ? 'active' : ""; ?>">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Daftar Surat Masuk</p>
+                                </a>
+                            <?php } ?>
+                            <?php if (session()->get('level') == '1' or session()->get('level') == '2') { ?>
+                                <a href="<?= base_url('data-surat-masuk') ?>" class="nav-link <?= ($request->uri->getSegment(1) == 'data-surat-masuk') ? 'active' : ""; ?>">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Daftar Surat Masuk</p>
+                                </a>
+                            <?php } ?>
+                        </li>
+                    </ul>
+                </li>
                 <li class="nav-item">
                     <a href="<?= base_url('auth/logout') ?>" class="nav-link">
                         <i class="fa-solid fa-right-from-bracket"></i>
