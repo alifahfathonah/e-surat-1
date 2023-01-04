@@ -6,7 +6,7 @@ use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 
-class FilterUser implements FilterInterface
+class FilterSek implements FilterInterface
 {
     public function before(RequestInterface $request, $arguments = null)
     {
@@ -18,7 +18,7 @@ class FilterUser implements FilterInterface
 
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
-        if (session()->get('level') == 3) {
+        if (session()->get('level') == 2) {
             return redirect()->to(base_url('home'));
         }
     }

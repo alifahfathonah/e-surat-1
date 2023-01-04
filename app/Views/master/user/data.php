@@ -47,18 +47,7 @@
                                             <td><?= $r['email']; ?></td>
                                             <td><?= $r['nohp']; ?></td>
                                             <td><?= $r['username']; ?></td>
-                                            <td> <?php if ($r['level'] == 2) { ?>
-                                                    Sekretaris
-                                                <?php } elseif ($r['level'] == 3) { ?>
-                                                    Pokja I
-                                                <?php } elseif ($r['level'] == 4) { ?>
-                                                    Pokja II
-                                                <?php } elseif ($r['level'] == 5) { ?>
-                                                    Pokja III
-                                                <?php } elseif ($r['level'] == 6) { ?>
-                                                    Pokja IV
-                                                <?php } ?>
-                                            </td>
+                                            <td><?= $r['level'] == 2 ? 'Sekretaris' : 'User'; ?></td>
                                             <td>
                                                 <center>
                                                     <?php if ($r['foto'] == null) { ?>

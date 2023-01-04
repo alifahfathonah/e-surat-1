@@ -24,4 +24,17 @@ if (swalLogin) {
         title: swalLogin
     })
 }
+const swalFlash = $(".swal").data("swal");
+if (swalFlash) {
+    var Toast =  Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000
+    });
+    Toast.fire({
+        icon: 'success',
+        title: swalFlash
+    })
+}
 

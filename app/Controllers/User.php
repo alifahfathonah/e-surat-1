@@ -105,7 +105,9 @@ class User extends BaseController
             'nohp'                 => $this->request->getPost('nohp'),
             'username'             => $this->request->getPost('username'),
             'password'             => $password,
+            'foto'                 => 'blank.png',
             'level'                => $this->request->getPost('level'),
+            'pokja'                => $this->request->getPost('pokja'),
         ];
         $this->userModel->save($data);
         session()->setFlashdata('m', 'Data berhasil disimpan');
@@ -221,6 +223,7 @@ class User extends BaseController
             'username'             => $this->request->getPost('username'),
             'password'             => $password,
             'level'                => $this->request->getPost('level'),
+            'pokja'                => $this->request->getPost('pokja'),
         ];
         $this->userModel->save($data);
         session()->setFlashdata('m', 'Data berhasil diupdate');

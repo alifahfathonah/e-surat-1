@@ -57,14 +57,24 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Level</label>
-                                    <select name="level" class="form-control <?= ($validation->hasError('level')) ? 'is-invalid' : ''; ?>">
-                                        <option value="<?= $data['level'] ?>" <?= $data['level'] == 2 ? 'selected' : ''; ?>>Sekretaris</option>
-                                        <option value="<?= $data['level'] ?>" <?= $data['level'] == 3 ? 'selected' : ''; ?>>Pokja I</option>
-                                        <option value="<?= $data['level'] ?>" <?= $data['level'] == 4 ? 'selected' : ''; ?>>Pokja II</option>
-                                        <option value="<?= $data['level'] ?>" <?= $data['level'] == 5 ? 'selected' : ''; ?>>Pokja III</option>
-                                        <option value="<?= $data['level'] ?>" <?= $data['level'] == 6 ? 'selected' : ''; ?>>Pokja IV</option>
+                                    <select name="level" class="form-control <?= ($validation->hasError('level')) ? 'is-invalid' : ''; ?>" onchange=" if (this.selectedIndex==2){ document.getElementById('view').style.display='inline' } else { document.getElementById('view').style.display='none' };">
+                                        <option selected disabled><?= (old('level')) ? old('level') : ".::Pilih Level::." ?></option>
+                                        <option value="2" <?= $data['level'] == 2 ? 'selected' : ''; ?>>Sekretaris</option>
+                                        <option value="3" <?= $data['level'] == 3 ? 'selected' : ''; ?>>User</option>
                                     </select>
                                     <span class="error invalid-feedback"> <?= $validation->getError('level'); ?></span>
+                                </div>
+                                <div id="view" style="display:none;">
+                                    <div class="form-group">
+                                        <label>Pokja</label>
+                                        <select name="pokja" class="form-control">
+                                            <option selected disabled><?= (old('pokja')) ? old('pokja') : ".::Pilih Pokja::." ?></option>
+                                            <option value="Pokja I" <?= $data['pokja'] == 'Pokja I' ? 'selected' : ''; ?>>Pokja I</option>
+                                            <option value="Pokja II" <?= $data['pokja'] == 'Pokja II' ? 'selected' : ''; ?>>Pokja II</option>
+                                            <option value="Pokja III" <?= $data['pokja'] == 'Pokja III' ? 'selected' : ''; ?>>Pokja III</option>
+                                            <option value="Pokja III" <?= $data['pokja'] == 'Pokja IV' ? 'selected' : ''; ?>>Pokja IV</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                             <div class="card-footer">

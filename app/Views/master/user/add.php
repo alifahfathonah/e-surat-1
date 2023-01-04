@@ -56,15 +56,24 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Level</label>
-                                    <select name="level" class="form-control <?= ($validation->hasError('level')) ? 'is-invalid' : ''; ?>">
+                                    <select name="level" class="form-control <?= ($validation->hasError('level')) ? 'is-invalid' : ''; ?>" onchange=" if (this.selectedIndex==2){ document.getElementById('view').style.display='inline' } else { document.getElementById('view').style.display='none' };">
                                         <option selected disabled><?= (old('level')) ? old('level') : ".::Pilih Level::." ?></option>
                                         <option value="2">Sekretaris</option>
-                                        <option value="3">Pokja I</option>
-                                        <option value="4">Pokja II</option>
-                                        <option value="5">Pokja III</option>
-                                        <option value="6">Pokja IV</option>
+                                        <option value="3">User</option>
                                     </select>
                                     <span class="error invalid-feedback"> <?= $validation->getError('level'); ?></span>
+                                </div>
+                                <div id="view" style="display:none;">
+                                    <div class="form-group">
+                                        <label>Pokja</label>
+                                        <select name="pokja" class="form-control">
+                                            <option selected disabled><?= (old('pokja')) ? old('pokja') : ".::Pilih Pokja::." ?></option>
+                                            <option value="Pokja I">Pokja I</option>
+                                            <option value="Pokja II">Pokja II</option>
+                                            <option value="Pokja III">Pokja III</option>
+                                            <option value="Pokja IV">Pokja IV</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                             <div class="card-footer">

@@ -43,10 +43,33 @@
 <script src="<?= base_url(); ?>/template/admin/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 <!-- SweetAlert2 -->
 <script src="<?= base_url(); ?>/template/admin/plugins/sweetalert2/sweetalert2.min.js"></script>
+<script src="<?= base_url(); ?>/template/admin/plugins/sweetalert2/script.js"></script>
 <!-- Toastr -->
 <script src="<?= base_url(); ?>/template/admin/plugins/toastr/toastr.min.js"></script>
 <!-- Page specific script -->
 <script>
+    window.onload = function() {
+        jam();
+    }
+
+    function jam() {
+        var e = document.getElementById('jam'),
+            d = new Date(),
+            h, m, s;
+        h = d.getHours();
+        m = set(d.getMinutes());
+        s = set(d.getSeconds());
+
+        e.innerHTML = h + ':' + m + ':' + s;
+
+        setTimeout('jam()', 1000);
+    }
+
+    function set(e) {
+        e = e < 10 ? '0' + e : e;
+        return e;
+    }
+
     $(function() {
         $("#example1").DataTable({
             "responsive": true,
