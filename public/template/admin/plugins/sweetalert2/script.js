@@ -1,0 +1,27 @@
+const swalLogout = $(".swal-logout").data("swal");
+if (swalLogout) {
+    var Toast =  Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000
+    });
+    Toast.fire({
+        icon: 'success',
+        title: swalLogout
+    })
+}
+const swalLogin = $(".swal-login").data("swal");
+if (swalLogin) {
+    var Toast =  Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000
+    });
+    Toast.fire({
+        icon: 'warning',
+        title: swalLogin
+    })
+}
+

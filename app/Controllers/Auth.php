@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\AuthModel;
+use App\Controllers\BaseController;
 use CodeIgniter\Config\Config;
 
 class Auth extends BaseController
@@ -25,14 +26,12 @@ class Auth extends BaseController
     {
         if ($this->validate([
             'username' =>  [
-                'label' => 'Username',
                 'rules' => 'max_length[25]',
                 'errors' => [
                     'max_length' => 'Username melebihi batas maksimal.',
                 ],
             ],
             'password' =>  [
-                'label' => 'Password',
                 'rules' => 'max_length[8]',
                 'errors' => [
                     'max_length' => 'Password maximal 8 digit.',
@@ -49,16 +48,12 @@ class Auth extends BaseController
                     //jika data cocok
                     session()->set('log', true);
                     session()->set('id', $cek['id']);
-                    session()->set('id_bagian', $cek['id_bagian']);
-                    session()->set('nama_bagian', $cek['nama_bagian']);
-                    session()->set('nip', $cek['nip']);
                     session()->set('nama', $cek['nama']);
-                    session()->set('nohp', $cek['nohp']);
                     session()->set('email', $cek['email']);
+                    session()->set('nohp', $cek['nohp']);
                     session()->set('username', $cek['username']);
                     session()->set('foto', $cek['foto']);
                     session()->set('level', $cek['level']);
-                    session()->set('status', $cek['status']);
                     return redirect()->to(base_url('/home'));
                 } else {
                     //jika tidak data cocok
@@ -80,16 +75,12 @@ class Auth extends BaseController
     {
         session()->remove('log');
         session()->remove('id');
-        session()->remove('id_bagian');
-        session()->remove('nama_bagian');
-        session()->remove('nip');
         session()->remove('nama');
         session()->remove('nohp');
         session()->remove('email');
         session()->remove('username');
         session()->remove('foto');
         session()->remove('level');
-        session()->remove('status');
         session()->setFlashdata('ml', 'LOGOUT BERHASIL');
         return redirect()->to(base_url('/'));
     }

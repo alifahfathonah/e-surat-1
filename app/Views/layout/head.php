@@ -30,7 +30,10 @@
     <link rel="stylesheet" href="<?= base_url(); ?>/template/admin/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="<?= base_url(); ?>/template/admin/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
     <link rel="stylesheet" href="<?= base_url(); ?>/template/admin/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
-    <!-- Theme style -->
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="<?= base_url(); ?>/template/admin/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+    <!-- Toastr -->
+    <link rel="stylesheet" href="<?= base_url(); ?>/template/admin/plugins/toastr/toastr.min.css">
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
