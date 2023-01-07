@@ -47,6 +47,13 @@ $routes->post('data-user/save', 'User::save');
 $routes->delete('data-user/(:num)', 'User::delete/$1');
 $routes->get('data-user/edit/(:segment)', 'User::edit/$1');
 $routes->add('data-user/update/(:segment)', 'User::update/$1');
+//Routes Surat Masuk
+$routes->get('tambah-surat-masuk', 'SuratMasuk::add');
+$routes->post('tambah-surat-masuk/save', 'SuratMasuk::save');
+$routes->get('surat-masuk', 'SuratMasuk::data');
+$routes->delete('surat-masuk/(:num)', 'SuratMasuk::delete/$1');
+$routes->get('surat-masuk/edit/(:segment)', 'SuratMasuk::edit/$1');
+$routes->add('surat-masuk/update/(:segment)', 'SuratMasuk::update/$1');
 /*
  * --------------------------------------------------------------------
  * Additional Routing

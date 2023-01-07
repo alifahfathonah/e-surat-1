@@ -36,6 +36,14 @@ function format_tahun($date)
     $result = $tahun;
     return $result;
 }
+function format_tanggal($date)
+{
+    date_default_timezone_set('Asia/Jakarta');
+    // pemisahan tanggal yang mempunyai waktu
+    $tgl = substr($date, 0, 10);
+    $result = $tgl;
+    return $result;
+}
 function rupiah($angka)
 {
     $hasil_rupiah = "Rp. " . number_format($angka, 2, ',', '.');

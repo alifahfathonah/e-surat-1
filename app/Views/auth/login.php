@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="<?= base_url(); ?>/template/admin/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
     <!-- Toastr -->
     <link rel="stylesheet" href="<?= base_url(); ?>/template/admin/plugins/toastr/toastr.min.css">
+    <link rel="icon" href="<?= base_url(); ?>/media/logo/logo.png" type="image/x-icon" />
 </head>
 
 <body class="hold-transition login-page">

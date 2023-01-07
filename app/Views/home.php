@@ -9,9 +9,8 @@
                         } elseif (session()->get('level') == '2') {
                             echo "Sekretaris";
                         } elseif (session()->get('level') == '3') {
-                            echo "User";
-                        }
-                        ?></h1>
+                            echo "User"; ?>&nbsp;<?= session()->get('pokja'); ?>
+                    <?php } ?></h1>
                 </div>
             </div>
         </div>

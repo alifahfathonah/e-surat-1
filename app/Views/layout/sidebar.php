@@ -81,7 +81,7 @@
                     </li>
                 <?php } ?>
                 <li class="nav-item">
-                    <a href="#" class="nav-link <?= ($request->uri->getSegment(1) == 'tambah-surat-masuk' or $request->uri->getSegment(1) == 'daftar-surat-masuk' or $request->uri->getSegment(1) == 'data-surat-masuk') ? 'active' : ""; ?>">
+                    <a href="#" class="nav-link <?= ($request->uri->getSegment(1) == 'tambah-surat-masuk' or $request->uri->getSegment(1) == 'surat-masuk' or $request->uri->getSegment(1) == 'data-surat-masuk') ? 'active' : ""; ?>">
                         <i class="nav-icon fas fa-envelope-open-text"></i>
                         <p>
                             Surat Masuk
@@ -95,13 +95,13 @@
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Tambah Surat Masuk</p>
                                 </a>
-                                <a href="<?= base_url('daftar-surat-masuk') ?>" class="nav-link <?= ($request->uri->getSegment(1) == 'daftar-surat-masuk') ? 'active' : ""; ?>">
+                                <a href="<?= base_url('surat-masuk') ?>" class="nav-link <?= ($request->uri->getSegment(1) == 'surat-masuk') ? 'active' : ""; ?>">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Daftar Surat Masuk</p>
                                 </a>
                             <?php } ?>
                             <?php if (session()->get('level') == '1' or session()->get('level') == '2') { ?>
-                                <a href="<?= base_url('data-surat-masuk') ?>" class="nav-link <?= ($request->uri->getSegment(1) == 'data-surat-masuk') ? 'active' : ""; ?>">
+                                <a href="<?= base_url('surat-masuk') ?>" class="nav-link <?= ($request->uri->getSegment(1) == 'surat-masuk') ? 'active' : ""; ?>">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Daftar Surat Masuk</p>
                                 </a>

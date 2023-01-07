@@ -17,7 +17,7 @@ class Auth extends BaseController
     public function index()
     {
         $data = array(
-            'title' => 'e-surat',
+            'title' => 'Aplikasi e-surat',
             'validation' => \Config\Services::validation()
         );
         return view('auth/login', $data);
@@ -54,6 +54,7 @@ class Auth extends BaseController
                     session()->set('username', $cek['username']);
                     session()->set('foto', $cek['foto']);
                     session()->set('level', $cek['level']);
+                    session()->set('pokja', $cek['pokja']);
                     return redirect()->to(base_url('/home'));
                 } else {
                     //jika tidak data cocok
@@ -81,6 +82,7 @@ class Auth extends BaseController
         session()->remove('username');
         session()->remove('foto');
         session()->remove('level');
+        session()->remove('pokja');
         session()->setFlashdata('ml', 'LOGOUT BERHASIL');
         return redirect()->to(base_url('/'));
     }
