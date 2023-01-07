@@ -61,7 +61,7 @@
                                                         <a href="surat-masuk/view/<?= $r['id']; ?>" class="btn btn-info btn-xs" title="Detail Data">
                                                             <i class="fa fa-info-circle"></i>
                                                         </a>
-                                                        <?php if (session()->get('level') == '3') { ?>
+                                                        <?php if (session()->get('level') == '3' && $r['pokja'] == (session()->get('pokja'))) { ?>
                                                             <a href="surat-masuk/edit/<?= $r['id']; ?>" class="btn btn-warning btn-xs" title="Edit Data">
                                                                 <i class="fa fa-edit"></i>
                                                             </a>

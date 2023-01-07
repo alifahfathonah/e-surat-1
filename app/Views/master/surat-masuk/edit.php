@@ -7,8 +7,8 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="<?= base_url('data-user') ?>">Daftar User</a></li>
-                        <li class=" breadcrumb-item active">Edit Data User</li>
+                        <li class="breadcrumb-item"><a href="<?= base_url('surat-masuk') ?>">Daftar Surat masuk</a></li>
+                        <li class=" breadcrumb-item active">Tambah Surat Masuk</li>
                     </ol>
                 </div>
             </div>
@@ -21,64 +21,74 @@
                         <div class="card-header">
                             <h3 class="card-title"><?= $title ?></h3>
                         </div>
-                        <form action="<?= base_url('data-user/update/' . $data['id']) ?>" method="post">
+                        <form action="<?= base_url('surat-masuk/update/' . $data['id']) ?>" method="post" enctype="multipart/form-data">
                             <?= csrf_field(); ?>
                             <input type="hidden" name="id" value="<?= $data['id']; ?>">
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label>Nama</label>
-                                    <input name="nama" type="text" class="form-control <?= ($validation->hasError('nama')) ? 'is-invalid' : ''; ?>" autocomplete="off" value="<?= (old('nama')) ? old('nama') : $data['nama']; ?>">
-                                    <span class="error invalid-feedback"> <?= $validation->getError('nama'); ?></span>
+                                    <label>Nomor Surat<span class="text-danger">*</span></label>
+                                    <input name="nosurat" type="text" class="form-control <?= ($validation->hasError('nosurat')) ? 'is-invalid' : ''; ?>" autocomplete="off" value="<?= (old('nosurat')) ? old('nosurat') : $data['no_surat']; ?>">
+                                    <span class="error invalid-feedback"> <?= $validation->getError('nosurat'); ?></span>
                                 </div>
                                 <div class="form-group">
-                                    <label>Email</label>
-                                    <input name="email" type="email" class="form-control <?= ($validation->hasError('email')) ? 'is-invalid' : ''; ?>l" autocomplete="off" value="<?= (old('email')) ? old('email') : $data['email']; ?>">
-                                    <span class="error invalid-feedback"> <?= $validation->getError('email'); ?></span>
-                                </div>
-                                <div class="form-group">
-                                    <label>Nomor HP</label>
-                                    <input name="nohp" type="text" class="form-control <?= ($validation->hasError('nohp')) ? 'is-invalid' : ''; ?>" autocomplete="off" value="<?= (old('nohp')) ? old('nohp') : $data['nohp']; ?>">
-                                    <span class="error invalid-feedback"> <?= $validation->getError('nohp'); ?></span>
-                                </div>
-                                <div class="form-group">
-                                    <label>Username</label>
-                                    <input name="username" type="text" class="form-control <?= ($validation->hasError('username')) ? 'is-invalid' : ''; ?>" autocomplete="off" value="<?= (old('username')) ? old('username') : $data['username']; ?>">
-                                    <span class="error invalid-feedback"> <?= $validation->getError('username'); ?></span>
-                                </div>
-                                <div class="form-group">
-                                    <label>Password</label>
-                                    <input name="password" type="password" class="form-control <?= ($validation->hasError('password')) ? 'is-invalid' : ''; ?>" autocomplete="off">
-                                    <span class="error invalid-feedback"> <?= $validation->getError('password'); ?></span>
-                                </div>
-                                <div class="form-group">
-                                    <label>Re-Type Password</label>
-                                    <input name="repassword" type="password" class="form-control <?= ($validation->hasError('repassword')) ? 'is-invalid' : ''; ?>" autocomplete="off">
-                                    <span class="error invalid-feedback"> <?= $validation->getError('repassword'); ?></span>
-                                </div>
-                                <div class="form-group">
-                                    <label>Level</label>
-                                    <select name="level" class="form-control <?= ($validation->hasError('level')) ? 'is-invalid' : ''; ?>" onchange=" if (this.selectedIndex==2){ document.getElementById('view').style.display='inline' } else { document.getElementById('view').style.display='none' };">
-                                        <option selected disabled><?= (old('level')) ? old('level') : ".::Pilih Level::." ?></option>
-                                        <option value="2" <?= $data['level'] == 2 ? 'selected' : ''; ?>>Sekretaris</option>
-                                        <option value="3" <?= $data['level'] == 3 ? 'selected' : ''; ?>>User</option>
+                                    <label>Sifat Surat<span class="text-danger">*</span></label>
+                                    <select name="sifat" class="form-control <?= ($validation->hasError('sifat')) ? 'is-invalid' : ''; ?>">
+                                        <option value="<?= $data['sifat_surat'] ?>"><?= (old('sifat')) ? old('sifat') : $data['sifat_surat'] ?></option>
+                                        <option value="Amat Segera">Amat Segera</option>
+                                        <option value="Biasa">Biasa</option>
+                                        <option value="Penting">Penting</option>
+                                        <option value="Segera">Segera</option>
+                                        <option value="Sangat Biasa">Sangat Biasa</option>
+                                        <option value="Rahasia">Rahasia</option>
                                     </select>
-                                    <span class="error invalid-feedback"> <?= $validation->getError('level'); ?></span>
+                                    <span class="error invalid-feedback"> <?= $validation->getError('sifat'); ?></span>
                                 </div>
-                                <div id="view" style="display:none;">
-                                    <div class="form-group">
-                                        <label>Pokja</label>
-                                        <select name="pokja" class="form-control">
-                                            <option selected disabled><?= (old('pokja')) ? old('pokja') : ".::Pilih Pokja::." ?></option>
-                                            <option value="Pokja I" <?= $data['pokja'] == 'Pokja I' ? 'selected' : ''; ?>>Pokja I</option>
-                                            <option value="Pokja II" <?= $data['pokja'] == 'Pokja II' ? 'selected' : ''; ?>>Pokja II</option>
-                                            <option value="Pokja III" <?= $data['pokja'] == 'Pokja III' ? 'selected' : ''; ?>>Pokja III</option>
-                                            <option value="Pokja III" <?= $data['pokja'] == 'Pokja IV' ? 'selected' : ''; ?>>Pokja IV</option>
-                                        </select>
+                                <div class="form-group">
+                                    <label>Kategori Surat<span class="text-danger">*</span></label>
+                                    <select name="kategori" class="form-control <?= ($validation->hasError('kategori')) ? 'is-invalid' : ''; ?>">
+                                        <option value="<?= $data['kategori_surat'] ?>"><?= (old('kategori')) ? old('kategori') : $data['kategori_surat'] ?></option>
+                                        <option value="Undangan">Undangan</option>
+                                        <option value="Biasa">Biasa</option>
+                                        <option value="Pengumuman">Pengumuman</option>
+                                        <option value="Pemberitahuan">Pemberitahuan</option>
+                                        <option value="Panggilan">Panggilan</option>
+                                        <option value="Pengantar">Pengantar</option>
+                                        <option value="Edaran">Edaran</option>
+                                    </select>
+                                    <span class="error invalid-feedback"> <?= $validation->getError('kategori'); ?></span>
+                                </div>
+                                <div class="form-group">
+                                    <label>Perihal<span class="text-danger">*</span></label>
+                                    <textarea name="perihal" class="form-control <?= ($validation->hasError('perihal')) ? 'is-invalid' : ''; ?>" rows="3" autocomplete="off" placeholder="Tulis Perihal ..."><?= (old('perihal')) ? old('perihal') : $data['perihal'] ?></textarea>
+                                    <span class="error invalid-feedback"> <?= $validation->getError('perihal'); ?></span>
+                                </div>
+                                <div class="form-group">
+                                    <label>Asal Surat<span class="text-danger">*</span></label>
+                                    <input name="asal" type="text" class="form-control <?= ($validation->hasError('asal')) ? 'is-invalid' : ''; ?>" autocomplete="off" value="<?= (old('asal')) ? old('asal') : $data['asal_surat'] ?>">
+                                    <span class="error invalid-feedback"> <?= $validation->getError('asal'); ?></span>
+                                </div>
+                                <div class="form-group">
+                                    <label>File Surat<span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            <input type="file" name="file_surat" class="custom-file-input <?= ($validation->hasError('file_surat')) ? 'is-invalid' : ''; ?>">
+                                            <label class="custom-file-label">Pilih File</label>
+                                        </div>
+                                    </div>
+                                    <span class="text-danger text-sm"> <?= $validation->getError('file_surat'); ?></span>
+                                </div>
+                                <div class="form-group">
+                                    <label>Lampiran <small class>(*Opsional)</small></label>
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            <input type="file" name="lampiran" class="custom-file-input">
+                                            <label class="custom-file-label">Pilih File</label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-info">Update</button>
+                                <button type="submit" class="btn btn-info">Simpan</button>
                             </div>
                         </form>
                     </div>
