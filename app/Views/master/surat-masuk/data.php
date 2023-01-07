@@ -58,7 +58,7 @@
                                             <td>
                                                 <div class="form-button-action">
                                                     <center>
-                                                        <a href="surat-masuk/view/<?= $r['id']; ?>" class="btn btn-info btn-xs" title="Detail Data">
+                                                        <a href="surat-masuk/detail/<?= $r['id']; ?>" class="btn btn-info btn-xs" title="Detail Data">
                                                             <i class="fa fa-info-circle"></i>
                                                         </a>
                                                         <?php if (session()->get('level') == '3' && $r['pokja'] == (session()->get('pokja'))) { ?>

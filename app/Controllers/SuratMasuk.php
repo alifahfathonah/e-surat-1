@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\SuratMasukModel;
+use App\Models\UserModel;
 use App\Controllers\BaseController;
 use CodeIgniter\Config\Config;
 use CodeIgniter\HTTP\RequestInterface;
@@ -10,9 +11,11 @@ use CodeIgniter\HTTP\RequestInterface;
 class SuratMasuk extends BaseController
 {
     protected $suratmasukModel;
+    protected $userModel;
     public function __construct()
     {
         $this->suratmasukModel = new SuratMasukModel();
+        $this->userModel = new UserModel();
     }
     public function data()
     {
@@ -244,5 +247,15 @@ class SuratMasuk extends BaseController
         $this->suratmasukModel->save($data);
         session()->setFlashdata('m', 'Data berhasil diupdate');
         return redirect()->to(base_url('surat-masuk'));
+    }
+    public function detail($id)
+    {
+        $detail = $this->userModel->join('mod_surat_masuk', 'mod_surat_masuk.id_user = mod_user.id', 'left')->where('mod_surat_masuk.id =', $id)->first();
+        $data = array(
+            'title' => 'Detail Surat Masuk',
+            'data' => $detail,
+            'isi' => 'master/surat-masuk/detail',
+        );
+        return view('layout/wrapper', $data);
     }
 }
