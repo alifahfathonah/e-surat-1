@@ -1,168 +1,84 @@
-<div class="page-inner">
-    <div class="page-header">
-        <h4 class="page-title"><?= $titlebar ?></h4>
-        <ul class="breadcrumbs">
-            <li class="nav-home">
-                <a href="<?= base_url('home') ?>">
-                    <i class="flaticon-home"></i>
-                </a>
-            </li>
-            <li class="separator">
-                <i class="flaticon-right-arrow"></i>
-            </li>
-            <li class="nav-item">
-                <a href="<?= base_url('my-profil') ?>"><?= $titlebar ?></a>
-            </li>
-            <li class="separator">
-                <i class="flaticon-right-arrow"></i>
-            </li>
-            <li class="nav-item">
-                <a href="#"><?= $title ?></a>
-            </li>
-        </ul>
-    </div>
-    <div class="row">
-        <?php if (!empty($data) && is_array($data)) : ?>
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title"><?= $titlebar ?></h4>
-                    </div>
+<div class="content-wrapper">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1><?= $titlebar ?></h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="<?= base_url('my-profil') ?>">Profil Saya</a></li>
+                        <li class=" breadcrumb-item active">Edit Profil</li>
+                    </ol>
+                </div>
+            </div>
+    </section>
+    <section class="content">
+        <div class="container-fluid">
+            <div class="card card-info">
+                <div class="card-header">
+                    <h3 class="card-title"><?= $title ?></h3>
+                </div>
+                <form action="<?= base_url('my-profil/update/' . $data['id']) ?>" method="post" enctype="multipart/form-data">
+                    <?= csrf_field(); ?>
+                    <input type="hidden" name="id" value="<?= $data['id']; ?>">
                     <div class="card-body">
-                        <ul class="nav nav-pills nav-primary" id="pills-tab" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" id="pills-sekolah-tab" data-toggle="pill" href="#pills-sekolah" role="tab" aria-controls="pills-sekolah" aria-selected="true">Bagian</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="pills-kontak-tab" data-toggle="pill" href="#pills-kontak" role="tab" aria-controls="pills-kontak" aria-selected="false">Kontak</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="pills-profil-tab" data-toggle="pill" href="#pills-profil" role="tab" aria-controls="pills-profil" aria-selected="false">Profil</a>
-                            </li>
-                        </ul>
-                        <form action="<?= base_url('my-profil/update/' . $data['id']) ?>" method="post" enctype="multipart/form-data">
-                            <?= csrf_field(); ?>
-                            <input type="hidden" name="id" value="<?= $data['id'] ?>">
-                            <div class="tab-content mt-2 mb-3" id="pills-tabContent">
-                                <div class="tab-pane fade show active" id="pills-sekolah" role="tabpanel" aria-labelledby="pills-sekolah-tab">
-                                    <div class="card-body">
-                                        <?php if (session()->get('level') == '2') { ?>
-                                            <div class="col-md-6 pr-0">
-                                                <div class="form-group">
-                                                    <label>Bagian</label>
-                                                    <input type="text" class="form-control" id="nama_bagian" name="nama_bagian" value="<?= $data['nama_bagian']; ?>" readonly>
-                                                </div>
-                                            </div>
-                                        <?php } ?>
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Nama<span class="text-danger">*</span></label>
+                                        <input name="nama" type="text" class="form-control <?= ($validation->hasError('nama')) ? 'is-invalid' : ''; ?>" autocomplete="off" value="<?= (old('nama')) ? old('nama') : $data['nama']; ?>">
+                                        <span class="error invalid-feedback"> <?= $validation->getError('nama'); ?></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Email<span class="text-danger">*</span></label>
+                                        <input name="email" type="email" class="form-control <?= ($validation->hasError('email')) ? 'is-invalid' : ''; ?>l" autocomplete="off" value="<?= (old('email')) ? old('email') : $data['email']; ?>">
+                                        <span class="error invalid-feedback"> <?= $validation->getError('email'); ?></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Nomor HP<span class="text-danger">*</span></label>
+                                        <input name="nohp" type="text" class="form-control <?= ($validation->hasError('nohp')) ? 'is-invalid' : ''; ?>" autocomplete="off" value="<?= (old('nohp')) ? old('nohp') : $data['nohp']; ?>">
+                                        <span class="error invalid-feedback"> <?= $validation->getError('nohp'); ?></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Password<span class="text-danger">*</span></label>
+                                        <input name="password" type="password" class="form-control <?= ($validation->hasError('password')) ? 'is-invalid' : ''; ?>" autocomplete="off">
+                                        <span class="error invalid-feedback"> <?= $validation->getError('password'); ?></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Re-Type Password<span class="text-danger">*</span></label>
+                                        <input name="repassword" type="password" class="form-control <?= ($validation->hasError('repassword')) ? 'is-invalid' : ''; ?>" autocomplete="off">
+                                        <span class="error invalid-feedback"> <?= $validation->getError('repassword'); ?></span>
                                     </div>
                                 </div>
-                                <div class="tab-pane fade" id="pills-kontak" role="tabpanel" aria-labelledby="pills-kontak-tab">
-                                    <div class="card-body">
-                                        <div class="col-md-6">
-                                            <div class="form-group <?= ($validation->hasError('nohp')) ? 'has-error' : ''; ?>">
-                                                <label>Nomor Handphone<span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" id="nohp" name="nohp" autocomplete="off" value="<?= (old('nohp')) ? old('nohp') : $data['nohp']; ?>">
-                                                <small class="form-text text-danger">
-                                                    <?= $validation->getError('nohp'); ?></small>
-                                            </div>
+                                <div class="col-md-6">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Foto</label>
                                         </div>
-                                        <div class="col-md-6 pr-0">
-                                            <div class="form-group <?= ($validation->hasError('email')) ? 'has-error' : ''; ?>">
-                                                <label>Email<span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" id="email" name="email" autocomplete="off" value="<?= (old('email')) ? old('email') : $data['email']; ?>">
-                                                <small class="form-text text-danger">
-                                                    <?= $validation->getError('email'); ?></small>
-                                            </div>
+                                        <div class="col-md-4">
+                                            <img src="<?= base_url('media/fotouser/' . $data['foto']) ?>" alt="image profile" class="img-thumbnail rounded img-preview">
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade" id="pills-profil" role="tabpanel" aria-labelledby="pills-profil-tab">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="col-md-12">
-                                                    <div class="form-group <?= ($validation->hasError('nip')) ? 'has-error' : ''; ?>">
-                                                        <label>NIP<span class="text-danger">*</span></label>
-                                                        <input type="text" class="form-control" id="nip" name="nip" autocomplete="off" value="<?= (old('nip')) ? old('nip') : $data['nip']; ?>">
-                                                        <small class="form-text text-danger">
-                                                            <?= $validation->getError('nip'); ?></small>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-12 pr-0">
-                                                    <div class="form-group <?= ($validation->hasError('nama')) ? 'has-error' : ''; ?>">
-                                                        <label>Nama<span class="text-danger">*</span></label>
-                                                        <input type="text" class="form-control" id="nama" name="nama" autocomplete="off" value="<?= (old('nama')) ? old('nama') : $data['nama']; ?>">
-                                                        <small class="form-text text-danger">
-                                                            <?= $validation->getError('nama'); ?></small>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-12 pr-0">
-                                                    <div class="form-group">
-                                                        <label>Username</label>
-                                                        <input type="text" class="form-control" id="username" name="username" value="<?= $data['username']; ?>" readonly>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <div class="form-group <?= ($validation->hasError('password')) ? 'has-error' : ''; ?>">
-                                                        <label>Password<span class="text-danger">*</span></label>
-                                                        <input type="password" class="form-control" id="password" name="password" placeholder="Password" autocomplete="off" value="<?= old('password'); ?>">
-                                                        <small class="form-text text-danger">
-                                                            <?= $validation->getError('password'); ?></small>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <div class="form-group <?= ($validation->hasError('repassword')) ? 'has-error' : ''; ?>">
-                                                        <label>Retype password<span class="text-danger">*</span></label>
-                                                        <input type="password" class="form-control" id="repassword" name="repassword" placeholder="Retype Password" autocomplete="off" value="<?= old('repassword'); ?>">
-                                                        <small class="form-text text-danger">
-                                                            <?= $validation->getError('repassword'); ?></small>
-                                                    </div>
+                                        <div class="col-md-12 mt-2">
+                                            <div class="input-group">
+                                                <div class="custom-file">
+                                                    <input type="file" name="foto" class="custom-file-input <?= ($validation->hasError('foto')) ? 'has-error' : ''; ?>" id="foto" onchange="previewImg();" accept=".png, .jpg, .jpeg">
+                                                    <label class="custom-file-label">Pilih File</label>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
-                                                <div class="col-md-12">
-                                                    <div class="form-group">
-                                                        <label>Foto</label>
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <img src="<?= base_url('media/fotouser/' . $data['foto']) ?>" alt="image profile" class="img-thumbnail rounded img-preview">
-                                                    </div>
-                                                    <div class="col-md-12 mt-2">
-                                                        <div class="form-group form-group-default <?= ($validation->hasError('foto')) ? 'has-error' : ''; ?>">
-                                                            <input type="file" name="foto" class="form-control-file" id="foto" onchange="previewImg();" accept=".png, .jpg, .jpeg">
-                                                            <small class="form-text text-danger">
-                                                                <?= $validation->getError('foto'); ?></small>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            <span class="error invalid-feedback"> <?= $validation->getError('foto'); ?></span>
                                         </div>
-                                    </div>
-                                    <div class="card-action">
-                                        <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-save"></i> Update</button>
-                                        <a href="<?= base_url('my-profil') ?>" class="btn btn-dark btn-sm"><i class="fas fa-undo-alt"></i> Kembali</a>
                                     </div>
                                 </div>
                             </div>
-                        </form>
+                        </div>
                     </div>
-                </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-info">Update</button>
+                    </div>
+                </form>
             </div>
-        <?php else : ?>
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title"><?= $title ?></div>
-                    </div>
-                    <div class="card-body">
-                        <h2>
-                            <center><i>Maaf, data ini tidak dapat ditampilkan . . .</i></center>
-                        </h2>
-                        <a href="<?= base_url('my-profil') ?>" class="btn btn-default ml-lg-1 btn-sm"><i class="fa fa-undo-alt"></i> Kembali</a>
-                    </div>
-                </div>
-            </div>
-        <?php endif ?>
-    </div>
-</div>
+        </div>
+    </section>
 </div>

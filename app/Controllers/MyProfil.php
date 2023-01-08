@@ -16,8 +16,8 @@ class MyProfil extends BaseController
     }
     public function myprofil()
     {
-        $idb = session()->get('id_bagian');
-        $profil = $this->userModel->where('id_bagian =', $idb)->first();
+        $ids = session()->get('id');
+        $profil = $this->userModel->where('id =', $ids)->first();
         $data = array(
             'titlebar' => 'Profil Saya',
             'title' => 'Profil Saya',
@@ -28,48 +28,39 @@ class MyProfil extends BaseController
     }
     public function edit($id)
     {
-        $idb = session()->get('id_bagian');
+        $ids = session()->get('id');
         $data = array(
             'titlebar' => 'Profil Saya',
-            'title' => 'Form Edit Data Saya',
+            'title' => 'Edit Profil',
             'isi' => 'master/myprofil/edit',
             'validation' => \Config\Services::validation(),
-            'data' => $this->userModel->where('id', $id)->where('id_bagian', $idb)->first(),
+            'data' => $this->userModel->where('id', $ids)->first(),
         );
         return view('layout/wrapper', $data);
     }
     public function update($id)
     {
-        $nipLama = $this->userModel->where(['id' => $id])->first();
-        if ($nipLama['nip'] == $this->request->getPost('nip')) {
-            $rule_nip = 'required|numeric|max_length[16]|min_length[16]';
-        } else {
-            $rule_nip = 'required|numeric|max_length[18]|min_length[18]|is_unique[mod_user.nip]';
-        }
         $emailLama = $this->userModel->where(['id' => $id])->first();
         if ($emailLama['email'] == $this->request->getPost('email')) {
             $rule_email = 'required|valid_email';
         } else {
             $rule_email = 'required|valid_email|is_unique[mod_user.email]';
         }
-
         //Validasi input
         if (!$this->validate([
-            'nip' => [
-                'rules' => $rule_nip,
-                'errors' => [
-                    'required' => 'NIP tidak boleh kosong.',
-                    'numeric' => 'NIP harus angka.',
-                    'max_length' => 'NIP maximal 18 digit.',
-                    'min_length' => 'NIP minimal 18 digit.',
-                    'is_unique' => 'NIP sudah terdaftar.'
-                ]
-            ],
             'nama' => [
                 'rules' => 'required|alpha_space',
                 'errors' => [
                     'required' => 'Nama tidak boleh kosong.',
                     'alpha_space' => 'Nama harus huruf dan spasi.'
+                ]
+            ],
+            'email' => [
+                'rules' => $rule_email,
+                'errors' => [
+                    'required' => 'Email tidak boleh kosong.',
+                    'valid_email' => 'Email tidak valid.',
+                    'is_unique' => 'Email sudah terdaftar.',
                 ]
             ],
             'nohp' => [
@@ -79,14 +70,6 @@ class MyProfil extends BaseController
                     'max_length' => 'Nomor Handphone maximal 12 digit.',
                     'min_length' => 'Nomor Handphone manimal 11 digit.',
                     'regex_match' => 'Penulisan Nomor Handphone harus benar'
-                ]
-            ],
-            'email' => [
-                'rules' => $rule_email,
-                'errors' => [
-                    'required' => 'Email tidak boleh kosong.',
-                    'valid_email' => 'Email tidak valid.',
-                    'is_unique' => 'Email sudah terdaftar.',
                 ]
             ],
             'password' => [
@@ -137,10 +120,9 @@ class MyProfil extends BaseController
         $password = password_hash($md5, PASSWORD_DEFAULT);
         $data = [
             'id'                   => $id,
-            'nip'                  => $this->request->getPost('nip'),
             'nama'                 => $this->request->getPost('nama'),
-            'nohp'                 => $this->request->getPost('nohp'),
             'email'                => $this->request->getPost('email'),
+            'nohp'                 => $this->request->getPost('nohp'),
             'password'             => $password,
             'foto'                 => $fileName,
         ];

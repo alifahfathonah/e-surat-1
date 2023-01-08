@@ -109,7 +109,11 @@
                                 </div>
                                 <a href="<?= base_url() ?>/media/surat-masuk/<?= $data['file']; ?>" target="blank" class="link-blue text-sm"><i class="fas fa-link mr-1"></i> File Surat</a>
                                 </p>
-                                <a href="<?= base_url() ?>/media/lampiran/<?= $data['lampiran']; ?>" target="blank" class="link-blue text-sm"><i class="fas fa-link mr-1"></i> File Lampiran</a>
+                                <?php if ($data['lampiran'] != null) { ?>
+                                    <a href="<?= base_url() ?>/media/lampiran/<?= $data['lampiran']; ?>" target="blank" class="link-blue text-sm"><i class="fas fa-link mr-1"></i> File Lampiran</a>
+                                <?php } else { ?>
+                                    <a href="#" class="link-blue text-sm LampiranError"><i class="fas fa-link mr-1"></i> File Lampiran</a>
+                                <?php } ?>
                             </div>
                         </div>
                     </div>

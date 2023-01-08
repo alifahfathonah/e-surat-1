@@ -55,6 +55,10 @@ $routes->delete('surat-masuk/(:num)', 'SuratMasuk::delete/$1');
 $routes->get('surat-masuk/edit/(:segment)', 'SuratMasuk::edit/$1');
 $routes->add('surat-masuk/update/(:segment)', 'SuratMasuk::update/$1');
 $routes->add('surat-masuk/detail/(:segment)', 'SuratMasuk::detail/$1');
+//Routes My Profil
+$routes->get('my-profil', 'MyProfil::myprofil');
+$routes->get('my-profil/edit/(:segment)', 'MyProfil::edit/$1');
+$routes->add('my-profil/update/(:segment)', 'MyProfil::update/$1');
 /*
  * --------------------------------------------------------------------
  * Additional Routing

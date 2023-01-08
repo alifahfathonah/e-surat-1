@@ -87,4 +87,19 @@
             "responsive": true,
         });
     });
+    $('.LampiranError').click(function() {
+        toastr.error('Maaf, File Lampiran tidak ditemukan.')
+    });
+
+    function previewImg() {
+        const foto = document.querySelector('#foto');
+        const img = document.querySelector('.img-preview');
+
+        const fileFoto = new FileReader();
+        fileFoto.readAsDataURL(foto.files[0]);
+
+        fileFoto.onload = function(e) {
+            img.src = e.target.result;
+        }
+    }
 </script>
