@@ -28,32 +28,37 @@
                         <div class="icon">
                             <i class="ionicons ion-ios-people"></i>
                         </div>
-                        <a href="<?= base_url('data-user') ?>" class="small-box-footer">Selengkapnya <i class="fas fa-arrow-circle-right"></i></a>
+                        <?php if (session()->get('level') == '1') { ?>
+                            <a href="<?= base_url('data-user') ?>" class="small-box-footer">Selengkapnya <i class="fas fa-arrow-circle-right"></i></a>
+                        <?php } ?>
                     </div>
                 </div>
                 <div class="col-lg-4 col-6">
                     <div class="small-box bg-success">
                         <div class="inner">
                             <h3><?= $suratmasuk ?></h3>
-                            <p>Surat Masuk</p>
+                            <p>Total Surat Masuk</p>
                         </div>
                         <div class="icon">
                             <i class="ionicons ion-email-unread"></i>
                         </div>
-                        <a href="<?= base_url('surat-masuk') ?>" class="small-box-footer">Selengkapnya<i class="fas fa-arrow-circle-right"></i></a>
+                        <?php if (session()->get('level') == '1') { ?>
+                            <a href="<?= base_url('surat-masuk') ?>" class="small-box-footer">Selengkapnya<i class="fas fa-arrow-circle-right"></i></a>
+                        <?php } ?>
                     </div>
                 </div>
                 <div class="col-lg-4 col-6">
                     <div class="small-box bg-warning">
                         <div class="inner">
-                            <h3>0</h3>
-                            <p>Surat Keluar</p>
+                            <h3><?= $suratkeluar ?></h3>
+                            <p>Total Surat Keluar</p>
                         </div>
                         <div class="icon">
-
                             <i class="ionicons ion-android-drafts"></i>
                         </div>
-                        <a href="#" class="small-box-footer">Selengkapnya<i class="fas fa-arrow-circle-right"></i></a>
+                        <?php if (session()->get('level') == '1') { ?>
+                            <a href="<?= base_url('surat-keluar') ?>" class="small-box-footer">Selengkapnya<i class="fas fa-arrow-circle-right"></i></a>
+                        <?php } ?>
                     </div>
                 </div>
             </div>

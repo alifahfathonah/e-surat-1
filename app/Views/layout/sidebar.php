@@ -80,9 +80,10 @@
                         </ul>
                     </li>
                 <?php } ?>
+
                 <li class="nav-item">
                     <a href="#" class="nav-link <?= ($request->uri->getSegment(1) == 'tambah-surat-masuk' or $request->uri->getSegment(1) == 'surat-masuk' or $request->uri->getSegment(1) == 'data-surat-masuk') ? 'active' : ""; ?>">
-                        <i class="nav-icon fas fa-envelope-open-text"></i>
+                        <i class="nav-icon fas fa-envelope"></i>
                         <p>
                             Surat Masuk
                             <i class="fas fa-angle-left right"></i>
@@ -104,6 +105,35 @@
                                 <a href="<?= base_url('surat-masuk') ?>" class="nav-link <?= ($request->uri->getSegment(1) == 'surat-masuk') ? 'active' : ""; ?>">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Daftar Surat Masuk</p>
+                                </a>
+                            <?php } ?>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link <?= ($request->uri->getSegment(1) == 'tambah-surat-keluar' or $request->uri->getSegment(1) == 'surat-keluar' or $request->uri->getSegment(1) == 'data-surat-keluar') ? 'active' : ""; ?>">
+                        <i class="nav-icon fas fa-envelope-open-text"></i>
+                        <p>
+                            Surat Keluar
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <?php if (session()->get('level') == '3' or session()->get('level') == '2') { ?>
+                                <a href="<?= base_url('tambah-surat-keluar') ?>" class="nav-link <?= ($request->uri->getSegment(1) == 'tambah-surat-keluar') ? 'active' : ""; ?>">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Tambah Surat Keluar</p>
+                                </a>
+                                <a href="<?= base_url('surat-keluar') ?>" class="nav-link <?= ($request->uri->getSegment(1) == 'surat-keluar') ? 'active' : ""; ?>">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Daftar Surat Keluar</p>
+                                </a>
+                            <?php } ?>
+                            <?php if (session()->get('level') == '1') { ?>
+                                <a href="<?= base_url('surat-keluar') ?>" class="nav-link <?= ($request->uri->getSegment(1) == 'surat-keluar') ? 'active' : ""; ?>">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Daftar Surat Keluar</p>
                                 </a>
                             <?php } ?>
                         </li>

@@ -3,6 +3,8 @@
 namespace App\Controllers;
 
 use App\Models\UserModel;
+use App\Models\SuratMasukModel;
+use App\Models\SuratKeluarModel;
 use CodeIgniter\Config\Config;
 use CodeIgniter\HTTP\RequestInterface;
 
@@ -10,9 +12,13 @@ use CodeIgniter\HTTP\RequestInterface;
 class MyProfil extends BaseController
 {
     protected $userModel;
+    protected $suratmasukModel;
+    protected $suratkeluarModel;
     public function __construct()
     {
         $this->userModel = new UserModel();
+        $this->suratmasukModel = new SuratMasukModel();
+        $this->suratkeluarModel = new SuratKeluarModel();
     }
     public function myprofil()
     {
@@ -21,6 +27,11 @@ class MyProfil extends BaseController
         $data = array(
             'titlebar' => 'Profil Saya',
             'title' => 'Profil Saya',
+            'suratmasuk'    => $this->suratmasukModel->where('id_user =', $ids)->countAllResults(),
+            'suratkeluar'   => $this->suratkeluarModel->where('id_user =', $ids)->countAllResults(),
+            'suratmasukall'    => $this->suratmasukModel->countAllResults(),
+            'suratkeluarall'   => $this->suratkeluarModel->countAllResults(),
+            'suratkeluar_s'   => $this->suratkeluarModel->where('id_user =', $ids)->countAllResults(),
             'data' => $profil,
             'isi' => 'master/myprofil/data',
         );

@@ -29,13 +29,26 @@
                                 <div class="row">
                                     <div class="col-sm-6 border-right">
                                         <div class="description-block">
-                                            <h5 class="description-header">2</h5>
+                                            <?php if (session()->get('level') == '3') { ?>
+                                                <h5 class="description-header"><?= $suratmasuk ?></h5>
+                                            <?php } ?>
+                                            <?php if (session()->get('level') == '1' or session()->get('level') == '2') { ?>
+                                                <h5 class="description-header"><?= $suratmasukall ?></h5>
+                                            <?php } ?>
                                             <span class="description-text">Surat Masuk</span>
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="description-block">
-                                            <h5 class="description-header">4</h5>
+                                            <?php if (session()->get('level') == '1') { ?>
+                                                <h5 class="description-header"><?= $suratkeluarall ?></h5>
+                                            <?php } ?>
+                                            <?php if (session()->get('level') == '2') { ?>
+                                                <h5 class="description-header"><?= $suratkeluar_s ?></h5>
+                                            <?php } ?>
+                                            <?php if (session()->get('level') == '3') { ?>
+                                                <h5 class="description-header"><?= $suratkeluar ?></h5>
+                                            <?php } ?>
                                             <span class="description-text">Surat Keluar</span>
                                         </div>
                                     </div>
