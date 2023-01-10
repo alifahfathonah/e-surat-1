@@ -7,7 +7,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="<?= base_url('surat-masuk') ?>">Daftar Surat Keluar</a></li>
+                        <li class="breadcrumb-item"><a href="<?= base_url('surat-masuk') ?>">Daftar Surat Masuk</a></li>
                         <li class=" breadcrumb-item active">Tambah Surat Masuk</li>
                     </ol>
                 </div>
