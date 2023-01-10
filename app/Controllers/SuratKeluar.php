@@ -91,7 +91,7 @@ class SuratKeluar extends BaseController
                 'errors' => [
                     'required' => 'Tujuan harus diisi.',
                 ]
-            ],
+            ]
         ])) {
             return redirect()->to('/tambah-surat-keluar')->withInput();
         }
@@ -177,71 +177,63 @@ class SuratKeluar extends BaseController
                     'alpha_numeric_punct' => 'Dasar Hukum berisi karakter yang tidak didukung.'
                 ]
             ],
-            'asal' => [
-                'rules' => 'required|alpha_space',
+            'penandatangan' => [
+                'rules' => 'required',
                 'errors' => [
-                    'required' => 'Asal Surat harus diisi.',
-                    'alpha_space' => 'Asal Surat hanya huruf dan spasi.',
+                    'required' => 'Penandatangan harus diisi.',
                 ]
             ],
-            'file_surat' => [
-                'rules' => 'mime_in[file_surat,application/pdf]|max_size[file_surat,2000]',
+            'isi' => [
+                'rules' => 'required',
                 'errors' => [
-                    'mime_in' => 'Extension file yang diperbolehkan .pdf',
-                    'max_size' => 'Ukuran File maksimal 2MB.'
+                    'required' => 'Isi surat harus diisi.',
                 ]
             ],
-            'lampiran' => [
-                'rules' => 'mime_in[lampiran,application/pdf]|max_size[lampiran,2000]',
+            'file_lampiran' => [
+                'rules' => 'mime_in[file_lampiran,application/pdf]|max_size[file_lampiran,2000]',
                 'errors' => [
                     'mime_in' => 'Extension file yang diperbolehkan .pdf',
                     'max_size' => 'Ukuran File maksimal 2MB.'
                 ]
             ],
+            'tujuan' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Tujuan harus diisi.',
+                ]
+            ]
         ])) {
             return redirect()->to(base_url('surat-keluar/edit/' . $this->request->getPost('id')))->withInput();
         }
-        $surat   = $this->request->getFile('file_surat');
-        $lampiran   = $this->request->getFile('lampiran');
-        if ($surat->getError() == 4) {
-            $r = $this->suratkeluarModel->find($id);
-            $fileNamesurat = $r['file'];
-        } else {
-            $fileNamesurat = $surat->getRandomName();
-            //move file
-            $surat->move(ROOTPATH . 'public/media/surat-keluar/', $fileNamesurat);
-            //if file found then replace file
-            $f = $this->suratkeluarModel->find($id);
-            $replacesurat = $f['file'];
-            if (file_exists(ROOTPATH . 'public/media/surat-keluar/' . $replacesurat)) {
-                unlink(ROOTPATH . 'public/media/surat-keluar/' . $replacesurat);
-            }
-        }
+        $lampiran   = $this->request->getFile('file_lampiran');
         if ($lampiran->getError() == 4) {
             $r = $this->suratkeluarModel->find($id);
-            $fileNamelampiran = $r['lampiran'];
+            $fileNamelampiran = $r['file_lampiran'];
         } else {
             $fileNamelampiran = $lampiran->getRandomName();
             //move file
-            $lampiran->move(ROOTPATH . 'public/media/lampiran/', $fileNamelampiran);
+            $lampiran->move(ROOTPATH . 'public/media/lampiran-surat/', $fileNamelampiran);
             //if file found then replace file
             $f = $this->suratkeluarModel->find($id);
-            $replacelampiran = $f['lampiran'];
-            if (file_exists(ROOTPATH . 'public/media/lampiran/' . $replacelampiran)) {
+            $replacelampiran = $f['file_lampiran'];
+            if (file_exists(ROOTPATH . 'public/media/lampiran-surat/' . $replacelampiran)) {
                 if ($replacelampiran != null) {
-                    unlink(ROOTPATH . 'public/media/lampiran/' . $replacelampiran);
+                    unlink(ROOTPATH . 'public/media/lampiran-surat/' . $replacelampiran);
                 }
             }
         }
         $data = [
             'id'             => $id,
             'no_surat'       => $this->request->getPost('nosurat'),
-            'sifat_surat'    => $this->request->getPost('sifat'),
             'kategori_surat' => $this->request->getPost('kategori'),
+            'sifat_surat'    => $this->request->getPost('sifat'),
             'perihal'        => $this->request->getPost('perihal'),
-            'asal_surat'     => $this->request->getPost('asal'),
-            'file'           => $fileNamesurat,
-            'lampiran'       => $fileNamelampiran,
+            'penandatangan'  => $this->request->getPost('penandatangan'),
+            'isi'            => $this->request->getPost('isi'),
+            'jlh_lampiran'   => $this->request->getPost('jlhlampiran'),
+            'satuan'         => $this->request->getPost('satuan'),
+            'tujuan'         => $this->request->getPost('tujuan'),
+            'file_lampiran'  => $fileNamelampiran,
         ];
         $this->suratkeluarModel->save($data);
         session()->setFlashdata('m', 'Data berhasil diupdate');

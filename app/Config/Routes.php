@@ -55,7 +55,7 @@ $routes->delete('surat-masuk/(:num)', 'SuratMasuk::delete/$1');
 $routes->get('surat-masuk/edit/(:segment)', 'SuratMasuk::edit/$1');
 $routes->add('surat-masuk/update/(:segment)', 'SuratMasuk::update/$1');
 $routes->add('surat-masuk/detail/(:segment)', 'SuratMasuk::detail/$1');
-//Routes Surat Masuk
+//Routes Surat Keluar
 $routes->get('tambah-surat-keluar', 'SuratKeluar::add');
 $routes->post('tambah-surat-keluar/save', 'SuratKeluar::save');
 $routes->get('surat-keluar', 'SuratKeluar::data');
