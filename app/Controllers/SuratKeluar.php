@@ -67,55 +67,70 @@ class SuratKeluar extends BaseController
                     'alpha_numeric_punct' => 'Dasar Hukum berisi karakter yang tidak didukung.'
                 ]
             ],
-            'asal' => [
-                'rules' => 'required|alpha_space',
+            'penandatangan' => [
+                'rules' => 'required',
                 'errors' => [
-                    'required' => 'Asal Surat harus diisi.',
-                    'alpha_space' => 'Asal Surat hanya huruf dan spasi.',
+                    'required' => 'Penandatangan harus diisi.',
                 ]
             ],
-            'file_surat' => [
-                'rules' => 'uploaded[file_surat]|mime_in[file_surat,application/pdf]|max_size[file_surat,2000]',
+            'isi' => [
+                'rules' => 'required',
                 'errors' => [
-                    'uploaded' => 'File Surat harus diupload.',
+                    'required' => 'Isi surat harus diisi.',
+                ]
+            ],
+            'jlhlampiran' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Jumlah Lampiran harus diisi.',
+                ]
+            ],
+            'satuan' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Satuan harus diisi.',
+                ]
+            ],
+            'file_lampiran' => [
+                'rules' => 'mime_in[file_lampiran,application/pdf]|max_size[file_lampiran,2000]',
+                'errors' => [
                     'mime_in' => 'Extension file yang diperbolehkan .pdf',
                     'max_size' => 'Ukuran File maksimal 2MB.'
                 ]
             ],
-            'lampiran' => [
-                'rules' => 'mime_in[lampiran,application/pdf]|max_size[lampiran,2000]',
+            'tujuan' => [
+                'rules' => 'required',
                 'errors' => [
-                    'mime_in' => 'Extension file yang diperbolehkan .pdf',
-                    'max_size' => 'Ukuran File maksimal 2MB.'
+                    'required' => 'Tujuan harus diisi.',
                 ]
             ],
         ])) {
-            return redirect()->to('/tambah-surat-masuk')->withInput();
+            return redirect()->to('/tambah-surat-keluar')->withInput();
         }
-        $surat   = $this->request->getFile('file_surat');
-        $lampiran   = $this->request->getFile('lampiran');
+        $lampiran   = $this->request->getFile('file_lampiran');
         if ($lampiran->getError() == 4) {
             $fileNamelampiran = null;
         } else {
             $fileNamelampiran = $lampiran->getRandomName();
-            $lampiran->move(ROOTPATH . 'public/media/lampiran/', $fileNamelampiran);
+            $lampiran->move(ROOTPATH . 'public/media/lampiran-surat/', $fileNamelampiran);
         }
-        $fileNamesurat = $surat->getRandomName();
-        $surat->move(ROOTPATH . 'public/media/surat-masuk/', $fileNamesurat);
         $data = [
             'id_user'        => session()->get('id'),
             'no_surat'       => $this->request->getPost('nosurat'),
-            'sifat_surat'    => $this->request->getPost('sifat'),
             'kategori_surat' => $this->request->getPost('kategori'),
+            'sifat_surat'    => $this->request->getPost('sifat'),
             'perihal'        => $this->request->getPost('perihal'),
-            'asal_surat'     => $this->request->getPost('asal'),
-            'file'           => $fileNamesurat,
-            'lampiran'       => $fileNamelampiran,
+            'penandatangan'  => $this->request->getPost('penandatangan'),
+            'isi'            => $this->request->getPost('isi'),
+            'jlh_lampiran'   => $this->request->getPost('jlhlampiran'),
+            'satuan'         => $this->request->getPost('satuan'),
+            'tujuan'         => $this->request->getPost('tujuan'),
+            'file_lampiran'  => $fileNamelampiran,
             'pokja'          => session()->get('pokja'),
         ];
-        $this->suratmasukModel->save($data);
+        $this->suratkeluarModel->save($data);
         session()->setFlashdata('m', 'Data berhasil disimpan');
-        return redirect()->to(base_url('surat-masuk'));
+        return redirect()->to(base_url('surat-keluar'));
     }
 
     public function delete($id)

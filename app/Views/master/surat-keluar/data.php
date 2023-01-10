@@ -15,9 +15,9 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="swal" data-swal="<?= session()->getFlashdata('m'); ?>"></div>
-                        <?php if (session()->get('level') == '3') { ?>
+                        <?php if (session()->get('level') == '3' or session()->get('level') == '2') { ?>
                             <div class="card-header">
-                                <a href="<?= base_url('tambah-surat-masuk') ?>" class="btn btn-info btn-xs">
+                                <a href="<?= base_url('tambah-surat-keluar') ?>" class="btn btn-info btn-xs">
                                     <i class="fa fa-plus-circle"></i>&nbsp;Tambah
                                 </a>
                             </div>
@@ -28,8 +28,8 @@
                                     <tr>
                                         <th style="width: 5%">No</th>
                                         <th style="width: 15%">Nomor Surat</th>
-                                        <th style="width: 20%">Asal</th>
                                         <th style="width: 30%">Perihal</th>
+                                        <th style="width: 20%">Tujuan</th>
                                         <th style="width: 10%">
                                             <center>Post by</center>
                                         </th>
@@ -47,8 +47,8 @@
                                         <tr>
                                             <td><?= $i++; ?></td>
                                             <td><?= $r['no_surat']; ?></td>
-                                            <td><?= $r['asal_surat']; ?></td>
                                             <td><?= $r['perihal']; ?></td>
+                                            <td><?= $r['tujuan']; ?></td>
                                             <td>
                                                 <center>
                                                     <?= $r['pokja']; ?>
@@ -56,21 +56,21 @@
                                             </td>
                                             <td><?= format_tanggal($r['created_at']); ?></td>
                                             <td>
-                                                <div class="form-button-action">
-                                                    <center>
-                                                        <a href="surat-masuk/detail/<?= $r['id']; ?>" class="btn btn-info btn-xs" title="Detail Data">
-                                                            <i class="fa fa-info-circle"></i>
-                                                        </a>
-                                                        <?php if (session()->get('level') == '3' && $r['pokja'] == (session()->get('pokja'))) { ?>
-                                                            <a href="surat-masuk/edit/<?= $r['id']; ?>" class="btn btn-warning btn-xs" title="Edit Data">
-                                                                <i class="fa fa-edit"></i>
-                                                            </a>
-                                                            <a href="#" class="btn btn-danger btn-xs" title="Hapus Data" data-toggle='modal' data-target='#activateModalDeleteSm<?= $r['id'] ?>'>
-                                                                <i class="fas fa-trash"></i>
-                                                            </a>
-                                                        <?php } ?>
-                                                    </center>
-                                                </div>
+                                                <center>
+                                                    <div class="btn-group">
+                                                        <button type="button" class="btn btn-default dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-expanded="false">
+                                                            <span class="sr-only">Toggle Dropdown</span>
+                                                        </button>
+                                                        <div class="dropdown-menu" role="menu">
+                                                            <a class="dropdown-item" href="<?= base_url('surat-keluar/detail/' . $r['id']) ?>">Detail</a>
+                                                            <a class="dropdown-item" href="<?= base_url('surat-keluar/print/' . $r['id']) ?>">Print</a>
+                                                            <?php if (session()->get('level') == '3' && $r['pokja'] == (session()->get('pokja'))) { ?>
+                                                                <a class="dropdown-item" href="<?= base_url('surat-keluar/edit/' . $r['id']) ?>">Edit</a>
+                                                                <a class="dropdown-item" href="#" data-toggle='modal' data-target='#activateModalDeleteSk<?= $r['id'] ?>'>Delete</a>
+                                                            <?php } ?>
+                                                        </div>
+                                                    </div>
+                                                </center>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
@@ -85,9 +85,9 @@
 </div>
 <!-- Modal -->
 <?php foreach ($data as $r) { ?>
-    <form action="<?= base_url('surat-masuk/' . $r['id']); ?>" method="post">
+    <form action="<?= base_url('surat-keluar/' . $r['id']); ?>" method="post">
         <?= csrf_field(); ?>
-        <div class="modal fade" id="activateModalDeleteSm<?= $r['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="activateModalDeleteSk<?= $r['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">

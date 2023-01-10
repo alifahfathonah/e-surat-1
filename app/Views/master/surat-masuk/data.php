@@ -60,21 +60,20 @@
                                             </td>
                                             <td><?= format_tanggal($r['created_at']); ?></td>
                                             <td>
-                                                <div class="form-button-action">
-                                                    <center>
-                                                        <a href="surat-masuk/detail/<?= $r['id']; ?>" class="btn btn-info btn-xs" title="Detail Data">
-                                                            <i class="fa fa-info-circle"></i>
-                                                        </a>
-                                                        <?php if (session()->get('level') == '3' && $r['pokja'] == (session()->get('pokja'))) { ?>
-                                                            <a href="surat-masuk/edit/<?= $r['id']; ?>" class="btn btn-warning btn-xs" title="Edit Data">
-                                                                <i class="fa fa-edit"></i>
-                                                            </a>
-                                                            <a href="#" class="btn btn-danger btn-xs" title="Hapus Data" data-toggle='modal' data-target='#activateModalDeleteSm<?= $r['id'] ?>'>
-                                                                <i class="fas fa-trash"></i>
-                                                            </a>
-                                                        <?php } ?>
-                                                    </center>
-                                                </div>
+                                                <center>
+                                                    <div class="btn-group">
+                                                        <button type="button" class="btn btn-default dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-expanded="false">
+                                                            <span class="sr-only">Toggle Dropdown</span>
+                                                        </button>
+                                                        <div class="dropdown-menu" role="menu">
+                                                            <a class="dropdown-item" href="<?= base_url('surat-masuk/detail/' . $r['id']) ?>">Detail</a>
+                                                            <?php if (session()->get('level') == '3' && $r['pokja'] == (session()->get('pokja'))) { ?>
+                                                                <a class="dropdown-item" href="<?= base_url('surat-masuk/edit/' . $r['id']) ?>">Edit</a>
+                                                                <a class="dropdown-item" href="#" data-toggle='modal' data-target='#activateModalDeleteSm<?= $r['id'] ?>'>Delete</a>
+                                                            <?php } ?>
+                                                        </div>
+                                                    </div>
+                                                </center>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>

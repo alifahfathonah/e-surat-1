@@ -8,9 +8,9 @@
                             echo "Administrator";
                         } elseif (session()->get('level') == '2') {
                             echo "Sekretaris";
-                        } elseif (session()->get('level') == '3') {
-                            echo "User"; ?>&nbsp;<?= session()->get('pokja'); ?>
-                    <?php } ?></h1>
+                        } elseif (session()->get('level') == '3') { ?>
+                            <?= session()->get('pokja'); ?>
+                        <?php } ?></h1>
                     <h6><?= $appname; ?></h6>
                 </div>
             </div>
