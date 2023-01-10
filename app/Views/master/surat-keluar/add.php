@@ -112,14 +112,14 @@
                                             </div>
                                             <div class="col-md-2">
                                                 <div class="form-group">
-                                                    <label>Jumlah Lampiran<span class="text-danger">*</span></label>
-                                                    <input name="jlhlampiran" type="number" class="form-control <?= ($validation->hasError('jlhlampiran')) ? 'is-invalid' : ''; ?>" autocomplete="off" value="<?= old('jlhlampiran'); ?>">
+                                                    <label>Jumlah Lampiran</label>
+                                                    <input name="jlhlampiran" type="text" class="form-control <?= ($validation->hasError('jlhlampiran')) ? 'is-invalid' : ''; ?>" autocomplete="off" value="<?= old('jlhlampiran'); ?>">
                                                     <span class="error invalid-feedback"> <?= $validation->getError('jlhlampiran'); ?></span>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label>Satuan<span class="text-danger">*</span></label>
+                                                    <label>Satuan</label>
                                                     <select name="satuan" class="form-control <?= ($validation->hasError('satuan')) ? 'is-invalid' : ''; ?>">
                                                         <option selected disabled><?= (old('satuan')) ? old('satuan') : ".::Pilih Satuan::." ?></option>
                                                         <option value="Lembar">Lembar</option>

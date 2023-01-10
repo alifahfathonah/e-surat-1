@@ -30,6 +30,8 @@
                         </div>
                         <?php if (session()->get('level') == '1') { ?>
                             <a href="<?= base_url('data-user') ?>" class="small-box-footer">Selengkapnya <i class="fas fa-arrow-circle-right"></i></a>
+                        <?php } else { ?>
+                            <a href="#" class="small-box-footer">Users</a>
                         <?php } ?>
                     </div>
                 </div>
@@ -44,6 +46,8 @@
                         </div>
                         <?php if (session()->get('level') == '1') { ?>
                             <a href="<?= base_url('surat-masuk') ?>" class="small-box-footer">Selengkapnya<i class="fas fa-arrow-circle-right"></i></a>
+                        <?php } else { ?>
+                            <a href="#" class="small-box-footer">Surat Masuk</a>
                         <?php } ?>
                     </div>
                 </div>
@@ -58,6 +62,8 @@
                         </div>
                         <?php if (session()->get('level') == '1') { ?>
                             <a href="<?= base_url('surat-masuk') ?>" class="small-box-footer">Selengkapnya<i class="fas fa-arrow-circle-right"></i></a>
+                        <?php } else { ?>
+                            <a href="#" class="small-box-footer">Surat Masuk</a>
                         <?php } ?>
                     </div>
                 </div>
@@ -72,6 +78,8 @@
                         </div>
                         <?php if (session()->get('level') == '1') { ?>
                             <a href="<?= base_url('surat-masuk') ?>" class="small-box-footer">Selengkapnya<i class="fas fa-arrow-circle-right"></i></a>
+                        <?php } else { ?>
+                            <a href="#" class="small-box-footer">Surat Masuk</a>
                         <?php } ?>
                     </div>
                 </div>
@@ -86,6 +94,8 @@
                         </div>
                         <?php if (session()->get('level') == '1') { ?>
                             <a href="<?= base_url('surat-masuk') ?>" class="small-box-footer">Selengkapnya<i class="fas fa-arrow-circle-right"></i></a>
+                        <?php } else { ?>
+                            <a href="#" class="small-box-footer">Surat Masuk</a>
                         <?php } ?>
                     </div>
                 </div>
@@ -100,6 +110,8 @@
                         </div>
                         <?php if (session()->get('level') == '1') { ?>
                             <a href="<?= base_url('surat-masuk') ?>" class="small-box-footer">Selengkapnya<i class="fas fa-arrow-circle-right"></i></a>
+                        <?php } else { ?>
+                            <a href="#" class="small-box-footer">Surat Masuk</a>
                         <?php } ?>
                     </div>
                 </div>

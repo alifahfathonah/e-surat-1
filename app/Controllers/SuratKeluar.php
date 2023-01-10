@@ -79,18 +79,6 @@ class SuratKeluar extends BaseController
                     'required' => 'Isi surat harus diisi.',
                 ]
             ],
-            'jlhlampiran' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Jumlah Lampiran harus diisi.',
-                ]
-            ],
-            'satuan' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Satuan harus diisi.',
-                ]
-            ],
             'file_lampiran' => [
                 'rules' => 'mime_in[file_lampiran,application/pdf]|max_size[file_lampiran,2000]',
                 'errors' => [
@@ -136,20 +124,16 @@ class SuratKeluar extends BaseController
     public function delete($id)
     {
         // Drop file
-        $data = $this->suratmasukModel->where('id =', $id)->first();
-        $surat = $data['file'];
-        $lampiran = $data['lampiran'];
-        if (file_exists(ROOTPATH . 'public/media/surat-masuk/' . $surat)) {
-            unlink(ROOTPATH . 'public/media/surat-masuk/' . $surat);
-        }
-        if (file_exists(ROOTPATH . 'public/media/lampiran/' . $lampiran)) {
+        $data = $this->suratkeluarModel->where('id =', $id)->first();
+        $lampiran = $data['file_lampiran'];
+        if (file_exists(ROOTPATH . 'public/media/lampiran-surat/' . $lampiran)) {
             if ($lampiran != null) {
-                unlink(ROOTPATH . 'public/media/lampiran/' . $lampiran);
+                unlink(ROOTPATH . 'public/media/lampiran-surat/' . $lampiran);
             }
         }
-        $this->suratmasukModel->delete($id);
+        $this->suratkeluarModel->delete($id);
         session()->setFlashdata('m', 'Data berhasil dihapus');
-        return redirect()->to(base_url('surat-masuk'));
+        return redirect()->to(base_url('surat-keluar'));
     }
 
     public function edit($id)
@@ -158,9 +142,9 @@ class SuratKeluar extends BaseController
         $data = array(
             'titlebar' => 'Surat Masuk',
             'title' => 'Edit Surat Masuk',
-            'isi' => 'master/surat-masuk/edit',
+            'isi' => 'master/surat-keluar/edit',
             'validation' => \Config\Services::validation(),
-            'data' => $this->suratmasukModel->where('id =', $id)->where('id_user =', $ids)->first(),
+            'data' => $this->suratkeluarModel->where('id =', $id)->where('id_user =', $ids)->first(),
         );
         return view('layout/wrapper', $data);
     }
@@ -215,33 +199,33 @@ class SuratKeluar extends BaseController
                 ]
             ],
         ])) {
-            return redirect()->to(base_url('surat-masuk/edit/' . $this->request->getPost('id')))->withInput();
+            return redirect()->to(base_url('surat-keluar/edit/' . $this->request->getPost('id')))->withInput();
         }
         $surat   = $this->request->getFile('file_surat');
         $lampiran   = $this->request->getFile('lampiran');
         if ($surat->getError() == 4) {
-            $r = $this->suratmasukModel->find($id);
+            $r = $this->suratkeluarModel->find($id);
             $fileNamesurat = $r['file'];
         } else {
             $fileNamesurat = $surat->getRandomName();
             //move file
-            $surat->move(ROOTPATH . 'public/media/surat-masuk/', $fileNamesurat);
+            $surat->move(ROOTPATH . 'public/media/surat-keluar/', $fileNamesurat);
             //if file found then replace file
-            $f = $this->suratmasukModel->find($id);
+            $f = $this->suratkeluarModel->find($id);
             $replacesurat = $f['file'];
-            if (file_exists(ROOTPATH . 'public/media/surat-masuk/' . $replacesurat)) {
-                unlink(ROOTPATH . 'public/media/surat-masuk/' . $replacesurat);
+            if (file_exists(ROOTPATH . 'public/media/surat-keluar/' . $replacesurat)) {
+                unlink(ROOTPATH . 'public/media/surat-keluar/' . $replacesurat);
             }
         }
         if ($lampiran->getError() == 4) {
-            $r = $this->suratmasukModel->find($id);
+            $r = $this->suratkeluarModel->find($id);
             $fileNamelampiran = $r['lampiran'];
         } else {
             $fileNamelampiran = $lampiran->getRandomName();
             //move file
             $lampiran->move(ROOTPATH . 'public/media/lampiran/', $fileNamelampiran);
             //if file found then replace file
-            $f = $this->suratmasukModel->find($id);
+            $f = $this->suratkeluarModel->find($id);
             $replacelampiran = $f['lampiran'];
             if (file_exists(ROOTPATH . 'public/media/lampiran/' . $replacelampiran)) {
                 if ($replacelampiran != null) {
@@ -259,9 +243,9 @@ class SuratKeluar extends BaseController
             'file'           => $fileNamesurat,
             'lampiran'       => $fileNamelampiran,
         ];
-        $this->suratmasukModel->save($data);
+        $this->suratkeluarModel->save($data);
         session()->setFlashdata('m', 'Data berhasil diupdate');
-        return redirect()->to(base_url('surat-masuk'));
+        return redirect()->to(base_url('surat-keluar'));
     }
     public function detail($id)
     {
@@ -269,7 +253,7 @@ class SuratKeluar extends BaseController
         $data = array(
             'title' => 'Detail Surat Masuk',
             'data' => $detail,
-            'isi' => 'master/surat-masuk/detail',
+            'isi' => 'master/surat-keluar/detail',
         );
         return view('layout/wrapper', $data);
     }
