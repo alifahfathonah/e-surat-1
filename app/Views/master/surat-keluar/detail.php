@@ -7,7 +7,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="<?= base_url('surat-masuk') ?>">Daftar Surat masuk</a></li>
+                        <li class="breadcrumb-item"><a href="<?= base_url('surat-keluar') ?>">Daftar Surat masuk</a></li>
                         <li class="breadcrumb-item active"><?= $title ?></li>
                     </ol>
                 </div>
@@ -90,23 +90,45 @@
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                        Asal Surat
+                                                        Penandatangan
                                                     </td>
                                                     <td>
                                                         :
                                                     </td>
                                                     <td>
-                                                        <?= $data['asal_surat'] ?>
+                                                        <?= $data['penandatangan'] ?>
+                                                    </td>
+                                                </tr>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Tujuan
+                                                    </td>
+                                                    <td>
+                                                        :
+                                                    </td>
+                                                    <td>
+                                                        <?= $data['tujuan'] ?>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Isi Surat
+                                                    </td>
+                                                    <td>
+                                                        :
+                                                    </td>
+                                                    <td>
+                                                        <p style="text-align:justify;"><?= $data['isi'] ?></p>
                                                     </td>
                                                 </tr>
                                             </table>
                                         </div>
                                     </div>
                                 </div>
-                                <a href="<?= base_url() ?>/media/surat-masuk/<?= $data['file']; ?>" target="blank" class="link-blue text-sm"><i class="fas fa-link mr-1"></i> File Surat</a>
                                 </p>
-                                <?php if ($data['lampiran'] != null) { ?>
-                                    <a href="<?= base_url() ?>/media/lampiran/<?= $data['lampiran']; ?>" target="blank" class="link-blue text-sm"><i class="fas fa-link mr-1"></i> File Lampiran</a>
+                                <?php if ($data['file_lampiran'] != null) { ?>
+                                    <a href="<?= base_url() ?>/media/lampiran-surat/<?= $data['file_lampiran']; ?>" target="blank" class="link-blue text-sm"><i class="fas fa-link mr-1"></i> File Lampiran</a>
                                 <?php } else { ?>
                                     <a href="#" class="link-blue text-sm LampiranError"><i class="fas fa-link mr-1"></i> File Lampiran</a>
                                 <?php } ?>

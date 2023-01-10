@@ -140,8 +140,8 @@ class SuratKeluar extends BaseController
     {
         $ids = session()->get('id');
         $data = array(
-            'titlebar' => 'Surat Masuk',
-            'title' => 'Edit Surat Masuk',
+            'titlebar' => 'Surat Keluar',
+            'title' => 'Edit Surat Keluar',
             'isi' => 'master/surat-keluar/edit',
             'validation' => \Config\Services::validation(),
             'data' => $this->suratkeluarModel->where('id =', $id)->where('id_user =', $ids)->first(),
@@ -241,9 +241,9 @@ class SuratKeluar extends BaseController
     }
     public function detail($id)
     {
-        $detail = $this->userModel->join('mod_surat_masuk', 'mod_surat_masuk.id_user = mod_user.id', 'left')->where('mod_surat_masuk.id =', $id)->first();
+        $detail = $this->userModel->join('mod_surat_keluar', 'mod_surat_keluar.id_user = mod_user.id', 'left')->where('mod_surat_keluar.id =', $id)->first();
         $data = array(
-            'title' => 'Detail Surat Masuk',
+            'title' => 'Detail Surat Keluar',
             'data' => $detail,
             'isi' => 'master/surat-keluar/detail',
         );
