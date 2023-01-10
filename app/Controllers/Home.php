@@ -20,12 +20,16 @@ class Home extends BaseController
     }
     public function index()
     {
+        $pokja = session()->get('pokja');
         $data = array(
             'title'         => 'Dashboard',
             'appname'       => 'Aplikasi Management Surat',
-            'suratmasuk'    => $this->suratmasukModel->countAllResults(),
-            'suratkeluar'   => $this->suratkeluarModel->countAllResults(),
             'users'         => $this->userModel->where('level !=', 1)->countAllResults(),
+            'sekretariat'   => $this->suratmasukModel->where('pokja =', null)->countAllResults(),
+            'pokjaI'        => $this->suratmasukModel->where('pokja =', 'Pokja I')->countAllResults(),
+            'pokjaII'       => $this->suratmasukModel->where('pokja =', 'Pokja II')->countAllResults(),
+            'pokjaIII'      => $this->suratmasukModel->where('pokja =', 'Pokja III')->countAllResults(),
+            'pokjaIV'       => $this->suratmasukModel->where('pokja =', 'Pokja IV')->countAllResults(),
             'isi'           => 'home',
         );
         return view('layout/wrapper', $data);

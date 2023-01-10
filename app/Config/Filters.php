@@ -65,6 +65,8 @@ class Filters extends BaseConfig
                 'home', 'home/*',
                 'surat-masuk',
                 'surat-masuk/*',
+                'tambah-surat-masuk',
+                'tambah-surat-masuk/*',
                 'surat-keluar',
                 'surat-keluar/*',
                 'tambah-surat-keluar',

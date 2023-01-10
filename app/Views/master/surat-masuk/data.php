@@ -51,7 +51,11 @@
                                             <td><?= $r['perihal']; ?></td>
                                             <td>
                                                 <center>
-                                                    <?= $r['pokja']; ?>
+                                                    <?php if ($r['pokja'] != null) { ?>
+                                                        <?= $r['pokja']; ?>
+                                                    <?php } else { ?>
+                                                        Sekretariat
+                                                    <?php } ?>
                                                 </center>
                                             </td>
                                             <td><?= format_tanggal($r['created_at']); ?></td>

@@ -91,7 +91,7 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <?php if (session()->get('level') == '3') { ?>
+                            <?php if (session()->get('level') == '3'  or session()->get('level') == '2') { ?>
                                 <a href="<?= base_url('tambah-surat-masuk') ?>" class="nav-link <?= ($request->uri->getSegment(1) == 'tambah-surat-masuk') ? 'active' : ""; ?>">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Tambah Surat Masuk</p>
@@ -101,7 +101,7 @@
                                     <p>Daftar Surat Masuk</p>
                                 </a>
                             <?php } ?>
-                            <?php if (session()->get('level') == '1' or session()->get('level') == '2') { ?>
+                            <?php if (session()->get('level') == '1') { ?>
                                 <a href="<?= base_url('surat-masuk') ?>" class="nav-link <?= ($request->uri->getSegment(1) == 'surat-masuk') ? 'active' : ""; ?>">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Daftar Surat Masuk</p>

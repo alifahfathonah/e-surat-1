@@ -35,6 +35,8 @@
     <!-- Toastr -->
     <link rel="stylesheet" href="<?= base_url(); ?>/template/admin/plugins/toastr/toastr.min.css">
     <link rel="icon" href="<?= base_url(); ?>/media/logo/logo.png" type="image/x-icon" />
+    <!-- BS Stepper -->
+    <link rel="stylesheet" href="<?= base_url(); ?>/template/admin/plugins/bs-stepper/css/bs-stepper.min.css">
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">

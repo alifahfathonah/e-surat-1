@@ -46,7 +46,21 @@
 <script src="<?= base_url(); ?>/template/admin/plugins/sweetalert2/script.js"></script>
 <!-- Toastr -->
 <script src="<?= base_url(); ?>/template/admin/plugins/toastr/toastr.min.js"></script>
+<!-- BS-Stepper -->
+<script src="<?= base_url(); ?>/template/admin/plugins/bs-stepper/js/bs-stepper.min.js"></script>
+<!-- CK Editor -->
+<script src="https://cdn.ckeditor.com/ckeditor5/35.4.0/classic/ckeditor.js"></script>
 <!-- Page specific script -->
+<script>
+    ClassicEditor
+        .create(document.querySelector('#editor'))
+        .then(editor => {
+            console.log(editor);
+        })
+        .catch(error => {
+            console.error(error);
+        });
+</script>
 <script>
     window.onload = function() {
         jam();
@@ -102,4 +116,8 @@
             img.src = e.target.result;
         }
     }
+    // BS-Stepper Init
+    document.addEventListener('DOMContentLoaded', function() {
+        window.stepper = new Stepper(document.querySelector('.bs-stepper'))
+    })
 </script>

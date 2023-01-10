@@ -19,8 +19,8 @@
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-4 col-6">
-                    <div class="small-box bg-info">
+                <div class="col-md-2">
+                    <div class="small-box bg-secondary">
                         <div class="inner">
                             <h3><?= $users ?></h3>
                             <p>Account Users</p>
@@ -33,11 +33,11 @@
                         <?php } ?>
                     </div>
                 </div>
-                <div class="col-lg-4 col-6">
-                    <div class="small-box bg-success">
+                <div class="col-md-2">
+                    <div class="small-box bg-fuchsia">
                         <div class="inner">
-                            <h3><?= $suratmasuk ?></h3>
-                            <p>Total Surat Masuk</p>
+                            <h3><?= $sekretariat ?></h3>
+                            <p>Sekretariat</p>
                         </div>
                         <div class="icon">
                             <i class="ionicons ion-email-unread"></i>
@@ -47,17 +47,59 @@
                         <?php } ?>
                     </div>
                 </div>
-                <div class="col-lg-4 col-6">
+                <div class="col-md-2">
                     <div class="small-box bg-warning">
                         <div class="inner">
-                            <h3><?= $suratkeluar ?></h3>
-                            <p>Total Surat Keluar</p>
+                            <h3><?= $pokjaI ?></h3>
+                            <p>POKJA I</p>
                         </div>
                         <div class="icon">
-                            <i class="ionicons ion-android-drafts"></i>
+                            <i class="ionicons ion-email-unread"></i>
                         </div>
                         <?php if (session()->get('level') == '1') { ?>
-                            <a href="<?= base_url('surat-keluar') ?>" class="small-box-footer">Selengkapnya<i class="fas fa-arrow-circle-right"></i></a>
+                            <a href="<?= base_url('surat-masuk') ?>" class="small-box-footer">Selengkapnya<i class="fas fa-arrow-circle-right"></i></a>
+                        <?php } ?>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            <h3><?= $pokjaII ?></h3>
+                            <p>POKJA II</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ionicons ion-email-unread"></i>
+                        </div>
+                        <?php if (session()->get('level') == '1') { ?>
+                            <a href="<?= base_url('surat-masuk') ?>" class="small-box-footer">Selengkapnya<i class="fas fa-arrow-circle-right"></i></a>
+                        <?php } ?>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="small-box bg-orange">
+                        <div class="inner">
+                            <h3><?= $pokjaIII ?></h3>
+                            <p>POKJA III</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ionicons ion-email-unread"></i>
+                        </div>
+                        <?php if (session()->get('level') == '1') { ?>
+                            <a href="<?= base_url('surat-masuk') ?>" class="small-box-footer">Selengkapnya<i class="fas fa-arrow-circle-right"></i></a>
+                        <?php } ?>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="small-box bg-purple">
+                        <div class="inner">
+                            <h3><?= $pokjaIV ?></h3>
+                            <p>POKJA IV</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ionicons ion-email-unread"></i>
+                        </div>
+                        <?php if (session()->get('level') == '1') { ?>
+                            <a href="<?= base_url('surat-masuk') ?>" class="small-box-footer">Selengkapnya<i class="fas fa-arrow-circle-right"></i></a>
                         <?php } ?>
                     </div>
                 </div>
