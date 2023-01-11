@@ -28,11 +28,9 @@
                                     <tr>
                                         <th style="width: 5%">No</th>
                                         <th style="width: 15%">Nomor Surat</th>
+                                        <th style="width: 10%">Sifat</th>
                                         <th style="width: 30%">Perihal</th>
                                         <th style="width: 20%">Tujuan</th>
-                                        <th style="width: 10%">
-                                            <center>Post by</center>
-                                        </th>
                                         <th style="width: 10%">
                                             <center>Created</center>
                                         </th>
@@ -47,13 +45,9 @@
                                         <tr>
                                             <td><?= $i++; ?></td>
                                             <td><?= $r['no_surat']; ?></td>
+                                            <td><?= $r['sifat_surat']; ?></td>
                                             <td><?= $r['perihal']; ?></td>
                                             <td><?= $r['tujuan']; ?></td>
-                                            <td>
-                                                <center>
-                                                    <?= $r['pokja']; ?>
-                                                </center>
-                                            </td>
                                             <td><?= format_tanggal($r['created_at']); ?></td>
                                             <td>
                                                 <center>
@@ -63,7 +57,7 @@
                                                         </button>
                                                         <div class="dropdown-menu" role="menu">
                                                             <a class="dropdown-item" href="<?= base_url('surat-keluar/detail/' . $r['id']) ?>">Detail</a>
-                                                            <a class="dropdown-item" href="<?= base_url('surat-keluar/print/' . $r['id']) ?>">Print</a>
+                                                            <a class="dropdown-item" href="<?= base_url('surat-keluar/print/' . $r['id']) ?>" target="_blank">Print</a>
                                                             <?php if (session()->get('level') == '3' && $r['pokja'] == (session()->get('pokja'))) { ?>
                                                                 <a class="dropdown-item" href="<?= base_url('surat-keluar/edit/' . $r['id']) ?>">Edit</a>
                                                                 <a class="dropdown-item" href="#" data-toggle='modal' data-target='#activateModalDeleteSk<?= $r['id'] ?>'>Delete</a>

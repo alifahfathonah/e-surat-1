@@ -63,6 +63,7 @@ $routes->delete('surat-keluar/(:num)', 'SuratKeluar::delete/$1');
 $routes->get('surat-keluar/edit/(:segment)', 'SuratKeluar::edit/$1');
 $routes->add('surat-keluar/update/(:segment)', 'SuratKeluar::update/$1');
 $routes->add('surat-keluar/detail/(:segment)', 'SuratKeluar::detail/$1');
+$routes->get('surat-keluar/print/(:segment)', 'SuratKeluar::print/$1');
 //Routes My Profil
 $routes->get('my-profil', 'MyProfil::myprofil');
 $routes->get('my-profil/edit/(:segment)', 'MyProfil::edit/$1');

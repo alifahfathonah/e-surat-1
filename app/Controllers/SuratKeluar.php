@@ -5,8 +5,10 @@ namespace App\Controllers;
 use App\Models\SuratKeluarModel;
 use App\Models\UserModel;
 use App\Controllers\BaseController;
+use TCPDF;
 use CodeIgniter\Config\Config;
 use CodeIgniter\HTTP\RequestInterface;
+use PhpOffice\PhpSpreadsheet\Writer\Pdf\Tcpdf as PdfTcpdf;
 
 class SuratKeluar extends BaseController
 {
@@ -19,7 +21,8 @@ class SuratKeluar extends BaseController
     }
     public function data()
     {
-        $surat = $this->suratkeluarModel->findAll();
+        $ids = session()->get('id');
+        $surat = $this->suratkeluarModel->where('id_user =', $ids)->findAll();
         $data = array(
             'title' => 'Surat Keluar',
             'data' => $surat,
@@ -248,5 +251,31 @@ class SuratKeluar extends BaseController
             'isi' => 'master/surat-keluar/detail',
         );
         return view('layout/wrapper', $data);
+    }
+    public function print($id)
+    {
+        $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+
+        //initialize document
+        $pdf->SetPrintHeader(false);
+        $pdf->SetPrintFooter(false);
+        $pdf->SetMargins(20, 15, 20, true);
+        $pdf->SetAutoPageBreak(TRUE, 2);
+        $pdf->AddPage("P", "A4");
+        $pdf->SetFont("helvetica", "", 12);
+        $this->response->setContentType('application/pdf');
+
+        $html = '<table width="100%" border="0" cellpadding="0">
+                    <tr>
+                    <td width="52%">&nbsp;</td>
+                    <td width="6.6%">&nbsp;</td>
+                    <td width="42%">&nbsp;</td>
+                    </tr>
+                       </table>';
+
+        $pdf->writeHTML($html, true, false, true, false);
+
+        $filename = "surat_keluar/" . $id . ".pdf";
+        $pdf->Output($filename, 'I');
     }
 }
