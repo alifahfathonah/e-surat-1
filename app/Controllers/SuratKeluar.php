@@ -254,8 +254,10 @@ class SuratKeluar extends BaseController
     }
     public function print($id)
     {
-        $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+        $q = $this->suratkeluarModel->where('id =', $id)->first();
+        $sifat = $q['sifat_surat'];
 
+        $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
         //initialize document
         $pdf->SetPrintHeader(false);
         $pdf->SetPrintFooter(false);
@@ -265,16 +267,16 @@ class SuratKeluar extends BaseController
         $pdf->SetFont("helvetica", "", 12);
         $this->response->setContentType('application/pdf');
 
-        $html = '<table width="100%" border="0" cellpadding="0">
-                    <tr>
-                    <td width="52%">&nbsp;</td>
-                    <td width="6.6%">&nbsp;</td>
-                    <td width="42%">&nbsp;</td>
-                    </tr>
-                       </table>';
+        $html = '<table width="100%" border="0" cellpadding="1">
+        <tr>
+        <td align="center"><img src=' . base_url("media/logo/logo.png") . '></td>
+        </tr>
+        <tr>
+        <td><div align="center"><font><b>' . $sifat . '</b></font></div></td>
+        </tr>
+        </table>';
 
-        $pdf->writeHTML($html, true, false, true, false);
-
+        $pdf->writeHTML($html, true, false, true, false, '');
         $filename = "surat_keluar/" . $id . ".pdf";
         $pdf->Output($filename, 'I');
     }
