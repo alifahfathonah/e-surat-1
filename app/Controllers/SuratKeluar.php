@@ -252,10 +252,37 @@ class SuratKeluar extends BaseController
         );
         return view('layout/wrapper', $data);
     }
+    // public function print($id)
+    // {
+    //     $mpdf = new \Mpdf\Mpdf();
+    //     $html = '<table width="100%" border="0" cellpadding="1">
+    //     <tr>
+    //     <td align="center"><img src="' . ROOTPATH . 'public/media/logo/logopkk.png"></td>
+    //     </tr>
+    //     <tr>
+    //     <td><div align="center"><font><b>Test</b></font></div></td>
+    //     </tr>
+    //     </table>';
+    //     // $html = ROOTPATH . 'public/media/logo/logopkk.png';
+    //     $mpdf->SetHeader('Document Title|Center Text|{PAGENO}');
+    //     $mpdf->SetFooter('Document Title');
+    //     $this->response->setContentType('application/pdf');
+    //     $mpdf->WriteHTML($html);
+    //     return redirect()->to($mpdf->Output('Filename.pdf', 'I'));
+    //     // $mpdf->Output();
+    // }
     public function print($id)
     {
         $q = $this->suratkeluarModel->where('id =', $id)->first();
+        $no_surat = $q['no_surat'];
         $sifat = $q['sifat_surat'];
+        $jlh_lampiran = $q['jlh_lampiran'];
+        $satuan = $q['satuan'];
+        $perihal = $q['perihal'];
+        $isi = $q['isi'];
+        $tujuan = $q['tujuan'];
+        $tgl = $q['created_at'];
+        $penandatangan = $q['penandatangan'];
 
         $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
         //initialize document
@@ -267,17 +294,152 @@ class SuratKeluar extends BaseController
         $pdf->SetFont("helvetica", "", 12);
         $this->response->setContentType('application/pdf');
 
+
         $html = '<table width="100%" border="0" cellpadding="1">
         <tr>
-        <td align="center"><img src=' . base_url("media/logo/logo.png") . '></td>
+        <td width="20%" rowspan="5" align="center"><img src="' . ROOTPATH . 'public/media/logo/logopkk.png" width="80" height="80"></td>
+        <td width="80%" align="center"><font size="+2"><b>PEMBERDAYAAN DAN KESEJAHTERAAN KELUARGA</b></font></td>
         </tr>
         <tr>
-        <td><div align="center"><font><b>' . $sifat . '</b></font></div></td>
+        <td align="center"><font size="+4"><b>-PKK-</b></font></td>
+        </tr>
+        <tr>
+        <td align="center"><font size="+2"><b>DESA MANGKAI BARU</b></font></td>
+        </tr>
+        <tr>
+        <td align="center"><font size="+2"><b>KECAMATAN LIMA PULUH</b></font></td>
+        </tr>
+        <tr>
+        <td align="center"><font size="-3">Jalan Besar Dusun V Desa Mangkai Baru Kode Pos 21255</font></td>
+        </tr>
+        <tr>
+        <td colspan="2"><hr height="2px"></td>
+        </tr>
+        </table>';
+
+        $html .= '<table width="100%" border="0" cellpadding="0">
+        <tr>
+        <td width="45%">&nbsp;</td>
+        <td width="10%">&nbsp;</td>
+        <td width="45%">&nbsp;</td>
+        </tr>
+        <tr>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>Mangkai Baru, ' . format_tgl_surat($tgl) . ' </td>
+        </tr>
+        <br>
+        
+        <tr>
+        <td valign="top">
+        <table width="100%" border="0" cellpadding="0">
+        <tr>
+        <td width="25%">Nomor</td>
+        <td width="5%">:</td>
+        <td width="70%"><font size="-1">' . $no_surat . '</font></td>
+        </tr>
+        <tr>
+        <td>Sifat</td>
+        <td>:</td>
+        <td>' . $sifat . '</td>
+        </tr>
+        <tr>
+        <td>Lampiran</td>
+        <td>:</td>
+        <td>' . $jlh_lampiran . ' ' . $satuan . ' </td>
+        </tr>
+        <tr>
+        <td>Perihal</td>
+        <td>:</td>
+        <td><b>' . $perihal . '</b></td>
+        </tr>
+        </table>
+        </td>
+
+        <td valign="top" colspan="2">
+        <table width="100%" border="0" cellpadding="1">
+        <tr>
+        <td width="16%">&nbsp;</td>
+        <td colspan="2" width="84%">Kepada yth :</td>
+        </tr>
+        <tr>
+        <td width="16%" align="right">&nbsp;</td>
+        <td width="84%" colspan="2" valign="top"><font size="-1">Ketua ' . $tujuan . '</font></td>
+        </tr>
+        <tr>
+        <td>&nbsp;</td>
+        <td width="5%">&nbsp;</td>
+        <td colspan="2">di -</td>
+        </tr>
+        <tr>
+        <td>&nbsp;</td>
+        <td width="14%">&nbsp;</td>
+        <td width="68%"><font size="-1"><b>Tempat</b></font></td>
+        </tr>
+        </table>
+        </td>
+        </tr>
+        </table>';
+
+        $html .= '
+        <table width="100%" border="0" cellpadding="2">
+        <tr>
+        <td width="8%"></td>
+        <td width="92%"></td>
+        </tr>
+        <tr>
+        <td>&nbsp;</td>
+        <td>' . $isi . '</td>
+        </tr>
+        <tr>
+        <td></td>
+        <td></td>
+        </tr>
+        </table>';
+
+        $html .= '<table width="100%" border="0" cellpadding="2">
+        <tr>
+        <td width="50%">&nbsp;</td>
+        <td width="10%">&nbsp;</td>
+        <td width="40%">&nbsp;</td>
+        </tr>
+        <tr>
+        <td width="6%">&nbsp;</td>
+        <td colspan="2" width="44%" valign="top">
+        </td>
+        <td valign="top" width="50%" >
+        <table width="100%" border="0" cellpadding="0">
+        
+        <tr>
+        <td width="22%">&nbsp;</td>
+        <td width="78%" align="left"><b>KETUA PKK</b></td>
+        </tr>
+        
+        <tr>
+        <td align="center"></td>
+        </tr>
+        <tr>
+        <td align="center"></td>
+        </tr>
+        <tr>
+        <td align="center"></td>
+        </tr>
+        <tr>
+        <td align="center"></td>
+        </tr>
+        
+        <tr>
+        <td width="22%">&nbsp;</td>
+        <td width="78%" align="left"><u><font size="-1"><b>' . $penandatangan . '</b></font></u></td>
+        </tr>
+        
+        </table>
+        </td>
         </tr>
         </table>';
 
         $pdf->writeHTML($html, true, false, true, false, '');
-        $filename = "surat_keluar/" . $id . ".pdf";
+        $filename = "surat_keluar/" . $no_surat . ".pdf";
         $pdf->Output($filename, 'I');
     }
 }

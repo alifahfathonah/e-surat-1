@@ -151,7 +151,10 @@
                                                     <label>Tujuan<span class="text-danger">*</span></label>
                                                     <select name="tujuan" class="form-control <?= ($validation->hasError('tujuan')) ? 'is-invalid' : ''; ?>">
                                                         <option value="<?= $data['tujuan'] ?>"><?= (old('tujuan')) ? old('tujuan') : $data['tujuan'] ?></option>
-                                                        <option value="Dinas Komunikasi dan Informartika">Dinas Komunikasi dan Informartika</option>
+                                                        <option value="Pokja I/Anggota">Pokja I/Anggota</option>
+                                                        <option value="Pokja II/Anggota">Pokja II/Anggota</option>
+                                                        <option value="Pokja III/Anggota">Pokja III/Anggota</option>
+                                                        <option value="Pokja IV/Anggota">Pokja IV/Anggota</option>
                                                     </select>
                                                     <span class="error invalid-feedback"> <?= $validation->getError('tujuan'); ?></span>
                                                 </div>

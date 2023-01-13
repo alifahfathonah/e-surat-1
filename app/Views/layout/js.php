@@ -49,17 +49,10 @@
 <!-- BS-Stepper -->
 <script src="<?= base_url(); ?>/template/admin/plugins/bs-stepper/js/bs-stepper.min.js"></script>
 <!-- CK Editor -->
-<script src="https://cdn.ckeditor.com/ckeditor5/35.4.0/classic/ckeditor.js"></script>
+<script src="https://cdn.ckeditor.com/4.20.1/full/ckeditor.js"></script>
 <!-- Page specific script -->
 <script>
-    ClassicEditor
-        .create(document.querySelector('#editor'))
-        .then(editor => {
-            console.log(editor);
-        })
-        .catch(error => {
-            console.error(error);
-        });
+    CKEDITOR.replace('editor');
 </script>
 <script>
     window.onload = function() {
