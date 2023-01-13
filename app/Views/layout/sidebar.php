@@ -66,15 +66,31 @@
                         <a href="#" class="nav-link <?= ($request->uri->getSegment(1) == 'data-user') ? 'active' : ""; ?>">
                             <i class="nav-icon fas fa-copy"></i>
                             <p>
-                                Master Data
+                                Master
                                 <i class="fas fa-angle-left right"></i>
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
+                                <a href="<?= base_url('setting-profil') ?>" class="nav-link <?= ($request->uri->getSegment(1) == 'setting-profil') ? 'active' : ""; ?>">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Profil</p>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
                                 <a href="<?= base_url('data-user') ?>" class="nav-link <?= ($request->uri->getSegment(1) == 'data-user') ? 'active' : ""; ?>">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Data User</p>
+                                    <p>User</p>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="<?= base_url('penandatangan') ?>" class="nav-link <?= ($request->uri->getSegment(1) == 'penandatangan') ? 'active' : ""; ?>">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Penandatangan</p>
                                 </a>
                             </li>
                         </ul>
@@ -131,7 +147,7 @@
                                 </a>
                             <?php } ?>
                             <?php if (session()->get('level') == '1') { ?>
-                                <a href="<?= base_url('surat-keluar') ?>" class="nav-link <?= ($request->uri->getSegment(1) == 'surat-keluar') ? 'active' : ""; ?>">
+                                <a href="<?= base_url('data-surat-keluar') ?>" class="nav-link <?= ($request->uri->getSegment(1) == 'data-surat-keluar') ? 'active' : ""; ?>">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Daftar Surat Keluar</p>
                                 </a>

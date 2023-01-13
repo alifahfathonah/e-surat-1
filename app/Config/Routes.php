@@ -47,6 +47,13 @@ $routes->post('data-user/save', 'User::save');
 $routes->delete('data-user/(:num)', 'User::delete/$1');
 $routes->get('data-user/edit/(:segment)', 'User::edit/$1');
 $routes->add('data-user/update/(:segment)', 'User::update/$1');
+//Routes Penandatangan
+$routes->get('penandatangan', 'Penandatangan::data');
+$routes->get('penandatangan/add', 'Penandatangan::add');
+$routes->post('penandatangan/save', 'Penandatangan::save');
+$routes->delete('penandatangan/(:num)', 'Penandatangan::delete/$1');
+$routes->get('penandatangan/edit/(:segment)', 'Penandatangan::edit/$1');
+$routes->add('penandatangan/update/(:segment)', 'Penandatangan::update/$1');
 //Routes Surat Masuk
 $routes->get('tambah-surat-masuk', 'SuratMasuk::add');
 $routes->post('tambah-surat-masuk/save', 'SuratMasuk::save');
@@ -59,6 +66,7 @@ $routes->add('surat-masuk/detail/(:segment)', 'SuratMasuk::detail/$1');
 $routes->get('tambah-surat-keluar', 'SuratKeluar::add');
 $routes->post('tambah-surat-keluar/save', 'SuratKeluar::save');
 $routes->get('surat-keluar', 'SuratKeluar::data');
+$routes->get('data-surat-keluar', 'SuratKeluar::datasurat');
 $routes->delete('surat-keluar/(:num)', 'SuratKeluar::delete/$1');
 $routes->get('surat-keluar/edit/(:segment)', 'SuratKeluar::edit/$1');
 $routes->add('surat-keluar/update/(:segment)', 'SuratKeluar::update/$1');
@@ -68,6 +76,10 @@ $routes->get('surat-keluar/print/(:segment)', 'SuratKeluar::print/$1');
 $routes->get('my-profil', 'MyProfil::myprofil');
 $routes->get('my-profil/edit/(:segment)', 'MyProfil::edit/$1');
 $routes->add('my-profil/update/(:segment)', 'MyProfil::update/$1');
+//Routes Setting Profil
+$routes->get('setting-profil', 'SettingProfil::data');
+$routes->get('setting-profil/edit/(:segment)', 'SettingProfil::edit/$1');
+$routes->add('setting-profil/update/(:segment)', 'SettingProfil::update/$1');
 /*
  * --------------------------------------------------------------------
  * Additional Routing

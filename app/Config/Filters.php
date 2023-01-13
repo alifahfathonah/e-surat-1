@@ -58,8 +58,13 @@ class Filters extends BaseConfig
                 'surat-masuk/*',
                 'surat-keluar',
                 'surat-keluar/*',
+                'data-surat-keluar',
                 'my-profil',
                 'my-profil/*',
+                'penandatangan',
+                'penandatangan/*',
+                'setting-profil',
+                'setting-profil/*',
             ]],
             'filtersek' => ['except' => [
                 'home', 'home/*',

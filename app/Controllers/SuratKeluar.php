@@ -31,6 +31,17 @@ class SuratKeluar extends BaseController
 
         return view('layout/wrapper', $data);
     }
+    public function datasurat()
+    {
+        $surat = $this->suratkeluarModel->findAll();
+        $data = array(
+            'title' => 'Surat Keluar',
+            'data' => $surat,
+            'isi' => 'master/surat-keluar/datasurat'
+        );
+
+        return view('layout/wrapper', $data);
+    }
     public function add()
     {
         $data = array(
