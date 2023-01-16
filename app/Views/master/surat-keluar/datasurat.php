@@ -63,6 +63,10 @@
                                                         <div class="dropdown-menu" role="menu">
                                                             <a class="dropdown-item" href="<?= base_url('surat-keluar/detail/' . $r['id']) ?>">Detail</a>
                                                             <a class="dropdown-item" href="<?= base_url('surat-keluar/print/' . $r['id']) ?>" target="_blank">Print</a>
+                                                            <?php if (session()->get('level') == '2' && $r['pokja'] == (session()->get('pokja'))) { ?>
+                                                                <a class="dropdown-item" href="<?= base_url('surat-keluar/edit/' . $r['id']) ?>">Edit</a>
+                                                                <a class="dropdown-item" href="#" data-toggle='modal' data-target='#activateModalDeleteSk<?= $r['id'] ?>'>Delete</a>
+                                                            <?php } ?>
                                                         </div>
                                                     </div>
                                                 </center>

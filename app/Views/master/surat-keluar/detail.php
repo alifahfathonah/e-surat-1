@@ -7,7 +7,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <?php if (session()->get('level') == '1') { ?>
+                        <?php if (session()->get('level') == '1' or session()->get('level') == '2') { ?>
                             <li class="breadcrumb-item"><a href="<?= base_url('data-surat-keluar') ?>">Daftar Surat Keluar</a></li>
                         <?php } else { ?>
                             <li class="breadcrumb-item"><a href="<?= base_url('surat-keluar') ?>">Daftar Surat Keluar</a></li>

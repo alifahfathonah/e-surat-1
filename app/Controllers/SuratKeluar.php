@@ -140,7 +140,11 @@ class SuratKeluar extends BaseController
         ];
         $this->suratkeluarModel->save($data);
         session()->setFlashdata('m', 'Data berhasil disimpan');
-        return redirect()->to(base_url('surat-keluar'));
+        if (session()->get('level') == '2') {
+            return redirect()->to(base_url('data-surat-keluar'));
+        } else {
+            return redirect()->to(base_url('surat-keluar'));
+        }
     }
 
     public function delete($id)
@@ -261,7 +265,12 @@ class SuratKeluar extends BaseController
         ];
         $this->suratkeluarModel->save($data);
         session()->setFlashdata('m', 'Data berhasil diupdate');
-        return redirect()->to(base_url('surat-keluar'));
+        session()->setFlashdata('m', 'Data berhasil disimpan');
+        if (session()->get('level') == '2') {
+            return redirect()->to(base_url('data-surat-keluar'));
+        } else {
+            return redirect()->to(base_url('surat-keluar'));
+        }
     }
     public function detail($id)
     {
