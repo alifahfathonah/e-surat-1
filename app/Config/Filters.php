@@ -74,6 +74,7 @@ class Filters extends BaseConfig
                 'tambah-surat-masuk/*',
                 'surat-keluar',
                 'surat-keluar/*',
+                'data-surat-keluar',
                 'tambah-surat-keluar',
                 'tambah-surat-keluar/*',
                 'my-profil',

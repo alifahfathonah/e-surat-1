@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\SuratKeluarModel;
 use App\Models\UserModel;
 use App\Models\PenandatanganModel;
+use App\Models\SettingModel;
 use App\Controllers\BaseController;
 use TCPDF;
 use CodeIgniter\Config\Config;
@@ -16,11 +17,13 @@ class SuratKeluar extends BaseController
     protected $suratkeluarModel;
     protected $userModel;
     protected $penandatanganModel;
+    protected $settingModel;
     public function __construct()
     {
         $this->suratkeluarModel = new SuratKeluarModel();
         $this->userModel = new UserModel();
         $this->penandatanganModel = new PenandatanganModel();
+        $this->settingModel = new SettingModel();
     }
     public function data()
     {
@@ -291,6 +294,7 @@ class SuratKeluar extends BaseController
     // }
     public function print($id)
     {
+        //fetch ttd
         $q = $this->penandatanganModel->join('mod_surat_keluar', 'mod_surat_keluar.penandatangan = mod_penandatangan.id', 'left')->where('mod_surat_keluar.id =', $id)->first();
         $penandatangan = $q['nama'];
         $jabatan = $q['jabatan'];
@@ -300,7 +304,15 @@ class SuratKeluar extends BaseController
         } else {
             $scan_ttd = '<img src="' . ROOTPATH . 'public/media/ttd/' . $q['ttd'] . '" width="50" height="50"><br><small style="color:#aaa;">Ditandatangani secara elektronik</small>';
         }
-        // dd($q);
+        //fetch header
+        $setting = $this->settingModel->findAll();
+        foreach ($setting as $s) :
+            $desa = $s['nama_desa'];
+            $kecamatan = $s['nama_kecamatan'];
+            $alamat = $s['alamat'];
+            $kodepos = $s['kode_pos'];
+        endforeach;
+        //fetch surat
         $q = $this->suratkeluarModel->where('id =', $id)->first();
         $no_surat = $q['no_surat'];
         $sifat = $q['sifat_surat'];
@@ -331,13 +343,13 @@ class SuratKeluar extends BaseController
         <td align="center"><font size="+4"><b>-PKK-</b></font></td>
         </tr>
         <tr>
-        <td align="center"><font size="+2"><b>DESA MANGKAI BARU</b></font></td>
+        <td align="center"><font size="+2"><b>' . $desa . '</b></font></td>
         </tr>
         <tr>
-        <td align="center"><font size="+2"><b>KECAMATAN LIMA PULUH</b></font></td>
+        <td align="center"><font size="+2"><b>KECAMATAN ' . $kecamatan . '</b></font></td>
         </tr>
         <tr>
-        <td align="center"><font size="-3">Jalan Besar Dusun V Desa Mangkai Baru Kode Pos 21255</font></td>
+        <td align="center"><font size="-3">' . $alamat . ' Kode Pos ' . $kodepos . '</font></td>
         </tr>
         <tr>
         <td colspan="2"><hr height="2px"></td>

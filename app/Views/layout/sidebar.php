@@ -133,12 +133,14 @@
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Tambah Surat Keluar</p>
                                 </a>
-                                <a href="<?= base_url('surat-keluar') ?>" class="nav-link <?= ($request->uri->getSegment(1) == 'surat-keluar') ? 'active' : ""; ?>">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Daftar Surat Keluar</p>
-                                </a>
+                                <?php if (session()->get('level') == '3') { ?>
+                                    <a href="<?= base_url('surat-keluar') ?>" class="nav-link <?= ($request->uri->getSegment(1) == 'surat-keluar') ? 'active' : ""; ?>">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Daftar Surat Keluar</p>
+                                    </a>
+                                <?php } ?>
                             <?php } ?>
-                            <?php if (session()->get('level') == '1') { ?>
+                            <?php if (session()->get('level') == '1' or session()->get('level') == '2') { ?>
                                 <a href="<?= base_url('data-surat-keluar') ?>" class="nav-link <?= ($request->uri->getSegment(1) == 'data-surat-keluar') ? 'active' : ""; ?>">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Daftar Surat Keluar</p>

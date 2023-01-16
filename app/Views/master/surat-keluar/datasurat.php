@@ -22,12 +22,15 @@
                                         <th style="width: 5%">No</th>
                                         <th style="width: 15%">Nomor Surat</th>
                                         <th style="width: 10%">Sifat</th>
-                                        <th style="width: 30%">Perihal</th>
-                                        <th style="width: 20%">Tujuan</th>
+                                        <th style="width: 40%">Perihal</th>
+                                        <th style="width: 12%">Tujuan</th>
+                                        <th style="width: 8%">
+                                            <center>Post by</center>
+                                        </th>
                                         <th style="width: 10%">
                                             <center>Created</center>
                                         </th>
-                                        <th style="width: 15%">
+                                        <th style="width: 5%">
                                             <center>Aksi</center>
                                         </th>
                                     </tr>
@@ -41,6 +44,15 @@
                                             <td><?= $r['sifat_surat']; ?></td>
                                             <td><?= $r['perihal']; ?></td>
                                             <td><?= $r['tujuan']; ?></td>
+                                            <td>
+                                                <center>
+                                                    <?php if ($r['pokja'] != null) { ?>
+                                                        <?= $r['pokja']; ?>
+                                                    <?php } else { ?>
+                                                        Sekretariat
+                                                    <?php } ?>
+                                                </center>
+                                            </td>
                                             <td><?= format_tanggal($r['created_at']); ?></td>
                                             <td>
                                                 <center>
