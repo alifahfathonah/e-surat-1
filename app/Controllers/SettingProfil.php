@@ -9,134 +9,121 @@ use CodeIgniter\HTTP\RequestInterface;
 
 class SettingProfil extends BaseController
 {
-    protected $userModel;
-    protected $suratmasukModel;
-    protected $suratkeluarModel;
+    protected $settingModel;
     public function __construct()
     {
-        $this->userModel = new UserModel();
-        $this->suratmasukModel = new SuratMasukModel();
-        $this->suratkeluarModel = new SuratKeluarModel();
+        $this->settingModel = new SettingModel();
     }
-    public function myprofil()
+    public function add()
     {
-        $ids = session()->get('id');
-        $profil = $this->userModel->where('id =', $ids)->first();
         $data = array(
-            'titlebar' => 'Profil Saya',
-            'title' => 'Profil Saya',
-            'suratmasuk'    => $this->suratmasukModel->where('id_user =', $ids)->countAllResults(),
-            'suratkeluar'   => $this->suratkeluarModel->where('id_user =', $ids)->countAllResults(),
-            'suratmasukall'    => $this->suratmasukModel->countAllResults(),
-            'suratkeluarall'   => $this->suratkeluarModel->countAllResults(),
-            'suratkeluar_s'   => $this->suratkeluarModel->where('id_user =', $ids)->countAllResults(),
-            'data' => $profil,
-            'isi' => 'master/myprofil/data',
+            'titlebar' => 'Profil Desa',
+            'title' => 'Tambah Profil Desa',
+            'isi' => 'master/setting-profil/add',
+            'validation' => \Config\Services::validation()
         );
         return view('layout/wrapper', $data);
     }
+    public function save()
+    {
+        if (!$this->validate([
+            'nmdesa' => [
+                'rules' => 'required|alpha_space',
+                'errors' => [
+                    'required' => 'Nama Desa tidak boleh kosong.',
+                    'alpha_space' => 'Nama Desa harus huruf dan spasi.'
+                ]
+            ],
+            'nmkecamatan' => [
+                'rules' => 'required|alpha_space',
+                'errors' => [
+                    'required' => 'Nama Kecamatan tidak boleh kosong.',
+                    'alpha_space' => 'Nama Kecamatan harus huruf dan spasi.'
+                ]
+            ],
+            'alamat' => [
+                'rules' => 'required|alpha_numeric_punct',
+                'errors' => [
+                    'required' => 'Alamat harus diisi.',
+                    'alpha_numeric_punct' => 'Alamat berisi karakter yang tidak didukung.'
+                ]
+            ],
+            'kdpos' => [
+                'rules' => 'required|numeric|max_length[5]',
+                'errors' => [
+                    'required' => 'Kode Pos harus diisi.',
+                    'max_length' => 'Kode Pos maksimal 5 digit.',
+                    'numeric' => 'Kode Pos harus angka.',
+                ]
+            ]
+        ])) {
+            return redirect()->to('add')->withInput();
+        }
+        $data = [
+            'nama_desa'      => $this->request->getPost('nmdesa'),
+            'nama_kecamatan' => $this->request->getPost('nmkecamatan'),
+            'alamat'         => $this->request->getPost('alamat'),
+            'kode_pos'       => $this->request->getPost('kdpos'),
+        ];
+        $this->settingModel->save($data);
+        session()->setFlashdata('m', 'Data berhasil diupdate');
+        return redirect()->to(base_url('my-profil'));
+    }
     public function edit($id)
     {
-        $ids = session()->get('id');
         $data = array(
-            'titlebar' => 'Profil Saya',
-            'title' => 'Edit Profil',
-            'isi' => 'master/myprofil/edit',
+            'titlebar' => 'Profil Desa',
+            'title' => 'Edit Profil Desa',
+            'isi' => 'master/setting-profil/edit',
             'validation' => \Config\Services::validation(),
-            'data' => $this->userModel->where('id', $ids)->first(),
+            'data' => $this->settingModel->where('id', $id)->first(),
         );
         return view('layout/wrapper', $data);
     }
     public function update($id)
     {
-        $emailLama = $this->userModel->where(['id' => $id])->first();
-        if ($emailLama['email'] == $this->request->getPost('email')) {
-            $rule_email = 'required|valid_email';
-        } else {
-            $rule_email = 'required|valid_email|is_unique[mod_user.email]';
-        }
-        //Validasi input
         if (!$this->validate([
-            'nama' => [
+            'nmdesa' => [
                 'rules' => 'required|alpha_space',
                 'errors' => [
-                    'required' => 'Nama tidak boleh kosong.',
-                    'alpha_space' => 'Nama harus huruf dan spasi.'
+                    'required' => 'Nama Desa tidak boleh kosong.',
+                    'alpha_space' => 'Nama Desa harus huruf dan spasi.'
                 ]
             ],
-            'email' => [
-                'rules' => $rule_email,
+            'nmkecamatan' => [
+                'rules' => 'required|alpha_space',
                 'errors' => [
-                    'required' => 'Email tidak boleh kosong.',
-                    'valid_email' => 'Email tidak valid.',
-                    'is_unique' => 'Email sudah terdaftar.',
+                    'required' => 'Nama Kecamatan tidak boleh kosong.',
+                    'alpha_space' => 'Nama Kecamatan harus huruf dan spasi.'
                 ]
             ],
-            'nohp' => [
-                'rules' => 'required|max_length[12]|min_length[11]|regex_match[^(\+62|62)?[\s-]?0?8[1-9]{1}\d{1}[\s-]?\d{4}[\s-]?\d{2,5}$]',
+            'alamat' => [
+                'rules' => 'required|alpha_numeric_punct',
                 'errors' => [
-                    'required' => 'Nomor Handphone tidak boleh kosong.',
-                    'max_length' => 'Nomor Handphone maximal 12 digit.',
-                    'min_length' => 'Nomor Handphone manimal 11 digit.',
-                    'regex_match' => 'Penulisan Nomor Handphone harus benar'
+                    'required' => 'Alamat harus diisi.',
+                    'alpha_numeric_punct' => 'Alamat berisi karakter yang tidak didukung.'
                 ]
             ],
-            'password' => [
-                'rules' => 'required|max_length[8]|min_length[6]',
+            'kdpos' => [
+                'rules' => 'required|numeric|max_length[5]',
                 'errors' => [
-                    'required' => 'Mohon konfirmasi password.',
-                    'max_length' => 'Password maximal 8 digit.',
-                    'min_length' => 'Password minimal 6 digit.',
+                    'required' => 'Kode Pos harus diisi.',
+                    'max_length' => 'Kode Pos maksimal 5 digit.',
+                    'numeric' => 'Kode Pos harus angka.',
                 ]
-            ],
-            'repassword' => [
-                'rules' => 'required|max_length[8]|min_length[6]|matches[password]',
-                'errors' => [
-                    'required' => 'Mohon konfirmasi password.',
-                    'max_length' => 'Password maximal 8 digit.',
-                    'min_length' => 'Password minimal 6 digit.',
-                    'matches' => 'Password harus sama.'
-                ]
-            ],
-            'foto' => [
-                'rules' => 'mime_in[foto,image/jpg,image/jpeg,image/png]|max_size[foto,500]',
-                'errors' => [
-                    'mime_in' => 'File extention hanya jpg, jpeg, png.',
-                    'is_image' => 'Upload hanya file foto.',
-                    'max_size' => 'Ukuran gambar maksimal 500kb.'
-                ]
-            ],
+            ]
         ])) {
-            return redirect()->to(base_url('/my-profil/edit/' . $this->request->getPost('id')))->withInput();
+            return redirect()->to(base_url('/setting-profil/edit/' . $this->request->getPost('id')))->withInput();
         }
-        $foto   = $this->request->getFile('foto');
-        if ($foto->getError() == 4) {
-            $data = $this->userModel->find($id);
-            $fileName = $data['foto'];
-        } else {
-            $fileName = $foto->getRandomName();
-            //move foto
-            $foto->move(ROOTPATH . 'public/media/fotouser/', $fileName);
-            $data = $this->userModel->find($id);
-            $replace = $data['foto'];
-            if (file_exists(ROOTPATH . 'public/media/fotouser/' . $replace)) {
-                if ($data['foto'] != 'blank.png') {
-                    unlink(ROOTPATH . 'public/media/fotouser/' . $replace);
-                }
-            }
-        }
-        $md5 = md5($this->request->getPost('password'));
-        $password = password_hash($md5, PASSWORD_DEFAULT);
         $data = [
-            'id'                   => $id,
-            'nama'                 => $this->request->getPost('nama'),
-            'email'                => $this->request->getPost('email'),
-            'nohp'                 => $this->request->getPost('nohp'),
-            'password'             => $password,
-            'foto'                 => $fileName,
+            'id' => $id,
+            'nama_desa'      => $this->request->getPost('nmdesa'),
+            'nama_kecamatan' => $this->request->getPost('nmkecamatan'),
+            'alamat'         => $this->request->getPost('alamat'),
+            'kode_pos'       => $this->request->getPost('kdpos'),
         ];
-        $this->userModel->save($data);
-        session()->setFlashdata('m', 'Data berhasil di update');
+        $this->settingModel->save($data);
+        session()->setFlashdata('m', 'Data berhasil diupdate');
         return redirect()->to(base_url('my-profil'));
     }
 }

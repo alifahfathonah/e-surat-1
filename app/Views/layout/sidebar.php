@@ -63,21 +63,13 @@
                 </li>
                 <?php if (session()->get('level') == '1') { ?>
                     <li class="nav-item">
-                        <a href="#" class="nav-link <?= ($request->uri->getSegment(1) == 'data-user') ? 'active' : ""; ?>">
+                        <a href="#" class="nav-link <?= ($request->uri->getSegment(1) == 'data-user' or $request->uri->getSegment(1) == 'penandatangan') ? 'active' : ""; ?>">
                             <i class="nav-icon fas fa-copy"></i>
                             <p>
                                 Master
                                 <i class="fas fa-angle-left right"></i>
                             </p>
                         </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="<?= base_url('setting-profil') ?>" class="nav-link <?= ($request->uri->getSegment(1) == 'setting-profil') ? 'active' : ""; ?>">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Profil</p>
-                                </a>
-                            </li>
-                        </ul>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
                                 <a href="<?= base_url('data-user') ?>" class="nav-link <?= ($request->uri->getSegment(1) == 'data-user') ? 'active' : ""; ?>">

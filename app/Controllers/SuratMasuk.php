@@ -64,7 +64,7 @@ class SuratMasuk extends BaseController
                 'rules' => 'required|alpha_numeric_punct',
                 'errors' => [
                     'required' => 'Perihal harus diisi.',
-                    'alpha_numeric_punct' => 'Dasar Hukum berisi karakter yang tidak didukung.'
+                    'alpha_numeric_punct' => 'Perihal berisi karakter yang tidak didukung.'
                 ]
             ],
             'asal' => [
@@ -175,7 +175,7 @@ class SuratMasuk extends BaseController
                 'rules' => 'required|alpha_numeric_punct',
                 'errors' => [
                     'required' => 'Perihal harus diisi.',
-                    'alpha_numeric_punct' => 'Dasar Hukum berisi karakter yang tidak didukung.'
+                    'alpha_numeric_punct' => 'Perihal berisi karakter yang tidak didukung.'
                 ]
             ],
             'asal' => [

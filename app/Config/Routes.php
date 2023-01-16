@@ -78,6 +78,8 @@ $routes->get('my-profil/edit/(:segment)', 'MyProfil::edit/$1');
 $routes->add('my-profil/update/(:segment)', 'MyProfil::update/$1');
 //Routes Setting Profil
 $routes->get('setting-profil', 'SettingProfil::data');
+$routes->get('setting-profil/add', 'SettingProfil::add');
+$routes->post('setting-profil/save', 'SettingProfil::save');
 $routes->get('setting-profil/edit/(:segment)', 'SettingProfil::edit/$1');
 $routes->add('setting-profil/update/(:segment)', 'SettingProfil::update/$1');
 /*

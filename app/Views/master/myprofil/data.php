@@ -80,6 +80,56 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-4">
+                    </div>
+                    <?php if (!empty($settings) && is_array($settings)) : ?>
+                        <div class="col-md-8">
+                            <div class="invoice p-3 mb-3">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h4>
+                                            <i class="fas fa-user"></i> Profil Desa
+                                            <a href="<?= base_url('setting-profil/edit/' . $settings['id']) ?>" class="btn btn-info btn-xs float-right">
+                                                <i class="fa fa-edit"></i>
+                                            </a>
+                                        </h4>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 invoice-col mt-4">
+                                    <h6><b>Nama Desa</b></h6>
+                                    <span><?= $settings['nama_desa'] ?></span>
+                                    <h6 class="mt-2"><b>Kecamatan</b></h6>
+                                    <span><?= $settings['nama_kecamatan'] ?></span>
+                                    <h6 class="mt-2"><b>Alamat</b></h6>
+                                    <span><?= $settings['alamat'] ?></span>
+                                    <h6 class="mt-2"><b>Kode Pos</b></h6>
+                                    <span><?= $settings['kode_pos'] ?></span>
+                                </div>
+                            </div>
+                        </div>
+                    <?php else : ?>
+                        <div class="col-md-8">
+                            <div class="invoice p-3 mb-3">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h4>
+                                            <i class="fas fa-home"></i> Profil Desa
+                                            <a href="<?= base_url('setting-profil/add') ?>" class="btn btn-warning btn-xs float-right">
+                                                <i class="fa fa-plus"></i>
+                                            </a>
+                                        </h4>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <table>
+                                        <h6>
+                                            <center><i>Profil Desa belum disetting . . .</i></center>
+                                        </h6>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endif ?>
                 </div>
             </div>
         </div>

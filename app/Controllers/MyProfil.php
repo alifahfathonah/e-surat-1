@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\UserModel;
+use App\Models\SettingModel;
 use App\Models\SuratMasukModel;
 use App\Models\SuratKeluarModel;
 use CodeIgniter\Config\Config;
@@ -12,11 +13,13 @@ use CodeIgniter\HTTP\RequestInterface;
 class MyProfil extends BaseController
 {
     protected $userModel;
+    protected $settingModel;
     protected $suratmasukModel;
     protected $suratkeluarModel;
     public function __construct()
     {
         $this->userModel = new UserModel();
+        $this->settingModel = new SettingModel();
         $this->suratmasukModel = new SuratMasukModel();
         $this->suratkeluarModel = new SuratKeluarModel();
     }
@@ -24,6 +27,7 @@ class MyProfil extends BaseController
     {
         $ids = session()->get('id');
         $profil = $this->userModel->where('id =', $ids)->first();
+        $setting = $this->settingModel->first();
         $data = array(
             'titlebar' => 'Profil Saya',
             'title' => 'Profil Saya',
@@ -33,19 +37,19 @@ class MyProfil extends BaseController
             'suratkeluarall'   => $this->suratkeluarModel->countAllResults(),
             'suratkeluar_s'   => $this->suratkeluarModel->where('id_user =', $ids)->countAllResults(),
             'data' => $profil,
+            'settings' => $setting,
             'isi' => 'master/myprofil/data',
         );
         return view('layout/wrapper', $data);
     }
     public function edit($id)
     {
-        $ids = session()->get('id');
         $data = array(
             'titlebar' => 'Profil Saya',
             'title' => 'Edit Profil',
             'isi' => 'master/myprofil/edit',
             'validation' => \Config\Services::validation(),
-            'data' => $this->userModel->where('id', $ids)->first(),
+            'data' => $this->userModel->where('id', $id)->first(),
         );
         return view('layout/wrapper', $data);
     }
