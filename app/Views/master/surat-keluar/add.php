@@ -62,12 +62,12 @@
                                                             <select name="kategori" class="form-control <?= ($validation->hasError('kategori')) ? 'is-invalid' : ''; ?>">
                                                                 <option selected disabled><?= (old('kategori')) ? old('kategori') : ".::Pilih Kategori::." ?></option>
                                                                 <option value="Undangan">Undangan</option>
-                                                                <option value="Biasa">Biasa</option>
+                                                                <!-- <option value="Biasa">Biasa</option>
                                                                 <option value="Pengumuman">Pengumuman</option>
                                                                 <option value="Pemberitahuan">Pemberitahuan</option>
                                                                 <option value="Panggilan">Panggilan</option>
                                                                 <option value="Pengantar">Pengantar</option>
-                                                                <option value="Edaran">Edaran</option>
+                                                                <option value="Edaran">Edaran</option> -->
                                                             </select>
                                                             <span class="error invalid-feedback"> <?= $validation->getError('kategori'); ?></span>
                                                         </div>

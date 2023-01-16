@@ -291,6 +291,16 @@ class SuratKeluar extends BaseController
     // }
     public function print($id)
     {
+        $q = $this->penandatanganModel->join('mod_surat_keluar', 'mod_surat_keluar.penandatangan = mod_penandatangan.id', 'left')->where('mod_surat_keluar.id =', $id)->first();
+        $penandatangan = $q['nama'];
+        $jabatan = $q['jabatan'];
+        $scan_ttd = $q['ttd'];
+        if ($scan_ttd = "") {
+            $scan_ttd = "";
+        } else {
+            $scan_ttd = '<img src="' . ROOTPATH . 'public/media/ttd/' . $q['ttd'] . '" width="50" height="50"><br><small style="color:#aaa;">Ditandatangani secara elektronik</small>';
+        }
+        // dd($q);
         $q = $this->suratkeluarModel->where('id =', $id)->first();
         $no_surat = $q['no_surat'];
         $sifat = $q['sifat_surat'];
@@ -300,7 +310,6 @@ class SuratKeluar extends BaseController
         $isi = $q['isi'];
         $tujuan = $q['tujuan'];
         $tgl = $q['created_at'];
-        $penandatangan = $q['penandatangan'];
 
         $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
         //initialize document
@@ -335,7 +344,7 @@ class SuratKeluar extends BaseController
         </tr>
         </table>';
 
-        $html .= '<table width="100%" border="1" cellpadding="0">
+        $html .= '<table width="100%" border="0" cellpadding="0">
         <tr>
         <td width="55%">&nbsp;</td>
         <td width="10%">&nbsp;</td>
@@ -350,7 +359,7 @@ class SuratKeluar extends BaseController
         
         <tr>
         <td valign="top">
-        <table width="100%" border="1" cellpadding="0">
+        <table width="100%" border="0" cellpadding="0">
         <tr>
         <td width="25%">Nomor</td>
         <td width="5%">:</td>
@@ -375,7 +384,7 @@ class SuratKeluar extends BaseController
         </td>
 
         <td valign="top" colspan="2">
-        <table width="100%" border="1" cellpadding="1">
+        <table width="100%" border="0" cellpadding="1">
         <tr>
         <td width="20%">&nbsp;</td>
         <td colspan="2" width="80%">Kepada yth :</td>
@@ -400,7 +409,7 @@ class SuratKeluar extends BaseController
         </table>';
 
         $html .= '
-        <table width="100%" border="1" cellpadding="2">
+        <table width="100%" border="0" cellpadding="2">
         <tr>
         <td width="8%"></td>
         <td width="92%"></td>
@@ -415,7 +424,7 @@ class SuratKeluar extends BaseController
         </tr>
         </table>';
 
-        $html .= '<table width="100%" border="1" cellpadding="2">
+        $html .= '<table width="100%" border="0" cellpadding="2">
         <tr>
         <td width="50%">&nbsp;</td>
         <td width="10%">&nbsp;</td>
@@ -426,24 +435,21 @@ class SuratKeluar extends BaseController
         <td colspan="2" width="44%" valign="top">
         </td>
         <td valign="top" width="50%" >
-        <table width="100%" border="1" cellpadding="0">
+        <table width="100%" border="0" cellpadding="0">
         
         <tr>
         <td width="27%">&nbsp;</td>
-        <td width="73%" align="left"><b>KETUA PKK</b></td>
+        <td width="73%" align="left"><b>' . $jabatan . '</b></td>
         </tr>
-        
+
         <tr>
-        <td align="center"></td>
+        <td width="27%">&nbsp;</td>
+        <td width="73%" align="left">&nbsp;</td>
         </tr>
+
         <tr>
-        <td align="center"></td>
-        </tr>
-        <tr>
-        <td align="center"></td>
-        </tr>
-        <tr>
-        <td align="center"></td>
+        <td width="27%">&nbsp;</td>
+        <td width="73%" align="left">' . $scan_ttd . '</td>
         </tr>
         
         <tr>
