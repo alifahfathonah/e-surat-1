@@ -50,6 +50,8 @@
 <script src="<?= base_url(); ?>/template/admin/plugins/bs-stepper/js/bs-stepper.min.js"></script>
 <!-- CK Editor -->
 <script src="https://cdn.ckeditor.com/4.20.1/full/ckeditor.js"></script>
+<!-- Select2 -->
+<script src="<?= base_url(); ?>/template/admin/plugins/select2/js/select2.full.min.js"></script>
 <!-- Page specific script -->
 <script>
     CKEDITOR.replace('editor');
@@ -112,5 +114,14 @@
     // BS-Stepper Init
     document.addEventListener('DOMContentLoaded', function() {
         window.stepper = new Stepper(document.querySelector('.bs-stepper'))
+    })
+    $(function() {
+        //Initialize Select2 Elements
+        $('.select2').select2()
+
+        //Initialize Select2 Elements
+        $('.select2bs4').select2({
+            theme: 'bootstrap4'
+        })
     })
 </script>

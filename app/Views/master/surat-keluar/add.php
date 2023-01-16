@@ -17,7 +17,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="card card-default">
+                    <div class="card card-info">
                         <div class="card-header">
                             <h3 class="card-title"><?= $title ?></h3>
                         </div>
@@ -93,9 +93,11 @@
                                                         </div>
                                                         <div class="form-group">
                                                             <label>Penandatangan<span class="text-danger">*</span></label>
-                                                            <select name="penandatangan" class="form-control <?= ($validation->hasError('penandatangan')) ? 'is-invalid' : ''; ?>">
-                                                                <option selected disabled><?= (old('penandatangan')) ? old('penandatangan') : ".::Pilih Penandatangan ::." ?></option>
-                                                                <option value="Abii Hutabarat">Abii Hutabarat</option>
+                                                            <select name="penandatangan" class="form-control select2bs4 <?= ($validation->hasError('penandatangan')) ? 'is-invalid' : ''; ?>" style="width: 100%;">
+                                                                <option selected disabled><?= (old('penandatangan')) ? old('penandatangan') : ".::Pilih Penandatangan::." ?></option>
+                                                                <?php foreach ($ttd as $r) : ?>
+                                                                    <option value="<?= $r['id'] ?>"><?= $r['jabatan'] ?> (<?= $r['nama'] ?>)</option>
+                                                                <?php endforeach ?>
                                                             </select>
                                                             <span class="error invalid-feedback"> <?= $validation->getError('penandatangan'); ?></span>
                                                         </div>

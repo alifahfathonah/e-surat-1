@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\SuratKeluarModel;
 use App\Models\UserModel;
+use App\Models\PenandatanganModel;
 use App\Controllers\BaseController;
 use TCPDF;
 use CodeIgniter\Config\Config;
@@ -14,10 +15,12 @@ class SuratKeluar extends BaseController
 {
     protected $suratkeluarModel;
     protected $userModel;
+    protected $penandatanganModel;
     public function __construct()
     {
         $this->suratkeluarModel = new SuratKeluarModel();
         $this->userModel = new UserModel();
+        $this->penandatanganModel = new PenandatanganModel();
     }
     public function data()
     {
@@ -44,9 +47,11 @@ class SuratKeluar extends BaseController
     }
     public function add()
     {
+        $penandatangan = $this->penandatanganModel->findAll();
         $data = array(
             'titlebar' => 'Surat Keluar',
             'title' => 'Tambah Surat Keluar',
+            'ttd' => $penandatangan,
             'isi' => 'master/surat-keluar/add',
             'validation' => \Config\Services::validation()
         );
@@ -153,10 +158,12 @@ class SuratKeluar extends BaseController
     public function edit($id)
     {
         $ids = session()->get('id');
+        $penandatangan = $this->penandatanganModel->findAll();
         $data = array(
             'titlebar' => 'Surat Keluar',
             'title' => 'Edit Surat Keluar',
             'isi' => 'master/surat-keluar/edit',
+            'ttd' => $penandatangan,
             'validation' => \Config\Services::validation(),
             'data' => $this->suratkeluarModel->where('id =', $id)->where('id_user =', $ids)->first(),
         );
@@ -328,11 +335,11 @@ class SuratKeluar extends BaseController
         </tr>
         </table>';
 
-        $html .= '<table width="100%" border="0" cellpadding="0">
+        $html .= '<table width="100%" border="1" cellpadding="0">
         <tr>
-        <td width="45%">&nbsp;</td>
+        <td width="55%">&nbsp;</td>
         <td width="10%">&nbsp;</td>
-        <td width="45%">&nbsp;</td>
+        <td width="35%">&nbsp;</td>
         </tr>
         <tr>
         <td>&nbsp;</td>
@@ -343,7 +350,7 @@ class SuratKeluar extends BaseController
         
         <tr>
         <td valign="top">
-        <table width="100%" border="0" cellpadding="0">
+        <table width="100%" border="1" cellpadding="0">
         <tr>
         <td width="25%">Nomor</td>
         <td width="5%">:</td>
@@ -368,14 +375,14 @@ class SuratKeluar extends BaseController
         </td>
 
         <td valign="top" colspan="2">
-        <table width="100%" border="0" cellpadding="1">
+        <table width="100%" border="1" cellpadding="1">
         <tr>
-        <td width="16%">&nbsp;</td>
-        <td colspan="2" width="84%">Kepada yth :</td>
+        <td width="20%">&nbsp;</td>
+        <td colspan="2" width="80%">Kepada yth :</td>
         </tr>
         <tr>
-        <td width="16%" align="right">&nbsp;</td>
-        <td width="84%" colspan="2" valign="top"><font size="-1">Ketua ' . $tujuan . '</font></td>
+        <td width="20%" align="right">&nbsp;</td>
+        <td width="80%" colspan="2" valign="top"><font size="-1">Ketua ' . $tujuan . '</font></td>
         </tr>
         <tr>
         <td>&nbsp;</td>
@@ -385,7 +392,7 @@ class SuratKeluar extends BaseController
         <tr>
         <td>&nbsp;</td>
         <td width="14%">&nbsp;</td>
-        <td width="68%"><font size="-1"><b>Tempat</b></font></td>
+        <td width="66%"><font size="-1"><b>Tempat</b></font></td>
         </tr>
         </table>
         </td>
@@ -393,7 +400,7 @@ class SuratKeluar extends BaseController
         </table>';
 
         $html .= '
-        <table width="100%" border="0" cellpadding="2">
+        <table width="100%" border="1" cellpadding="2">
         <tr>
         <td width="8%"></td>
         <td width="92%"></td>
@@ -408,7 +415,7 @@ class SuratKeluar extends BaseController
         </tr>
         </table>';
 
-        $html .= '<table width="100%" border="0" cellpadding="2">
+        $html .= '<table width="100%" border="1" cellpadding="2">
         <tr>
         <td width="50%">&nbsp;</td>
         <td width="10%">&nbsp;</td>
@@ -419,29 +426,29 @@ class SuratKeluar extends BaseController
         <td colspan="2" width="44%" valign="top">
         </td>
         <td valign="top" width="50%" >
-        <table width="100%" border="0" cellpadding="0">
+        <table width="100%" border="1" cellpadding="0">
         
         <tr>
-        <td width="22%">&nbsp;</td>
-        <td width="78%" align="left"><b>KETUA PKK</b></td>
-        </tr>
-        
-        <tr>
-        <td align="center"></td>
-        </tr>
-        <tr>
-        <td align="center"></td>
-        </tr>
-        <tr>
-        <td align="center"></td>
-        </tr>
-        <tr>
-        <td align="center"></td>
+        <td width="27%">&nbsp;</td>
+        <td width="73%" align="left"><b>KETUA PKK</b></td>
         </tr>
         
         <tr>
-        <td width="22%">&nbsp;</td>
-        <td width="78%" align="left"><u><font size="-1"><b>' . $penandatangan . '</b></font></u></td>
+        <td align="center"></td>
+        </tr>
+        <tr>
+        <td align="center"></td>
+        </tr>
+        <tr>
+        <td align="center"></td>
+        </tr>
+        <tr>
+        <td align="center"></td>
+        </tr>
+        
+        <tr>
+        <td width="27%">&nbsp;</td>
+        <td width="73%" align="left"><u><font size="-1"><b>' . $penandatangan . '</b></font></u></td>
         </tr>
         
         </table>
