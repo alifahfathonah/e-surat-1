@@ -3,7 +3,7 @@
     <!-- Brand Logo -->
     <a href="<?= base_url('/home'); ?>" class="brand-link">
         <img src="<?= base_url(); ?>/media/logo/logo.png" alt="Lambang Batu Bara" class="brand-image ml-4 mr-4">
-        <span class="brand-text font-weight-light">e Surat</span>
+        <span class="brand-text font-weight-light">e Arsip</span>
     </a>
 
     <!-- Sidebar -->

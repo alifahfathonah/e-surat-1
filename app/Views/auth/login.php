@@ -25,12 +25,13 @@
         <!-- /.login-logo -->
         <div class="card card-outline card-primary">
             <div class="card-header text-center">
-                <a href="#" class="h1">E-surat</a>
+                <img src="<?= base_url(); ?>/media/logo/logo.png" alt="" class="img-fluid" width="70">
+                <h4 class="mt-2">E-Arsip</h4>
+                <small>(Desa Mangkai Baru | Kabupaten Batu Bara)</small>
             </div>
             <div class="card-body">
                 <div class="swal-login" data-swal="<?= session()->getFlashdata('m'); ?>"></div>
                 <div class="swal-logout" data-swal="<?= session()->getFlashdata('ml'); ?>"></div>
-                <p class="login-box-msg">Silahkan login</p>
                 <form action="<?= base_url('auth/verify') ?>" method="post">
                     <?= csrf_field(); ?>
                     <div class="form-group">
