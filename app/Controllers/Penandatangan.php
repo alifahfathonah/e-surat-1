@@ -50,10 +50,10 @@ class Penandatangan extends BaseController
                 ]
             ],
             'ttd' => [
-                'rules' => 'uploaded[ttd]|mime_in[ttd,image/jpg,image/jpeg,image/png]|max_size[ttd,500]',
+                'rules' => 'uploaded[ttd]|mime_in[ttd,image/jpg,image/jpeg]|max_size[ttd,500]',
                 'errors' => [
                     'uploaded' => 'Scan TTD harus diupload.',
-                    'mime_in' => 'File extention hanya jpg, jpeg, png.',
+                    'mime_in' => 'File extention hanya jpg, jpeg.',
                     'is_image' => 'Upload hanya file foto.',
                     'max_size' => 'Ukuran gambar maksimal 500kb.'
                 ]
@@ -113,9 +113,9 @@ class Penandatangan extends BaseController
                 ]
             ],
             'ttd' => [
-                'rules' => 'mime_in[ttd,image/jpg,image/jpeg,image/png]|max_size[ttd,500]',
+                'rules' => 'mime_in[ttd,image/jpg,image/jpg,image/jpeg]|max_size[ttd,500]',
                 'errors' => [
-                    'mime_in' => 'File extention hanya jpg, jpeg, png.',
+                    'mime_in' => 'File extention hanya jpg, jpeg.',
                     'is_image' => 'Upload hanya file foto.',
                     'max_size' => 'Ukuran gambar maksimal 500kb.'
                 ]
