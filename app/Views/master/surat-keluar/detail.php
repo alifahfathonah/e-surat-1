@@ -100,7 +100,9 @@
                                                         :
                                                     </td>
                                                     <td>
-                                                        <?= $data['penandatangan'] ?>
+                                                        <?php foreach ($ttd as $key => $r) {
+                                                            echo $data['penandatangan'] == $r['id'] ? $r['nama'] : ''; ?>
+                                                        <?php } ?>
                                                     </td>
                                                 </tr>
                                                 </tr>

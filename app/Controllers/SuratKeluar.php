@@ -274,9 +274,11 @@ class SuratKeluar extends BaseController
     }
     public function detail($id)
     {
+        $penandatangan = $this->penandatanganModel->findAll();
         $detail = $this->userModel->join('mod_surat_keluar', 'mod_surat_keluar.id_user = mod_user.id', 'left')->where('mod_surat_keluar.id =', $id)->first();
         $data = array(
             'title' => 'Detail Surat Keluar',
+            'ttd' => $penandatangan,
             'data' => $detail,
             'isi' => 'master/surat-keluar/detail',
         );
