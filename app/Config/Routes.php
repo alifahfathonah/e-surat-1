@@ -82,6 +82,15 @@ $routes->get('setting-profil/add', 'SettingProfil::add');
 $routes->post('setting-profil/save', 'SettingProfil::save');
 $routes->get('setting-profil/edit/(:segment)', 'SettingProfil::edit/$1');
 $routes->add('setting-profil/update/(:segment)', 'SettingProfil::update/$1');
+//Routes Laporan Kegiatan
+$routes->get('tambah-laporan-kegiatan', 'Laporan::add');
+$routes->post('tambah-laporan-kegiatan/save', 'Laporan::save');
+$routes->get('laporan-kegiatan', 'Laporan::data');
+$routes->get('data-laporan-kegiatan', 'Laporan::datalaporan');
+$routes->delete('laporan-kegiatan/(:num)', 'Laporan::delete/$1');
+$routes->get('laporan-kegiatan/edit/(:segment)', 'Laporan::edit/$1');
+$routes->add('laporan-kegiatan/update/(:segment)', 'Laporan::update/$1');
+$routes->add('laporan-kegiatan/detail/(:segment)', 'Laporan::detail/$1');
 /*
  * --------------------------------------------------------------------
  * Additional Routing

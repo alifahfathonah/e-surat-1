@@ -158,8 +158,13 @@ class SuratKeluar extends BaseController
             }
         }
         $this->suratkeluarModel->delete($id);
-        session()->setFlashdata('m', 'Data berhasil dihapus');
-        return redirect()->to(base_url('surat-keluar'));
+        if (session()->get('level') == 1) {
+            session()->setFlashdata('m', 'Data berhasil dihapus');
+            return redirect()->to(base_url('data-surat-keluar'));
+        } else {
+            session()->setFlashdata('m', 'Data berhasil dihapus');
+            return redirect()->to(base_url('surat-keluar'));
+        }
     }
 
     public function edit($id)
@@ -284,6 +289,7 @@ class SuratKeluar extends BaseController
         );
         return view('layout/wrapper', $data);
     }
+    // print old
     // public function print($id)
     // {
     //     $mpdf = new \Mpdf\Mpdf();

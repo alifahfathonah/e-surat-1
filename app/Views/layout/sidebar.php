@@ -150,6 +150,35 @@
                     </ul>
                 </li>
                 <li class="nav-item">
+                    <a href="#" class="nav-link <?= ($request->uri->getSegment(1) == 'tambah-laporan-kegiatan' or $request->uri->getSegment(1) == 'laporan-kegiatan' or $request->uri->getSegment(1) == 'data-laporan-kegiatan') ? 'active' : ""; ?>">
+                        <i class="nav-icon fas fa-file-image"></i>
+                        <p>
+                            Laporan Kegiatan
+                            <i class="fas fa-angle-left right"></i><span class="badge badge-danger">new</span>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <?php if (session()->get('level') == '3') { ?>
+                                <a href="<?= base_url('tambah-laporan-kegiatan') ?>" class="nav-link <?= ($request->uri->getSegment(1) == 'tambah-laporan-kegiatan') ? 'active' : ""; ?>">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Tambah Laporan</p>
+                                </a>
+                                <a href="<?= base_url('laporan-kegiatan') ?>" class="nav-link <?= ($request->uri->getSegment(1) == 'laporan-kegiatan') ? 'active' : ""; ?>">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Daftar Laporan</p>
+                                </a>
+                            <?php } ?>
+                            <?php if (session()->get('level') == '1' or session()->get('level') == '2') { ?>
+                                <a href="<?= base_url('data-laporan-kegiatan') ?>" class="nav-link <?= ($request->uri->getSegment(1) == 'data-laporan-kegiatan') ? 'active' : ""; ?>">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Daftar Laporan Kegiatan</p>
+                                </a>
+                            <?php } ?>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
                     <a href="<?= base_url('auth/logout') ?>" class="nav-link">
                         <i class="fa-solid fa-right-from-bracket"></i>
                         <i class="nav-icon fa fa-sign-out-alt"></i>

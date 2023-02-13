@@ -65,6 +65,8 @@ class Filters extends BaseConfig
                 'penandatangan/*',
                 'setting-profil',
                 'setting-profil/*',
+                'laporan-kegiatan/*',
+                'data-laporan-kegiatan',
             ]],
             'filtersek' => ['except' => [
                 'home', 'home/*',
@@ -78,6 +80,8 @@ class Filters extends BaseConfig
                 'tambah-surat-keluar/*',
                 'my-profil',
                 'my-profil/*',
+                'laporan-kegiatan/*',
+                'data-laporan-kegiatan',
             ]],
             'filteruser' => ['except' => [
                 'home', 'home/*',
@@ -91,6 +95,10 @@ class Filters extends BaseConfig
                 'tambah-surat-keluar/*',
                 'my-profil',
                 'my-profil/*',
+                'laporan-kegiatan',
+                'laporan-kegiatan/*',
+                'tambah-laporan-kegiatan',
+                'tambah-laporan-kegiatan/*',
             ]],
         ],
     ];
