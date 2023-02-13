@@ -30,7 +30,7 @@ class Laporan extends BaseController
     {
         $laporan = $this->laporanModel->findAll();
         $data = array(
-            'title' => 'Lapora Kegiatan',
+            'title' => 'Laporan Kegiatan',
             'data' => $laporan,
             'isi' => 'master/laporan/datalaporan'
         );
