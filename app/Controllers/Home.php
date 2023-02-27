@@ -23,6 +23,7 @@ class Home extends BaseController
         $pokja = session()->get('pokja');
         $data = array(
             'title'         => 'Dashboard',
+            'apptitle'      => 'E-Arsip Surat',
             'appname'       => 'Aplikasi Management Surat',
             'users'         => $this->userModel->where('level !=', 1)->countAllResults(),
             'sekretariat'   => $this->suratmasukModel->where('pokja =', null)->countAllResults(),

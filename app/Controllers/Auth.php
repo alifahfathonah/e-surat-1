@@ -4,20 +4,26 @@ namespace App\Controllers;
 
 use App\Models\AuthModel;
 use App\Controllers\BaseController;
+use App\Models\SettingModel;
 use CodeIgniter\Config\Config;
 
 class Auth extends BaseController
 {
     protected $authModel;
+    protected $settingModel;
     public function __construct()
     {
         $this->authModel = new AuthModel();
+        $this->settingModel = new SettingModel();
     }
 
     public function index()
     {
+        $setting = $this->settingModel->first();
+        $desa = $setting['nama_desa'];
         $data = array(
-            'title' => 'Aplikasi e-surat',
+            'title' => 'E-Arsip Surat' . ' ' . $desa,
+            'setting' => $setting,
             'validation' => \Config\Services::validation()
         );
         return view('auth/login', $data);
