@@ -4,26 +4,20 @@ namespace App\Controllers;
 
 use App\Models\AuthModel;
 use App\Controllers\BaseController;
-use App\Models\SettingModel;
 use CodeIgniter\Config\Config;
 
 class Auth extends BaseController
 {
     protected $authModel;
-    protected $settingModel;
     public function __construct()
     {
         $this->authModel = new AuthModel();
-        $this->settingModel = new SettingModel();
     }
 
     public function index()
     {
-        $setting = $this->settingModel->first();
-        $desa = $setting['nama_desa'];
         $data = array(
-            'title' => 'E-Arsip Surat' . ' ' . $desa,
-            'setting' => $setting,
+            'title' => 'E-Arsip Surat',
             'validation' => \Config\Services::validation()
         );
         return view('auth/login', $data);
@@ -54,6 +48,7 @@ class Auth extends BaseController
                     //jika data cocok
                     session()->set('log', true);
                     session()->set('id', $cek['id']);
+                    session()->set('id_desa', $cek['id_desa']);
                     session()->set('nama', $cek['nama']);
                     session()->set('email', $cek['email']);
                     session()->set('nohp', $cek['nohp']);
@@ -82,6 +77,7 @@ class Auth extends BaseController
     {
         session()->remove('log');
         session()->remove('id');
+        session()->remove('id_desa');
         session()->remove('nama');
         session()->remove('nohp');
         session()->remove('email');

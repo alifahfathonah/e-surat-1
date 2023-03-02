@@ -27,8 +27,31 @@ class SuratKeluar extends BaseController
     }
     public function data()
     {
+        $idd = session()->get('id_desa');
         $ids = session()->get('id');
-        $surat = $this->suratkeluarModel->where('id_user =', $ids)->findAll();
+        $surat = $this->suratkeluarModel->where('id_user =', $ids)->where('id_desa', $idd)->findAll();
+        $data = array(
+            'title' => 'Surat Keluar',
+            'data' => $surat,
+            'isi' => 'master/surat-keluar/data'
+        );
+
+        return view('layout/wrapper', $data);
+    }
+    public function datadesa()
+    {
+        $surat = $this->suratkeluarModel->where('id_desa !=', 0)->findAll();
+        $data = array(
+            'title' => 'Surat Keluar',
+            'data' => $surat,
+            'isi' => 'master/surat-keluar/data'
+        );
+
+        return view('layout/wrapper', $data);
+    }
+    public function datakab()
+    {
+        $surat = $this->suratkeluarModel->where('id_desa =', 0)->findAll();
         $data = array(
             'title' => 'Surat Keluar',
             'data' => $surat,
@@ -39,7 +62,8 @@ class SuratKeluar extends BaseController
     }
     public function datasurat()
     {
-        $surat = $this->suratkeluarModel->findAll();
+        $idd = session()->get('id_desa');
+        $surat = $this->suratkeluarModel->where('id_desa', $idd)->findAll();
         $data = array(
             'title' => 'Surat Keluar',
             'data' => $surat,
@@ -50,7 +74,8 @@ class SuratKeluar extends BaseController
     }
     public function add()
     {
-        $penandatangan = $this->penandatanganModel->findAll();
+        $idd = session()->get('id_desa');
+        $penandatangan = $this->penandatanganModel->where('id_desa', $idd)->findAll();
         $data = array(
             'titlebar' => 'Surat Keluar',
             'title' => 'Tambah Surat Keluar',
@@ -126,6 +151,7 @@ class SuratKeluar extends BaseController
         }
         $data = [
             'id_user'        => session()->get('id'),
+            'id_desa'        => session()->get('id_desa'),
             'no_surat'       => $this->request->getPost('nosurat'),
             'kategori_surat' => $this->request->getPost('kategori'),
             'sifat_surat'    => $this->request->getPost('sifat'),
@@ -170,14 +196,15 @@ class SuratKeluar extends BaseController
     public function edit($id)
     {
         $ids = session()->get('id');
-        $penandatangan = $this->penandatanganModel->findAll();
+        $idd = session()->get('id_desa');
+        $penandatangan = $this->penandatanganModel->where('id_desa', $idd)->findAll();
         $data = array(
             'titlebar' => 'Surat Keluar',
             'title' => 'Edit Surat Keluar',
             'isi' => 'master/surat-keluar/edit',
             'ttd' => $penandatangan,
             'validation' => \Config\Services::validation(),
-            'data' => $this->suratkeluarModel->where('id =', $id)->where('id_user =', $ids)->first(),
+            'data' => $this->suratkeluarModel->where('id =', $id)->where('id_user =', $ids)->where('id_desa', $idd)->first(),
         );
         return view('layout/wrapper', $data);
     }
@@ -257,6 +284,7 @@ class SuratKeluar extends BaseController
         }
         $data = [
             'id'             => $id,
+            'id_desa'        => session()->get('id_desa'),
             'no_surat'       => $this->request->getPost('nosurat'),
             'kategori_surat' => $this->request->getPost('kategori'),
             'sifat_surat'    => $this->request->getPost('sifat'),
@@ -289,6 +317,18 @@ class SuratKeluar extends BaseController
         );
         return view('layout/wrapper', $data);
     }
+    public function details($id)
+    {
+        $penandatangan = $this->penandatanganModel->findAll();
+        $detail = $this->userModel->join('mod_surat_keluar', 'mod_surat_keluar.id_user = mod_user.id', 'left')->where('mod_surat_keluar.id =', $id)->first();
+        $data = array(
+            'title' => 'Detail Surat Keluar',
+            'ttd' => $penandatangan,
+            'data' => $detail,
+            'isi' => 'master/surat-keluar/detail',
+        );
+        return view('layout/wrapper', $data);
+    }
     // print old
     // public function print($id)
     // {
@@ -310,6 +350,194 @@ class SuratKeluar extends BaseController
     //     // $mpdf->Output();
     // }
     public function print($id)
+    {
+        //fetch ttd
+        $idd = session()->get('id_desa');
+        $q = $this->penandatanganModel->join('mod_surat_keluar', 'mod_surat_keluar.penandatangan = mod_penandatangan.id', 'left')->where('mod_surat_keluar.id =', $id)->where('mod_surat_keluar.id_desa =', $idd)->first();
+        $penandatangan = $q['nama'];
+        $jabatan = $q['jabatan'];
+        $scan_ttd = $q['ttd'];
+        if ($scan_ttd = "") {
+            $scan_ttd = "";
+        } else {
+            $scan_ttd = '<img src="' . ROOTPATH . 'public/media/ttd/' . $q['ttd'] . '" width="50" height="50"><br><small style="color:#aaa;">Ditandatangani secara elektronik</small>';
+        }
+        //fetch header
+        $setting = $this->settingModel->findAll();
+        foreach ($setting as $s) :
+            $desa = $s['nama_desa'];
+            $kecamatan = $s['nama_kecamatan'];
+            $alamat = $s['alamat'];
+            $kodepos = $s['kode_pos'];
+        endforeach;
+        //fetch surat
+        $idd = session()->get('id_desa');
+        $q = $this->suratkeluarModel->where('id =', $id)->where('id_desa', $idd)->first();
+        $no_surat = $q['no_surat'];
+        $sifat = $q['sifat_surat'];
+        $jlh_lampiran = $q['jlh_lampiran'];
+        $satuan = $q['satuan'];
+        $perihal = $q['perihal'];
+        $isi = $q['isi'];
+        $tujuan = $q['tujuan'];
+        $tgl = $q['created_at'];
+
+        $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+        //initialize document
+        $pdf->SetPrintHeader(false);
+        $pdf->SetPrintFooter(false);
+        $pdf->SetMargins(20, 15, 20, true);
+        $pdf->SetAutoPageBreak(TRUE, 2);
+        $pdf->AddPage("P", "A4");
+        $pdf->SetFont("helvetica", "", 12);
+        $this->response->setContentType('application/pdf');
+
+
+        $html = '<table width="100%" border="0" cellpadding="1">
+        <tr>
+        <td width="20%" rowspan="5" align="center"><img src="' . ROOTPATH . 'public/media/logo/logopkk.png" width="80" height="80"></td>
+        <td width="80%" align="center"><font size="+2"><b>PEMBERDAYAAN DAN KESEJAHTERAAN KELUARGA</b></font></td>
+        </tr>
+        <tr>
+        <td align="center"><font size="+4"><b>-PKK-</b></font></td>
+        </tr>
+        <tr>
+        <td align="center"><font size="+2"><b>' . $desa . '</b></font></td>
+        </tr>
+        <tr>
+        <td align="center"><font size="+2"><b>KECAMATAN ' . $kecamatan . '</b></font></td>
+        </tr>
+        <tr>
+        <td align="center"><font size="-3">' . $alamat . ' Kode Pos ' . $kodepos . '</font></td>
+        </tr>
+        <tr>
+        <td colspan="2"><hr height="2px"></td>
+        </tr>
+        </table>';
+
+        $html .= '<table width="100%" border="0" cellpadding="0">
+        <tr>
+        <td width="55%">&nbsp;</td>
+        <td width="10%">&nbsp;</td>
+        <td width="35%">&nbsp;</td>
+        </tr>
+        <tr>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>Mangkai Baru, ' . format_tgl_surat($tgl) . ' </td>
+        </tr>
+        <br>
+        
+        <tr>
+        <td valign="top">
+        <table width="100%" border="0" cellpadding="0">
+        <tr>
+        <td width="25%">Nomor</td>
+        <td width="5%">:</td>
+        <td width="70%"><font size="-1">' . $no_surat . '</font></td>
+        </tr>
+        <tr>
+        <td>Sifat</td>
+        <td>:</td>
+        <td>' . $sifat . '</td>
+        </tr>
+        <tr>
+        <td>Lampiran</td>
+        <td>:</td>
+        <td>' . $jlh_lampiran . ' ' . $satuan . ' </td>
+        </tr>
+        <tr>
+        <td>Perihal</td>
+        <td>:</td>
+        <td><b>' . $perihal . '</b></td>
+        </tr>
+        </table>
+        </td>
+
+        <td valign="top" colspan="2">
+        <table width="100%" border="0" cellpadding="1">
+        <tr>
+        <td width="20%">&nbsp;</td>
+        <td colspan="2" width="80%">Kepada yth :</td>
+        </tr>
+        <tr>
+        <td width="20%" align="right">&nbsp;</td>
+        <td width="80%" colspan="2" valign="top"><font size="-1">Ketua ' . $tujuan . '</font></td>
+        </tr>
+        <tr>
+        <td>&nbsp;</td>
+        <td width="5%">&nbsp;</td>
+        <td colspan="2">di -</td>
+        </tr>
+        <tr>
+        <td>&nbsp;</td>
+        <td width="14%">&nbsp;</td>
+        <td width="66%"><font size="-1"><b>Tempat</b></font></td>
+        </tr>
+        </table>
+        </td>
+        </tr>
+        </table>';
+
+        $html .= '
+        <table width="100%" border="0" cellpadding="2">
+        <tr>
+        <td width="8%"></td>
+        <td width="92%"></td>
+        </tr>
+        <tr>
+        <td>&nbsp;</td>
+        <td>' . $isi . '</td>
+        </tr>
+        <tr>
+        <td></td>
+        <td></td>
+        </tr>
+        </table>';
+
+        $html .= '<table width="100%" border="0" cellpadding="2">
+        <tr>
+        <td width="50%">&nbsp;</td>
+        <td width="10%">&nbsp;</td>
+        <td width="40%">&nbsp;</td>
+        </tr>
+        <tr>
+        <td width="6%">&nbsp;</td>
+        <td colspan="2" width="44%" valign="top">
+        </td>
+        <td valign="top" width="50%" >
+        <table width="100%" border="0" cellpadding="0">
+        
+        <tr>
+        <td width="27%">&nbsp;</td>
+        <td width="73%" align="left"><b>' . $jabatan . '</b></td>
+        </tr>
+
+        <tr>
+        <td width="27%">&nbsp;</td>
+        <td width="73%" align="left">&nbsp;</td>
+        </tr>
+
+        <tr>
+        <td width="27%">&nbsp;</td>
+        <td width="73%" align="left">' . $scan_ttd . '</td>
+        </tr>
+        
+        <tr>
+        <td width="27%">&nbsp;</td>
+        <td width="73%" align="left"><u><font size="-1"><b>' . $penandatangan . '</b></font></u></td>
+        </tr>
+        
+        </table>
+        </td>
+        </tr>
+        </table>';
+
+        $pdf->writeHTML($html, true, false, true, false, '');
+        $filename = "surat_keluar/" . $no_surat . ".pdf";
+        $pdf->Output($filename, 'I');
+    }
+    public function prints($id)
     {
         //fetch ttd
         $q = $this->penandatanganModel->join('mod_surat_keluar', 'mod_surat_keluar.penandatangan = mod_penandatangan.id', 'left')->where('mod_surat_keluar.id =', $id)->first();

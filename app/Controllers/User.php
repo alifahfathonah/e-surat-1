@@ -14,8 +14,8 @@ class User extends BaseController
     }
     public function user()
     {
-        // jika tidak ingin menampilkan data superadmin
-        $datauser = $this->userModel->where('level !=', 1)->findAll();
+        $idd = session()->get('id_desa');
+        $datauser = $this->userModel->where('id_desa =', $idd)->where('level !=', 1)->findAll();
         $data = array(
             'title' => 'Daftar User',
             'data' => $datauser,
@@ -100,6 +100,7 @@ class User extends BaseController
         $md5 = md5($this->request->getPost('password'));
         $password = password_hash($md5, PASSWORD_DEFAULT);
         $data = [
+            'id_desa'              => session()->get('id_desa'),
             'nama'                 => $this->request->getPost('nama'),
             'email'                => $this->request->getPost('email'),
             'nohp'                 => $this->request->getPost('nohp'),
@@ -128,12 +129,13 @@ class User extends BaseController
     }
     public function edit($id)
     {
+        $idd = session()->get('id_desa');
         $data = array(
             'titlebar' => 'Data User',
             'title' => 'Edit User',
             'isi' => 'master/user/edit',
             'validation' => \Config\Services::validation(),
-            'data' => $this->userModel->where('id', $id)->first(),
+            'data' => $this->userModel->where('id', $id)->where('id_desa', $idd)->first(),
         );
         return view('layout/wrapper', $data);
     }
@@ -217,6 +219,7 @@ class User extends BaseController
         $password = password_hash($md5, PASSWORD_DEFAULT);
         $data = [
             'id'                   => $id,
+            'id_desa'              => session()->get('id_desa'),
             'nama'                 => $this->request->getPost('nama'),
             'email'                => $this->request->getPost('email'),
             'nohp'                 => $this->request->getPost('nohp'),

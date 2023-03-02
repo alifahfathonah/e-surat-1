@@ -60,6 +60,7 @@ class SettingProfil extends BaseController
             return redirect()->to('add')->withInput();
         }
         $data = [
+            'id_desa'        => session()->get('id_desa'),
             'nama_desa'      => $this->request->getPost('nmdesa'),
             'nama_kecamatan' => $this->request->getPost('nmkecamatan'),
             'alamat'         => $this->request->getPost('alamat'),
@@ -71,12 +72,13 @@ class SettingProfil extends BaseController
     }
     public function edit($id)
     {
+        $idd = session()->get('id_desa');
         $data = array(
             'titlebar' => 'Profil Desa',
             'title' => 'Edit Profil Desa',
             'isi' => 'master/setting-profil/edit',
             'validation' => \Config\Services::validation(),
-            'data' => $this->settingModel->where('id', $id)->first(),
+            'data' => $this->settingModel->where('id', $id)->where('id_desa', $idd)->first(),
         );
         return view('layout/wrapper', $data);
     }
@@ -116,7 +118,8 @@ class SettingProfil extends BaseController
             return redirect()->to(base_url('/setting-profil/edit/' . $this->request->getPost('id')))->withInput();
         }
         $data = [
-            'id' => $id,
+            'id'             => $id,
+            'id_desa'        => session()->get('id_desa'),
             'nama_desa'      => $this->request->getPost('nmdesa'),
             'nama_kecamatan' => $this->request->getPost('nmkecamatan'),
             'alamat'         => $this->request->getPost('alamat'),

@@ -21,11 +21,13 @@
                 <a href="<?= base_url('my-profil'); ?>" class="d-block"><?= session()->get('nama'); ?></a>
                 <small class="text-muted">
                     <?php if (session()->get('level') == '1') {
-                        echo "Administrator";
+                        echo "admin desa";
                     } elseif (session()->get('level') == '2') {
-                        echo "Sekretaris";
+                        echo "sekretaris";
                     } elseif (session()->get('level') == '3') {
-                        echo "User";
+                        echo "user";
+                    } elseif (session()->get('level') == '4') {
+                        echo "superadmin";
                     }
                     ?>
                 </small>
@@ -61,36 +63,73 @@
                         </p>
                     </a>
                 </li>
-                <?php if (session()->get('level') == '1') { ?>
+                <?php if (session()->get('level') == '1' or session()->get('level') == '4') {  ?>
                     <li class="nav-item">
-                        <a href="#" class="nav-link <?= ($request->uri->getSegment(1) == 'data-user' or $request->uri->getSegment(1) == 'penandatangan') ? 'active' : ""; ?>">
+                        <a href="#" class="nav-link <?= ($request->uri->getSegment(1) == 'data-user' or $request->uri->getSegment(1) == 'penandatangan' or $request->uri->getSegment(1) == 'desa' or $request->uri->getSegment(1) == 'user' or $request->uri->getSegment(1) == 'user-admin-desa' or $request->uri->getSegment(1) == 'penandatangan-kabupaten') ? 'active' : ""; ?>">
                             <i class="nav-icon fas fa-copy"></i>
                             <p>
                                 Master
                                 <i class="fas fa-angle-left right"></i>
                             </p>
                         </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="<?= base_url('data-user') ?>" class="nav-link <?= ($request->uri->getSegment(1) == 'data-user') ? 'active' : ""; ?>">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>User</p>
-                                </a>
-                            </li>
-                        </ul>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="<?= base_url('penandatangan') ?>" class="nav-link <?= ($request->uri->getSegment(1) == 'penandatangan') ? 'active' : ""; ?>">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Penandatangan</p>
-                                </a>
-                            </li>
-                        </ul>
+                        <?php if (session()->get('level') == '4') {  ?>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="<?= base_url('desa') ?>" class="nav-link <?= ($request->uri->getSegment(1) == 'desa') ? 'active' : ""; ?>">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Desa</p>
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="<?= base_url('user-admin-desa') ?>" class="nav-link <?= ($request->uri->getSegment(1) == 'user-admin-desa') ? 'active' : ""; ?>">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>User Admin Desa</p>
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="<?= base_url('user') ?>" class="nav-link <?= ($request->uri->getSegment(1) == 'user') ? 'active' : ""; ?>">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>User Kabupaten</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        <?php } ?>
+                        <?php if (session()->get('level') == '1') {  ?>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="<?= base_url('data-user') ?>" class="nav-link <?= ($request->uri->getSegment(1) == 'data-user') ? 'active' : ""; ?>">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>User Desa</p>
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="<?= base_url('penandatangan') ?>" class="nav-link <?= ($request->uri->getSegment(1) == 'penandatangan') ? 'active' : ""; ?>">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Penandatangan</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        <?php } ?>
+                        <?php if (session()->get('level') == '4') { ?>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="<?= base_url('penandatangan-kabupaten') ?>" class="nav-link <?= ($request->uri->getSegment(1) == 'penandatangan-kabupaten') ? 'active' : ""; ?>">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Penandatangan</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        <?php } ?>
                     </li>
                 <?php } ?>
-
                 <li class="nav-item">
-                    <a href="#" class="nav-link <?= ($request->uri->getSegment(1) == 'tambah-surat-masuk' or $request->uri->getSegment(1) == 'surat-masuk' or $request->uri->getSegment(1) == 'data-surat-masuk') ? 'active' : ""; ?>">
+                    <a href="#" class="nav-link <?= ($request->uri->getSegment(1) == 'tambah-surat-masuk' or $request->uri->getSegment(1) == 'surat-masuk' or $request->uri->getSegment(1) == 'data-surat-masuk' or $request->uri->getSegment(1) == 'surat-masuk-desa' or $request->uri->getSegment(1) == 'surat-masuk-kabupaten') ? 'active' : ""; ?>">
                         <i class="nav-icon fas fa-envelope"></i>
                         <p>
                             Surat Masuk
@@ -115,11 +154,21 @@
                                     <p>Daftar Surat Masuk</p>
                                 </a>
                             <?php } ?>
+                            <?php if (session()->get('level') == '4') { ?>
+                                <a href="<?= base_url('surat-masuk-desa') ?>" class="nav-link <?= ($request->uri->getSegment(1) == 'surat-masuk-desa') ? 'active' : ""; ?>">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Surat Masuk Desa</p>
+                                </a>
+                                <a href="<?= base_url('surat-masuk-kabupaten') ?>" class="nav-link <?= ($request->uri->getSegment(1) == 'surat-masuk-kabupaten') ? 'active' : ""; ?>">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Surat Masuk Kabupaten</p>
+                                </a>
+                            <?php } ?>
                         </li>
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link <?= ($request->uri->getSegment(1) == 'tambah-surat-keluar' or $request->uri->getSegment(1) == 'surat-keluar' or $request->uri->getSegment(1) == 'data-surat-keluar') ? 'active' : ""; ?>">
+                    <a href="#" class="nav-link <?= ($request->uri->getSegment(1) == 'tambah-surat-keluar' or $request->uri->getSegment(1) == 'surat-keluar' or $request->uri->getSegment(1) == 'data-surat-keluar' or $request->uri->getSegment(1) == 'surat-keluar-desa' or $request->uri->getSegment(1) == 'surat-keluar-kabupaten') ? 'active' : ""; ?>">
                         <i class="nav-icon fas fa-envelope-open-text"></i>
                         <p>
                             Surat Keluar
@@ -146,11 +195,21 @@
                                     <p>Daftar Surat Keluar</p>
                                 </a>
                             <?php } ?>
+                            <?php if (session()->get('level') == '4') { ?>
+                                <a href="<?= base_url('surat-keluar-desa') ?>" class="nav-link <?= ($request->uri->getSegment(1) == 'surat-keluar-desa') ? 'active' : ""; ?>">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Surat Keluar Desa</p>
+                                </a>
+                                <a href="<?= base_url('surat-keluar-kabupaten') ?>" class="nav-link <?= ($request->uri->getSegment(1) == 'surat-keluar-kabupaten') ? 'active' : ""; ?>">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Surat Keluar Kabupaten</p>
+                                </a>
+                            <?php } ?>
                         </li>
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link <?= ($request->uri->getSegment(1) == 'tambah-laporan-kegiatan' or $request->uri->getSegment(1) == 'laporan-kegiatan' or $request->uri->getSegment(1) == 'data-laporan-kegiatan') ? 'active' : ""; ?>">
+                    <a href="#" class="nav-link <?= ($request->uri->getSegment(1) == 'tambah-laporan-kegiatan' or $request->uri->getSegment(1) == 'laporan-kegiatan' or $request->uri->getSegment(1) == 'data-laporan-kegiatan' or $request->uri->getSegment(1) == 'laporan-kegiatan-desa' or $request->uri->getSegment(1) == 'laporan-kegiatan-kabupaten') ? 'active' : ""; ?>">
                         <i class="nav-icon fas fa-file-image"></i>
                         <p>
                             Laporan Kegiatan
@@ -173,6 +232,16 @@
                                 <a href="<?= base_url('data-laporan-kegiatan') ?>" class="nav-link <?= ($request->uri->getSegment(1) == 'data-laporan-kegiatan') ? 'active' : ""; ?>">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Daftar Laporan Kegiatan</p>
+                                </a>
+                            <?php } ?>
+                            <?php if (session()->get('level') == '4') { ?>
+                                <a href="<?= base_url('laporan-kegiatan-desa') ?>" class="nav-link <?= ($request->uri->getSegment(1) == 'laporan-kegiatan-desa') ? 'active' : ""; ?>">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Laporan Desa</p>
+                                </a>
+                                <a href="<?= base_url('laporan-kegiatan-kabupaten') ?>" class="nav-link <?= ($request->uri->getSegment(1) == 'laporan-kegiatan-kabupaten') ? 'active' : ""; ?>">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Laporan Kabupaten</p>
                                 </a>
                             <?php } ?>
                         </li>

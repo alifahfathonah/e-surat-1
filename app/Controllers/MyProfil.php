@@ -26,32 +26,56 @@ class MyProfil extends BaseController
     public function myprofil()
     {
         $ids = session()->get('id');
-        $profil = $this->userModel->where('id =', $ids)->first();
-        $setting = $this->settingModel->first();
-        $data = array(
-            'titlebar' => 'Profil Saya',
-            'title' => 'Profil Saya',
-            'suratmasuk'    => $this->suratmasukModel->where('id_user =', $ids)->countAllResults(),
-            'suratkeluar'   => $this->suratkeluarModel->where('id_user =', $ids)->countAllResults(),
-            'suratmasukall'    => $this->suratmasukModel->countAllResults(),
-            'suratkeluarall'   => $this->suratkeluarModel->countAllResults(),
-            'suratkeluar_s'   => $this->suratkeluarModel->where('id_user =', $ids)->countAllResults(),
-            'data' => $profil,
-            'settings' => $setting,
-            'isi' => 'master/myprofil/data',
-        );
-        return view('layout/wrapper', $data);
+        $idd = session()->get('id_desa');
+        if (session()->get('level') == 4) {
+            $profil = $this->userModel->where('id =', $ids)->first();
+            $data = array(
+                'titlebar' => 'Profil Saya',
+                'title' => 'Profil Saya',
+                'data' => $profil,
+                'isi' => 'master/myprofil/dataadmkab',
+            );
+            return view('layout/wrapper', $data);
+        } else {
+            $profil = $this->userModel->where('id =', $ids)->where('id_desa =', $idd)->first();
+            $setting = $this->settingModel->where('id_desa =', $idd)->first();
+            $data = array(
+                'titlebar' => 'Profil Saya',
+                'title' => 'Profil Saya',
+                'suratmasuk'    => $this->suratmasukModel->where('id_user =', $ids)->where('id_desa =', $idd)->countAllResults(),
+                'suratkeluar'   => $this->suratkeluarModel->where('id_user =', $ids)->where('id_desa =', $idd)->countAllResults(),
+                'suratmasukall'    => $this->suratmasukModel->where('id_desa =', $idd)->countAllResults(),
+                'suratkeluarall'   => $this->suratkeluarModel->where('id_desa =', $idd)->countAllResults(),
+                'suratkeluar_s'   => $this->suratkeluarModel->where('id_user =', $ids)->where('id_desa =', $idd)->countAllResults(),
+                'data' => $profil,
+                'settings' => $setting,
+                'isi' => 'master/myprofil/data',
+            );
+            return view('layout/wrapper', $data);
+        }
     }
     public function edit($id)
     {
-        $data = array(
-            'titlebar' => 'Profil Saya',
-            'title' => 'Edit Profil',
-            'isi' => 'master/myprofil/edit',
-            'validation' => \Config\Services::validation(),
-            'data' => $this->userModel->where('id', $id)->first(),
-        );
-        return view('layout/wrapper', $data);
+        if (session()->get('level') == 4) {
+            $data = array(
+                'titlebar' => 'Profil Saya',
+                'title' => 'Edit Profil',
+                'isi' => 'master/myprofil/edit',
+                'validation' => \Config\Services::validation(),
+                'data' => $this->userModel->where('id', $id)->first(),
+            );
+            return view('layout/wrapper', $data);
+        } else {
+            $idd = session()->get('id_desa');
+            $data = array(
+                'titlebar' => 'Profil Saya',
+                'title' => 'Edit Profil',
+                'isi' => 'master/myprofil/edit',
+                'validation' => \Config\Services::validation(),
+                'data' => $this->userModel->where('id', $id)->where('id_desa', $idd)->first(),
+            );
+            return view('layout/wrapper', $data);
+        }
     }
     public function update($id)
     {

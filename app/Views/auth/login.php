@@ -27,7 +27,7 @@
             <div class="card-header text-center">
                 <img src="<?= base_url(); ?>/media/logo/logo.png" alt="" class="img-fluid" width="70">
                 <h4 class="mt-2">E-Arsip</h4>
-                <small>(<?= $setting['nama_desa'] ?> | Kabupaten Batu Bara)</small>
+                <small>(Kabupaten Batu Bara)</small>
             </div>
             <div class="card-body">
                 <div class="swal-login" data-swal="<?= session()->getFlashdata('m'); ?>"></div>

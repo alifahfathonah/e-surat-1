@@ -9,5 +9,5 @@ class PenandatanganModel extends Model
     protected $table      = 'mod_penandatangan';
     protected $primaryKey = 'id';
     protected $useTimestamps = true;
-    protected $allowedFields = ['nama', 'jabatan', 'ttd'];
+    protected $allowedFields = ['id_desa', 'nama', 'jabatan', 'ttd'];
 }

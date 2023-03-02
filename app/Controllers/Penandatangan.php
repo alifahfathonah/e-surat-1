@@ -14,7 +14,19 @@ class Penandatangan extends BaseController
     }
     public function data()
     {
-        $datauser = $this->penandatanganModel->findAll();
+        $idd = session()->get('id_desa');
+        $datauser = $this->penandatanganModel->where('id_desa', $idd)->findAll();
+        $data = array(
+            'title' => 'Penandatangan',
+            'data' => $datauser,
+            'isi' => 'master/penandatangan/data'
+        );
+        return view('layout/wrapper', $data);
+    }
+    public function datakab()
+    {
+        $idd = session()->get('id_desa');
+        $datauser = $this->penandatanganModel->where('id_desa', $idd)->findAll();
         $data = array(
             'title' => 'Penandatangan',
             'data' => $datauser,
@@ -65,13 +77,19 @@ class Penandatangan extends BaseController
         $fileNamettd = $file_ttd->getRandomName();
         $file_ttd->move(ROOTPATH . 'public/media/ttd/', $fileNamettd);
         $data = [
+            'id_desa'       => session()->get('id_desa'),
             'nama'          => $this->request->getPost('nama'),
             'jabatan'       => $this->request->getPost('jabatan'),
             'ttd'           => $fileNamettd,
         ];
         $this->penandatanganModel->save($data);
-        session()->setFlashdata('m', 'Data berhasil disimpan');
-        return redirect()->to(base_url('penandatangan'));
+        if (session()->get('level') == 4) {
+            session()->setFlashdata('m', 'Data berhasil disimpan');
+            return redirect()->to(base_url('penandatangan-kabupaten'));
+        } else {
+            session()->setFlashdata('m', 'Data berhasil disimpan');
+            return redirect()->to(base_url('penandatangan'));
+        }
     }
     public function delete($id)
     {
@@ -81,17 +99,23 @@ class Penandatangan extends BaseController
             unlink(ROOTPATH . 'public/media/ttd/' . $file_ttd);
         }
         $this->penandatanganModel->delete($id);
-        session()->setFlashdata('m', 'Data berhasil dihapus');
-        return redirect()->to(base_url('penandatangan'));
+        if (session()->get('level') == 4) {
+            session()->setFlashdata('m', 'Data berhasil dihapus');
+            return redirect()->to(base_url('penandatangan-kabupaten'));
+        } else {
+            session()->setFlashdata('m', 'Data berhasil dihapus');
+            return redirect()->to(base_url('penandatangan'));
+        }
     }
     public function edit($id)
     {
+        $idd = session()->get('id_desa');
         $data = array(
             'titlebar' => 'Penandatangan',
             'title' => 'Edit Penandatangan',
             'isi' => 'master/penandatangan/edit',
             'validation' => \Config\Services::validation(),
-            'data' => $this->penandatanganModel->where('id', $id)->first(),
+            'data' => $this->penandatanganModel->where('id', $id)->where('id_desa', $idd)->first(),
         );
         return view('layout/wrapper', $data);
     }
@@ -140,12 +164,18 @@ class Penandatangan extends BaseController
         }
         $data = [
             'id'            => $id,
+            'id_desa'              => session()->get('id_desa'),
             'nama'          => $this->request->getPost('nama'),
             'jabatan'       => $this->request->getPost('jabatan'),
             'ttd'           => $fileNamettd,
         ];
         $this->penandatanganModel->save($data);
-        session()->setFlashdata('m', 'Data berhasil diupdate');
-        return redirect()->to(base_url('penandatangan'));
+        if (session()->get('level') == 4) {
+            session()->setFlashdata('m', 'Data berhasil diupdate');
+            return redirect()->to(base_url('penandatangan-kabupaten'));
+        } else {
+            session()->setFlashdata('m', 'Data berhasil diupdate');
+            return redirect()->to(base_url('penandatangan'));
+        }
     }
 }

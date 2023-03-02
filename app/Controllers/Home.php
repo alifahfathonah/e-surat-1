@@ -20,19 +20,39 @@ class Home extends BaseController
     }
     public function index()
     {
-        $pokja = session()->get('pokja');
-        $data = array(
-            'title'         => 'Dashboard',
-            'apptitle'      => 'E-Arsip Surat',
-            'appname'       => 'Aplikasi Management Surat',
-            'users'         => $this->userModel->where('level !=', 1)->countAllResults(),
-            'sekretariat'   => $this->suratmasukModel->where('pokja =', null)->countAllResults(),
-            'pokjaI'        => $this->suratmasukModel->where('pokja =', 'Pokja I')->countAllResults(),
-            'pokjaII'       => $this->suratmasukModel->where('pokja =', 'Pokja II')->countAllResults(),
-            'pokjaIII'      => $this->suratmasukModel->where('pokja =', 'Pokja III')->countAllResults(),
-            'pokjaIV'       => $this->suratmasukModel->where('pokja =', 'Pokja IV')->countAllResults(),
-            'isi'           => 'home',
-        );
-        return view('layout/wrapper', $data);
+        if (session()->get('level') == 4) {
+            $idd = session()->get('id_desa');
+            $data = array(
+                'title'         => 'Dashboard',
+                'appname'       => 'Aplikasi Management Surat',
+                'users'         => $this->userModel->where('level !=', 4)->where('id_desa', $idd)->countAllResults(),
+                'sekretariat'   => $this->suratmasukModel->where('pokja =', null)->where('id_desa', $idd)->countAllResults(),
+                'pokjaI'        => $this->suratmasukModel->where('pokja =', 'Pokja I')->where('id_desa', $idd)->countAllResults(),
+                'pokjaII'       => $this->suratmasukModel->where('pokja =', 'Pokja II')->where('id_desa', $idd)->countAllResults(),
+                'pokjaIII'      => $this->suratmasukModel->where('pokja =', 'Pokja III')->where('id_desa', $idd)->countAllResults(),
+                'pokjaIV'       => $this->suratmasukModel->where('pokja =', 'Pokja IV')->where('id_desa', $idd)->countAllResults(),
+                'isi'           => 'home',
+            );
+            return view('layout/wrapper', $data);
+        } else {
+            $idd = session()->get('id_desa');
+            if (session()->get('id_desa') == 0) {
+                $user = $this->userModel->where('level !=', 4)->where('id_desa', $idd)->countAllResults();
+            } else {
+                $user = $this->userModel->where('level !=', 1)->where('id_desa', $idd)->countAllResults();
+            }
+            $data = array(
+                'title'         => 'Dashboard',
+                'appname'       => 'Aplikasi Management Surat',
+                'users'         => $user,
+                'sekretariat'   => $this->suratmasukModel->where('pokja =', null)->where('id_desa', $idd)->countAllResults(),
+                'pokjaI'        => $this->suratmasukModel->where('pokja =', 'Pokja I')->where('id_desa', $idd)->countAllResults(),
+                'pokjaII'       => $this->suratmasukModel->where('pokja =', 'Pokja II')->where('id_desa', $idd)->countAllResults(),
+                'pokjaIII'      => $this->suratmasukModel->where('pokja =', 'Pokja III')->where('id_desa', $idd)->countAllResults(),
+                'pokjaIV'       => $this->suratmasukModel->where('pokja =', 'Pokja IV')->where('id_desa', $idd)->countAllResults(),
+                'isi'           => 'home',
+            );
+            return view('layout/wrapper', $data);
+        }
     }
 }

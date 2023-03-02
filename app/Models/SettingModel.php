@@ -9,5 +9,5 @@ class SettingModel extends Model
     protected $table      = 'mod_setting';
     protected $primaryKey = 'id';
     protected $useTimestamps = true;
-    protected $allowedFields = ['nama_desa', 'nama_kecamatan', 'alamat', 'kode_pos'];
+    protected $allowedFields = ['id_desa', 'nama_desa', 'nama_kecamatan', 'alamat', 'kode_pos'];
 }

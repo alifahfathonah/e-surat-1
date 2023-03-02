@@ -15,7 +15,7 @@
                     <div class="card">
                         <div class="swal" data-swal="<?= session()->getFlashdata('m'); ?>"></div>
                         <div class="card-header">
-                            <a href="<?= base_url('penandatangan/add') ?>" class="btn btn-info btn-xs">
+                            <a href="<?= base_url('desa/add') ?>" class="btn btn-info btn-xs">
                                 <i class="fa fa-plus-circle"></i>&nbsp;Tambah
                             </a>
                         </div>
@@ -24,8 +24,8 @@
                                 <thead>
                                     <tr>
                                         <th style="width: 5%">No</th>
-                                        <th>Nama</th>
-                                        <th style="width: 15%">Jabatan</th>
+                                        <th style="width: 8%">Kode</th>
+                                        <th>Nama Desa</th>
                                         <th style="width: 10%">
                                             <center>Aksi</center>
                                         </th>
@@ -36,12 +36,12 @@
                                     foreach ($data as $key => $r) : ?>
                                         <tr>
                                             <td><?= $i++; ?></td>
-                                            <td><?= $r['nama']; ?></td>
-                                            <td><?= $r['jabatan']; ?></td>
+                                            <td><?= $r['kode']; ?></td>
+                                            <td><?= $r['nama_desa']; ?></td>
                                             <td>
                                                 <div class="form-button-action">
                                                     <center>
-                                                        <a href="penandatangan/edit/<?= $r['id']; ?>" class="btn btn-warning btn-xs">
+                                                        <a href="desa/edit/<?= $r['id']; ?>" class="btn btn-warning btn-xs">
                                                             <i class="fa fa-edit"></i>
                                                         </a>
                                                         <a href="#" class="btn btn-danger btn-xs" title="Hapus Data" data-toggle='modal' data-target='#activateModalDelete<?= $r['id'] ?>'>
@@ -63,7 +63,7 @@
 </div>
 <!-- Modal -->
 <?php foreach ($data as $r) { ?>
-    <form action="<?= base_url('penandatangan/' . $r['id']); ?>" method="post">
+    <form action="<?= base_url('desa/' . $r['id']); ?>" method="post">
         <?= csrf_field(); ?>
         <div class="modal fade" id="activateModalDelete<?= $r['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -75,7 +75,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        Apa kamu yakin ingin menghapus data <span class="text-danger"><?= $r['nama'] ?></span> ini secara permanen ???
+                        Apa kamu yakin ingin menghapus data <span class="text-danger"><?= $r['nama_desa'] ?></span> ini secara permanen ???
                     </div>
                     <div class="modal-footer">
                         <input type="hidden" name="_method" value="DELETE">

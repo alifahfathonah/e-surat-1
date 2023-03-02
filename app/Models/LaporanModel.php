@@ -9,5 +9,5 @@ class LaporanModel extends Model
     protected $table      = 'mod_laporan';
     protected $primaryKey = 'id';
     protected $useTimestamps = true;
-    protected $allowedFields = ['id_user', 'judul', 'manfaat', 'sasaran', 'tgl_kegiatan', 'foto_kegiatan', 'pokja'];
+    protected $allowedFields = ['id_user', 'id_desa', 'judul', 'manfaat', 'sasaran', 'tgl_kegiatan', 'foto_kegiatan', 'pokja'];
 }

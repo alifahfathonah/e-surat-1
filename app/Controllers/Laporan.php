@@ -18,7 +18,29 @@ class Laporan extends BaseController
     public function data()
     {
         $ids = session()->get('id');
-        $lap = $this->laporanModel->where('id_user =', $ids)->findAll();
+        $idd = session()->get('id_desa');
+        $lap = $this->laporanModel->where('id_user =', $ids)->where('id_desa', $idd)->findAll();
+        $data = array(
+            'title' => 'Laporan Kegiatan',
+            'data' => $lap,
+            'isi' => 'master/laporan/data'
+        );
+        return view('layout/wrapper', $data);
+    }
+    public function datadesa()
+    {
+        $lap = $this->laporanModel->where('id_desa !=', 0)->findAll();
+        $data = array(
+            'title' => 'Laporan Kegiatan',
+            'data' => $lap,
+            'isi' => 'master/laporan/data'
+        );
+        return view('layout/wrapper', $data);
+    }
+    public function datakab()
+    {
+        $idd = session()->get('id_desa');
+        $lap = $this->laporanModel->where('id_desa =', 0)->findAll();
         $data = array(
             'title' => 'Laporan Kegiatan',
             'data' => $lap,
@@ -28,7 +50,8 @@ class Laporan extends BaseController
     }
     public function datalaporan()
     {
-        $laporan = $this->laporanModel->findAll();
+        $idd = session()->get('id_desa');
+        $laporan = $this->laporanModel->where('id_desa', $idd)->findAll();
         $data = array(
             'title' => 'Laporan Kegiatan',
             'data' => $laporan,
@@ -92,13 +115,14 @@ class Laporan extends BaseController
         $fileNamefoto = $file_foto->getRandomName();
         $file_foto->move(ROOTPATH . 'public/media/foto-kegiatan/', $fileNamefoto);
         $data = [
-            'id_user'        => session()->get('id'),
+            'id_user'       => session()->get('id'),
+            'id_desa'       => session()->get('id_desa'),
             'judul'         => $this->request->getPost('judul'),
             'manfaat'       => $this->request->getPost('manfaat'),
             'sasaran'       => $this->request->getPost('sasaran'),
             'tgl_kegiatan'  => $this->request->getPost('tglk'),
             'foto_kegiatan' => $fileNamefoto,
-            'pokja'          => session()->get('pokja'),
+            'pokja'         => session()->get('pokja'),
         ];
         $this->laporanModel->save($data);
         session()->setFlashdata('m', 'Data berhasil disimpan');
@@ -122,12 +146,14 @@ class Laporan extends BaseController
     }
     public function edit($id)
     {
+        $ids = session()->get('id');
+        $idd = session()->get('id_desa');
         $data = array(
             'titlebar' => 'Laporan Kegiatan',
             'title' => 'Edit Laporan Kegiatan',
             'isi' => 'master/laporan/edit',
             'validation' => \Config\Services::validation(),
-            'data' => $this->laporanModel->where('id', $id)->first(),
+            'data' => $this->laporanModel->where('id', $id)->where('id_user =', $ids)->where('id_desa', $idd)->first(),
         );
         return view('layout/wrapper', $data);
     }
@@ -188,6 +214,7 @@ class Laporan extends BaseController
         }
         $data = [
             'id_user'       => session()->get('id'),
+            'id_desa'        => session()->get('id_desa'),
             'id'            => $id,
             'judul'         => $this->request->getPost('judul'),
             'manfaat'       => $this->request->getPost('manfaat'),
@@ -203,6 +230,18 @@ class Laporan extends BaseController
     public function detail($id)
     {
         $detail = $this->userModel->join('mod_laporan', 'mod_laporan.id_user = mod_user.id', 'left')->where('mod_laporan.id =', $id)->first();
+        $data = array(
+            'title' => 'Detail Laporan Kegiatan',
+            'data' => $detail,
+            'isi' => 'master/laporan/detail',
+        );
+        // dd($detail);
+        return view('layout/wrapper', $data);
+    }
+    public function details($id)
+    {
+        $idd = session()->get('id_desa');
+        $detail = $this->userModel->join('mod_laporan', 'mod_laporan.id_user = mod_user.id', 'left')->where('mod_laporan.id =', $id)->where('mod_laporan.id_desa =', $idd)->first();
         $data = array(
             'title' => 'Detail Laporan Kegiatan',
             'data' => $detail,

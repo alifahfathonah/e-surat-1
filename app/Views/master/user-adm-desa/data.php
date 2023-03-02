@@ -15,7 +15,7 @@
                     <div class="card">
                         <div class="swal" data-swal="<?= session()->getFlashdata('m'); ?>"></div>
                         <div class="card-header">
-                            <a href="<?= base_url('penandatangan/add') ?>" class="btn btn-info btn-xs">
+                            <a href="<?= base_url('user-admin-desa/add') ?>" class="btn btn-info btn-xs">
                                 <i class="fa fa-plus-circle"></i>&nbsp;Tambah
                             </a>
                         </div>
@@ -25,7 +25,13 @@
                                     <tr>
                                         <th style="width: 5%">No</th>
                                         <th>Nama</th>
-                                        <th style="width: 15%">Jabatan</th>
+                                        <th>Email</th>
+                                        <th>Nomor HP</th>
+                                        <th>Username</th>
+                                        <th>Level</th>
+                                        <th>
+                                            <center>Foto</center>
+                                        </th>
                                         <th style="width: 10%">
                                             <center>Aksi</center>
                                         </th>
@@ -37,11 +43,23 @@
                                         <tr>
                                             <td><?= $i++; ?></td>
                                             <td><?= $r['nama']; ?></td>
-                                            <td><?= $r['jabatan']; ?></td>
+                                            <td><?= $r['email']; ?></td>
+                                            <td><?= $r['nohp']; ?></td>
+                                            <td><?= $r['username']; ?></td>
+                                            <td><?= $r['level'] == 1 ? 'Admin Desa' : ''; ?></td>
+                                            <td>
+                                                <center>
+                                                    <?php if ($r['foto'] == null) { ?>
+                                                        <img src="<?= base_url('/media/fotouser/' . 'blank.png') ?>" width="30px" class="img rounded">
+                                                    <?php } else { ?>
+                                                        <img src="<?= base_url('/media/fotouser/' . $r['foto']) ?>" width="30px" class="img rounded">
+                                                    <?php } ?>
+                                                </center>
+                                            </td>
                                             <td>
                                                 <div class="form-button-action">
                                                     <center>
-                                                        <a href="penandatangan/edit/<?= $r['id']; ?>" class="btn btn-warning btn-xs">
+                                                        <a href="user-admin-desa/edit/<?= $r['id']; ?>" class="btn btn-warning btn-xs">
                                                             <i class="fa fa-edit"></i>
                                                         </a>
                                                         <a href="#" class="btn btn-danger btn-xs" title="Hapus Data" data-toggle='modal' data-target='#activateModalDelete<?= $r['id'] ?>'>
@@ -63,7 +81,7 @@
 </div>
 <!-- Modal -->
 <?php foreach ($data as $r) { ?>
-    <form action="<?= base_url('penandatangan/' . $r['id']); ?>" method="post">
+    <form action="<?= base_url('user-admin-desa/' . $r['id']); ?>" method="post">
         <?= csrf_field(); ?>
         <div class="modal fade" id="activateModalDelete<?= $r['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
