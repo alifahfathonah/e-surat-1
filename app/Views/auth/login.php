@@ -11,10 +11,14 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 
   <link rel="stylesheet" href="<?= base_url(); ?>/template/login/assets/css/style.css" />
+  <link rel="stylesheet" href="<?= base_url(); ?>/template/admin/plugins/toastr/toastr.min.css">
+  <link rel="icon" href="<?= base_url(); ?>/media/logo/logo.png" type="image/x-icon" />
 </head>
 
 <body>
   <section class="ftco-section">
+    <div class="swal-login" data-swal="<?= session()->getFlashdata('m'); ?>"></div>
+    <div class="swal-logout" data-swal="<?= session()->getFlashdata('ml'); ?>"></div>
     <div class="container">
       <div class="row justify-content-center"></div>
       <div class="row justify-content-center">
@@ -62,6 +66,11 @@
   <script src="<?= base_url(); ?>/template/login/assets/js/popper.js"></script>
   <script src="<?= base_url(); ?>/template/login/assets/js/bootstrap.min.js"></script>
   <script src="<?= base_url(); ?>/template/login/assets/js/main.js"></script>
+  <script src="<?= base_url(); ?>/template/admin/plugins/sweetalert2/script.js"></script>
+  <!-- AdminLTE App -->
+  <script src="<?= base_url(); ?>/template/admin/dist/js/adminlte.min.js"></script>
+  <!-- Toastr -->
+  <script src="<?= base_url(); ?>/template/admin/plugins/toastr/toastr.min.js"></script>
 </body>
 
 </html>
