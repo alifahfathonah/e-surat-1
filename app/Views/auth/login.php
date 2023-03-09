@@ -2,87 +2,66 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><?= $title ?></title>
-    <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="<?= base_url(); ?>/template/admin/plugins/fontawesome-free/css/all.min.css">
-    <!-- icheck bootstrap -->
-    <link rel="stylesheet" href="<?= base_url(); ?>/template/admin/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="<?= base_url(); ?>/template/admin/dist/css/adminlte.min.css">
-    <!-- SweetAlert2 -->
-    <link rel="stylesheet" href="<?= base_url(); ?>/template/admin/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
-    <!-- Toastr -->
-    <link rel="stylesheet" href="<?= base_url(); ?>/template/admin/plugins/toastr/toastr.min.css">
-    <link rel="icon" href="<?= base_url(); ?>/media/logo/logo.png" type="image/x-icon" />
+  <title><?= $title ?></title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+  <link rel="stylesheet" href="<?= base_url(); ?>/template/login/assets/css/style.css" />
 </head>
 
-<body class="hold-transition login-page">
-    <div class="login-box">
-        <!-- /.login-logo -->
-        <div class="card card-outline card-primary">
-            <div class="card-header text-center">
-                <img src="<?= base_url(); ?>/media/logo/logo.png" alt="" class="img-fluid" width="70">
-                <h4 class="mt-2">E-Arsip</h4>
-                <small>(Kabupaten Batu Bara)</small>
+<body>
+  <section class="ftco-section">
+    <div class="container">
+      <div class="row justify-content-center"></div>
+      <div class="row justify-content-center">
+        <div class="col-md-12 col-lg-10">
+          <div class="wrap d-md-flex">
+            <div class="img" style="background-image: url(<?= base_url(); ?>/template/login/assets/img/ilustrasi.jpg)"></div>
+            <div class="login-wrap p-4 p-md-5">
+              <div class="d-flex">
+                <div class="w-100">
+                  <h4 class="mb-4">Administrator</h4>
+                </div>
+              </div>
+              <form class="signin-form" action="<?= base_url('auth/verify') ?>" method="post">
+                <?= csrf_field(); ?>
+                <div class="form-group mb-3">
+                  <label class="label" for="name">Username</label>
+                  <input name="username" type="text" class="form-control <?= ($validation->hasError('username')) ? 'is-invalid' : ''; ?>" value="<?= old('username'); ?>" placeholder=" Username" required />
+                  <span class="text-danger text-sm <?= ($validation->hasError('password')) ? 'xtime' : ''; ?>"> <?= $validation->getError('username'); ?></span>
+                </div>
+                <div class="form-group mb-4">
+                  <label class="label" for="password">Password</label>
+                  <input name="password" type="password" class="form-control <?= ($validation->hasError('password')) ? 'is-invalid' : ''; ?>" placeholder="Password" required />
+                  <span class="text-danger text-sm <?= ($validation->hasError('password')) ? 'xtime' : ''; ?>"> <?= $validation->getError('password'); ?></span>
+                </div>
+                <div class="form-group">
+                  <button type="submit" class="form-control btn btn-primary submit px-3">
+                    Masuk
+                  </button>
+                </div>
+              </form>
             </div>
-            <div class="card-body">
-                <div class="swal-login" data-swal="<?= session()->getFlashdata('m'); ?>"></div>
-                <div class="swal-logout" data-swal="<?= session()->getFlashdata('ml'); ?>"></div>
-                <form action="<?= base_url('auth/verify') ?>" method="post">
-                    <?= csrf_field(); ?>
-                    <div class="form-group">
-                        <div class="input-group mb-3">
-                            <input type="text" name="username" class="form-control <?= ($validation->hasError('username')) ? 'is-invalid' : ''; ?>" value="<?= old('username'); ?>" placeholder="Masukkan Username" required>
-                            <div class="input-group-append">
-                                <div class="input-group-text">
-                                    <span class="fas fa-envelope"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <span class="text-danger text-sm <?= ($validation->hasError('password')) ? 'xtime' : ''; ?>"> <?= $validation->getError('username'); ?></span>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-group mb-3">
-                            <input type="password" name="password" class="form-control <?= ($validation->hasError('password')) ? 'is-invalid' : ''; ?>" placeholder="Masukkan Password" required>
-                            <div class="input-group-append">
-                                <div class="input-group-text">
-                                    <span class="fas fa-lock"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <span class="text-danger text-sm <?= ($validation->hasError('password')) ? 'xtime' : ''; ?>"> <?= $validation->getError('password'); ?></span>
-                    </div>
-                    <div class="row">
-                        <div class="col-4">
-                            <button type="submit" class="btn btn-primary btn-block">Masuk</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
+          </div>
         </div>
+      </div>
     </div>
-    <!-- jQuery -->
-    <script src="<?= base_url(); ?>/template/admin/plugins/jquery/jquery.min.js"></script>
-    <!-- Bootstrap 4 -->
-    <script src="<?= base_url(); ?>/template/admin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- AdminLTE App -->
-    <script src="<?= base_url(); ?>/template/admin/dist/js/adminlte.min.js"></script>
-    <!-- SweetAlert2 -->
-    <script src="<?= base_url(); ?>/template/admin/plugins/sweetalert2/sweetalert2.min.js"></script>
-    <script src="<?= base_url(); ?>/template/admin/plugins/sweetalert2/script.js"></script>
-    <!-- Toastr -->
-    <script src="<?= base_url(); ?>/template/admin/plugins/toastr/toastr.min.js"></script>
-    <script>
-        window.setTimeout(function() {
-            $(".xtime").fadeTo(500, 0).slideUp(500, function() {
-                $(this).remove();
-            })
-        }, 3000);
-    </script>
+  </section>
+  <script>
+    window.setTimeout(function() {
+      $(".xtime").fadeTo(500, 0).slideUp(500, function() {
+        $(this).remove();
+      })
+    }, 3000);
+  </script>
+  <script src="<?= base_url(); ?>/template/login/assets/js/jquery.min.js"></script>
+  <script src="<?= base_url(); ?>/template/login/assets/js/popper.js"></script>
+  <script src="<?= base_url(); ?>/template/login/assets/js/bootstrap.min.js"></script>
+  <script src="<?= base_url(); ?>/template/login/assets/js/main.js"></script>
 </body>
 
 </html>
